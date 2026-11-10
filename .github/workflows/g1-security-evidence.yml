@@ -17,8 +17,6 @@ jobs:
     timeout-minutes: 60
     env:
       CI: "true"
-      SBOM_TOOL_DIR: ${{ runner.temp }}/osjs-sbom-tool
-      EVIDENCE_DIR: ${{ runner.temp }}/osjs-g1-evidence
     steps:
       - name: Check out exact source
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -43,6 +41,8 @@ jobs:
 
       - name: Install isolated pinned SBOM tooling
         shell: bash
+        env:
+          SBOM_TOOL_DIR: ${{ runner.temp }}/osjs-sbom-tool
         run: |
           mkdir -p "$SBOM_TOOL_DIR"
           cd "$SBOM_TOOL_DIR"
@@ -55,11 +55,16 @@ jobs:
           npm audit --audit-level=low
 
       - name: Capture and validate complete G1 evidence
+        env:
+          SBOM_TOOL_DIR: ${{ runner.temp }}/osjs-sbom-tool
+          EVIDENCE_DIR: ${{ runner.temp }}/osjs-g1-evidence
         run: node scripts/security/run-g1-evidence-ci.js "$EVIDENCE_DIR" "$SBOM_TOOL_DIR"
 
       - name: Upload clean G1 evidence
         if: always()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        env:
+          EVIDENCE_DIR: ${{ runner.temp }}/osjs-g1-evidence
         with:
           name: g1-security-evidence-${{ github.sha }}
           path: ${{ env.EVIDENCE_DIR }}
