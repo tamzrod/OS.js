@@ -1,0 +1,67 @@
+name: G1 clean security evidence
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: g1-security-evidence-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  evidence:
+    name: Clean baseline evidence
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      CI: "true"
+      SBOM_TOOL_DIR: ${{ runner.temp }}/osjs-sbom-tool
+      EVIDENCE_DIR: ${{ runner.temp }}/osjs-g1-evidence
+    steps:
+      - name: Check out exact source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Set up pinned Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Verify clean source and toolchain
+        shell: bash
+        run: |
+          test -z "$(git status --porcelain=v1 --untracked-files=all)"
+          node -e "const cp=require('child_process');const actual=[process.version,cp.execFileSync('npm',['--version'],{encoding:'utf8'}).trim()];const expected=['v26.13.0','11.20.0'];if(actual.some((v,i)=>v!==expected[i]))throw new Error('Unexpected toolchain: '+actual.join('/'))"
+
+      - name: Install frozen project graph with scripts disabled
+        run: npm ci --ignore-scripts
+
+      - name: Install isolated pinned SBOM tooling
+        shell: bash
+        run: |
+          mkdir -p "$SBOM_TOOL_DIR"
+          cd "$SBOM_TOOL_DIR"
+          npm init --yes
+          npm install --save-exact --ignore-scripts \
+            @cyclonedx/cyclonedx-npm@7.0.0 \
+            ajv@8.20.0 \
+            ajv-formats@3.0.1 \
+            ajv-formats-draft2019@1.6.1
+          npm audit --audit-level=low
+
+      - name: Capture and validate complete G1 evidence
+        run: node scripts/security/run-g1-evidence-ci.js "$EVIDENCE_DIR" "$SBOM_TOOL_DIR"
+
+      - name: Upload clean G1 evidence
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: g1-security-evidence-${{ github.sha }}
+          path: ${{ env.EVIDENCE_DIR }}
+          if-no-files-found: error
+          retention-days: 90

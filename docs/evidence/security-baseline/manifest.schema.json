@@ -1,0 +1,144 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tamzrod.github.io/os.js/schemas/security-baseline-manifest-v1.json",
+  "title": "OS.js security baseline evidence manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "evidenceId",
+    "roadmapId",
+    "goalId",
+    "generatedAt",
+    "source",
+    "environment",
+    "commands",
+    "artifacts"
+  ],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "evidenceId": {
+      "type": "string",
+      "pattern": "^[0-9]{8}T[0-9]{6}Z_[0-9a-f]{12}_[0-9a-f]{12}$"
+    },
+    "roadmapId": { "const": "RM-SEC-001" },
+    "goalId": { "const": "G1" },
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "source": { "$ref": "#/$defs/source" },
+    "environment": { "$ref": "#/$defs/environment" },
+    "commands": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/command" }
+    },
+    "artifacts": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/artifact" }
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["commit", "dirty", "statusSha256", "lockfilePath", "lockfileSha256"],
+      "properties": {
+        "commit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+        "dirty": { "type": "boolean" },
+        "statusSha256": {
+          "anyOf": [
+            { "$ref": "#/$defs/sha256" },
+            { "type": "null" }
+          ]
+        },
+        "lockfilePath": { "const": "package-lock.json" },
+        "lockfileSha256": { "$ref": "#/$defs/sha256" }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "dirty": { "const": true } } },
+          "then": { "required": ["statusSha256"] }
+        }
+      ]
+    },
+    "environment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["os", "arch", "nodeVersion", "npmVersion", "registry"],
+      "properties": {
+        "os": { "type": "string", "minLength": 1 },
+        "arch": { "type": "string", "minLength": 1 },
+        "nodeVersion": { "const": "v26.13.0" },
+        "npmVersion": { "const": "11.20.0" },
+        "registry": { "type": "string", "format": "uri" }
+      }
+    },
+    "command": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "argv",
+        "startedAt",
+        "finishedAt",
+        "exitCode",
+        "classification",
+        "artifactIds"
+      ],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9_-]*$" },
+        "argv": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string" }
+        },
+        "startedAt": { "type": "string", "format": "date-time" },
+        "finishedAt": { "type": "string", "format": "date-time" },
+        "exitCode": { "type": "integer", "minimum": 0, "maximum": 255 },
+        "classification": {
+          "enum": ["pass", "findings", "expected-failure", "unexpected-failure"]
+        },
+        "artifactIds": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^[a-z0-9][a-z0-9_-]*$" }
+        }
+      }
+    },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "scope", "filename", "mediaType", "bytes", "sha256", "retention"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9_-]*$" },
+        "kind": {
+          "enum": [
+            "install-log",
+            "npm-audit",
+            "sbom",
+            "dependency-inventory",
+            "dependency-classification",
+            "package-discovery-log",
+            "build-log",
+            "source-context"
+          ]
+        },
+        "scope": { "type": "string", "pattern": "^[a-z0-9][a-z0-9_-]*$" },
+        "filename": {
+          "type": "string",
+          "pattern": "^[0-9]{8}T[0-9]{6}Z_[0-9a-f]{12}_[0-9a-f]{12}_[a-z0-9._-]+$"
+        },
+        "mediaType": { "type": "string", "minLength": 1 },
+        "bytes": { "type": "integer", "minimum": 0 },
+        "sha256": { "$ref": "#/$defs/sha256" },
+        "retention": { "enum": ["repository", "ci"] },
+        "location": { "type": ["string", "null"] }
+      }
+    }
+  }
+}

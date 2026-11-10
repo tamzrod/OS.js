@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "evidenceId": "20261109T090000Z_0aa874455e1c_d086b6df8d81",
+  "roadmapId": "RM-SEC-001",
+  "goalId": "G1",
+  "generatedAt": "2026-11-09T09:00:01Z",
+  "source": {
+    "commit": "0aa874455e1ca5a31e7be193b3be14080300c2c1",
+    "dirty": false,
+    "statusSha256": null,
+    "lockfilePath": "package-lock.json",
+    "lockfileSha256": "d086b6df8d81fba827c138aac6a194a923b58bf2eb1d47760766e01aa580d726"
+  },
+  "environment": {
+    "os": "linux",
+    "arch": "x64",
+    "nodeVersion": "v26.13.0",
+    "npmVersion": "11.20.0",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "commands": [
+    {
+      "id": "example_context",
+      "argv": ["git", "rev-parse", "HEAD"],
+      "startedAt": "2026-11-09T09:00:00Z",
+      "finishedAt": "2026-11-09T09:00:01Z",
+      "exitCode": 0,
+      "classification": "pass",
+      "artifactIds": ["example_context"]
+    }
+  ],
+  "artifacts": [
+    {
+      "id": "example_context",
+      "kind": "source-context",
+      "scope": "full",
+      "filename": "20261109T090000Z_0aa874455e1c_d086b6df8d81_source-context_full.txt",
+      "mediaType": "text/plain",
+      "bytes": 41,
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "retention": "repository",
+      "location": "example-only"
+    }
+  ]
+}

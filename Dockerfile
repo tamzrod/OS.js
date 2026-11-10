@@ -30,8 +30,8 @@
 
 # THIS IS ONLY INTENDED FOR DEVELOPMENT USAGE
 
-FROM node:10
-RUN npm install -g nodemon
+FROM node:26.13.0
+RUN npm install --global nodemon@3.1.10
 WORKDIR /usr/src/osjs
 COPY entrypoint.sh .
-CMD ./entrypoint.sh
+CMD ["./entrypoint.sh"]

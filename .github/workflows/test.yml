@@ -6,13 +6,16 @@ on:
   pull_request:
 jobs:
   build:
-    name: Lint tests (node latest)
+    name: Lint tests (supported toolchain)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: '13.x'
-      - run: npm install
+          node-version-file: .nvmrc
+          cache: npm
+      - name: Verify toolchain
+        run: node -e "const expected = ['v26.13.0', '11.20.0']; const actual = [process.version, require('child_process').execFileSync('npm', ['--version'], {encoding:'utf8'}).trim()]; if (actual.some((value, index) => value !== expected[index])) { throw new Error(`Expected Node ${expected[0]} and npm ${expected[1]}, got ${actual.join(' and npm ')}`); }"
+      - run: npm ci
       - run: npm run eslint
       - run: npm run stylelint
