@@ -2,7 +2,7 @@
 
 **ID:** `RM-SEC-001`  
 **Status:** Active  
-**Current position:** P5 G1 — Review and Continue (`T1.7a`)  
+**Current position:** P1 G2 — Understand vulnerable cookie handling  
 **Owner:** Unassigned  
 **Created:** 2026-11-09  
 **Updated:** 2026-11-10  
@@ -54,7 +54,7 @@ The controlling analysis is [`../../docs/security-risk-assessment.md`](../../doc
 
 ## G1 — Freeze and reproduce the baseline
 
-**Position:** P5 G1 — Review and Continue (`T1.7a`)  
+**Position:** Complete  
 **Exit condition:** A clean environment can reproduce the current dependency graph and dated security evidence from the committed configuration.
 
 **P1 analysis:** [`../../docs/p1-g1-baseline-reproducibility-analysis.md`](../../docs/p1-g1-baseline-reproducibility-analysis.md)
@@ -69,11 +69,11 @@ The controlling analysis is [`../../docs/security-risk-assessment.md`](../../doc
 - [x] **T1.5** [Generate and validate full and production CycloneDX SBOMs.](../tasks/RM-SEC-001/T1.5-generate-sboms.md)
 - [x] **T1.6** [Classify dependency boundaries, capture the no-workaround build result, and evaluate the G1 exit condition.](../tasks/RM-SEC-001/T1.6-classify-and-close-baseline.md)
 - [x] **T1.7a** [Implement a clean-checkout CI workflow for the complete G1 evidence set.](../tasks/RM-SEC-001/T1.7a-implement-clean-evidence-ci.md)
-- [ ] **T1.7b** [Run the workflow from committed source, review retained artifacts, and decide G1 closure.](../tasks/RM-SEC-001/T1.7b-run-clean-evidence-ci.md) — blocked pending T1.7a and a committed branch
+- [x] **T1.7b** [Run the workflow from committed source, review retained artifacts, and decide G1 closure.](../tasks/RM-SEC-001/T1.7b-run-clean-evidence-ci.md)
 
 ## G2 — Remove vulnerable cookie handling
 
-**Position:** Not started  
+**Position:** P1 G2 — Understand vulnerable cookie handling  
 **Exit condition:** No shipped path uses an affected `js-cookie` version, and hostile cookie-attribute inputs cannot change protected cookie policy.
 
 - [ ] **T2.1** Inventory every cookie read, write, removal, default-attribute, and converter call in the client.
@@ -190,6 +190,7 @@ Additional evidence required before completion:
 |---|---|---|
 | 2026-11-09 | Block unchanged OS.js integration and define zero high/critical production findings as a release gate. | The legacy baseline contains direct and transitive security risks in shipped dependencies and has no compatible automatic remediation path. |
 | 2026-11-09 | Treat browser, server, and build graphs as separate review surfaces. | Production exposure and supply-chain exposure require different evidence and remediation, while a minimal browser artifact can reduce attack surface. |
+| 2026-11-10 | Close G1 using retained clean evidence from commit `38e286a674cb4fe0238f703f1a5f69e25c590274`. | CI reproduced the reviewed dependency, audit, SBOM, classification, discovery, and expected-build baseline with clean source identity and validated artifact hashes. |
 
 ## Progress log
 
@@ -217,3 +218,5 @@ Additional evidence required before completion:
 | 2026-11-10 | Completed `P4 G1 / T1.6`. Classified all 1,392 lock entries with zero unknowns or unresolved edges; package discovery found 11 packages; Webpack reproduced the expected `ERR_OSSL_EVP_UNSUPPORTED` failure on Node 26 with no legacy flag. Development baseline is complete, but G1 exit fails clean-source and durable-CI-retention criteria. Advance to `P5 G1` for loop-back decision. |
 | 2026-11-10 | Completed `P5 G1 / T1.6`. Independent review reconciled every artifact and confirmed the development baseline. G1 remains open only because evidence is dirty-source and locally staged. Decision: add T1.7a for the clean-evidence workflow and T1.7b for committed CI execution and retained-artifact review. Continue to `P4 G1 / T1.7a`. |
 | 2026-11-10 | Completed `P4 G1 / T1.7a`. Added a manual clean-checkout evidence workflow with minimal permissions, immutable action pins, exact toolchain checks, isolated zero-finding SBOM tooling, fail-closed audit/SBOM/classification/build capture, manifest validation, checkout cleanliness checks, and 90-day artifact upload. Advance to `P5 G1`; remote execution remains T1.7b. |
+| 2026-11-10 | Completed `P5 G1 / T1.7a`. Review refreshed immutable action pins and accepted permissions, clean-source semantics, fail-closed validation, and retention controls. Decision: continue to `P4 G1 / T1.7b`. |
+| 2026-11-10 | Completed `P4–P5 G1 / T1.7b`. GitHub Actions run `42792109526` passed on clean commit `38e286a674cb4fe0238f703f1a5f69e25c590274`; retained artifact ID `13752320598` and digest `0240a4384662f5851012db14f66c62ed438431e5ef82c31c83ff7c407605d866` were independently verified. G1 is complete; advance to `P1 G2`. MI-P6 remains blocked by the reproduced vulnerabilities. |
