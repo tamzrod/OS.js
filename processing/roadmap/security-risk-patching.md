@@ -2,7 +2,7 @@
 
 **ID:** `RM-SEC-001`  
 **Status:** Active  
-**Current position:** P4 G2 — Import exact client source (`T2.1`)  
+**Current position:** P5 G2 — Review exact client import (`T2.1`)  
 **Owner:** Unassigned  
 **Created:** 2026-11-09  
 **Updated:** 2026-11-10  
@@ -73,14 +73,14 @@ The controlling analysis is [`../../docs/security-risk-assessment.md`](../../doc
 
 ## G2 — Remove vulnerable cookie handling
 
-**Position:** P4 G2 — Import exact client source (`T2.1`)  
+**Position:** P5 G2 — Review exact client import (`T2.1`)  
 **Exit condition:** No shipped path uses an affected `js-cookie` version, and hostile cookie-attribute inputs cannot change protected cookie policy.
 
 **P1 analysis:** [`../../docs/p1-g2-cookie-risk-analysis.md`](../../docs/p1-g2-cookie-risk-analysis.md)
 
 **P2 plan:** [`../../docs/p2-g2-safe-auth-persistence-plan.md`](../../docs/p2-g2-safe-auth-persistence-plan.md)
 
-- [ ] **T2.1** [Import the exact OS.js client 3.7.1 source with immutable provenance and no behavior change.](../tasks/RM-SEC-001/T2.1-import-client-source.md) — ready
+- [x] **T2.1** [Import the exact OS.js client 3.7.1 source with immutable provenance and no behavior change.](../tasks/RM-SEC-001/T2.1-import-client-source.md) — P5 review pending
 - [ ] **T2.2** [Reproduce the forked client's build, package, and public API baseline.](../tasks/RM-SEC-001/T2.2-reproduce-client-baseline.md) — blocked by T2.1
 - [ ] **T2.3** [Add failing regression tests for credential persistence and hostile legacy configuration.](../tasks/RM-SEC-001/T2.3-add-cookie-security-tests.md) — blocked by T2.2
 - [ ] **T2.4** [Remove `js-cookie`, client credential persistence, and unsafe legacy enablement.](../tasks/RM-SEC-001/T2.4-remove-client-credential-persistence.md) — blocked by T2.3
@@ -227,3 +227,4 @@ Additional evidence required before completion:
 | 2026-11-11 | Completed `P1 G2`. Exact package analysis found four authentication-only cookie calls. The advisory's JSON-derived attribute path is not directly exposed, but the vulnerable code ships and optional persistence stores the submitted login object, including the password, in a JavaScript-readable cookie while ignoring the configured `secure` flag. Decision: advance to `P2 G2`, preferring removal of client credential persistence in favor of server-owned session state. |
 | 2026-11-11 | Completed `P2 G2`. Selected a fork-owned client source package, complete removal of `js-cookie` and browser credential replay, and a fail-closed migration error for legacy cookie enablement. Reload will require explicit login; G2 will not add an unreviewed session-resume API or absorb broader server hardening from G5. Decision: advance to `P3 G2` and create independent provenance, baseline-build, red-test, remediation, integration, and evidence tasks. |
 | 2026-11-11 | Completed `P3 G2`. Segregated the work into six sequential tasks: provenance import, baseline reproduction, red security tests, client remediation, root integration, and retained closure evidence. Only T2.1 is ready; every later task is dependency-blocked. Decision: advance to `P4 G2 / T2.1`. |
+| 2026-11-11 | Completed `P4 G2 / T2.1`. Imported 122 tracked files from official client tag `3.7.1` at commit `53b8376d9681cf5429e6882417da9d421b1b869c`, added explicit upstream provenance and a 123-file hash inventory, reconciled package/source-map identity with the locked npm artifact, and preserved root manifest and lockfile hashes. Advance to P5 review; T2.2 remains blocked. |
