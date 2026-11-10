@@ -2,7 +2,7 @@
 
 **ID:** `RM-SEC-001`  
 **Status:** Active  
-**Current position:** P1 G2 — Understand vulnerable cookie handling  
+**Current position:** P2 G2 — Design safe authentication persistence  
 **Owner:** Unassigned  
 **Created:** 2026-11-09  
 **Updated:** 2026-11-10  
@@ -73,8 +73,10 @@ The controlling analysis is [`../../docs/security-risk-assessment.md`](../../doc
 
 ## G2 — Remove vulnerable cookie handling
 
-**Position:** P1 G2 — Understand vulnerable cookie handling  
+**Position:** P2 G2 — Design safe authentication persistence  
 **Exit condition:** No shipped path uses an affected `js-cookie` version, and hostile cookie-attribute inputs cannot change protected cookie policy.
+
+**P1 analysis:** [`../../docs/p1-g2-cookie-risk-analysis.md`](../../docs/p1-g2-cookie-risk-analysis.md)
 
 - [ ] **T2.1** Inventory every cookie read, write, removal, default-attribute, and converter call in the client.
 - [ ] **T2.2** Decide whether to replace `js-cookie` with a minimal adapter or vendor a maintained client implementation.
@@ -220,3 +222,4 @@ Additional evidence required before completion:
 | 2026-11-10 | Completed `P4 G1 / T1.7a`. Added a manual clean-checkout evidence workflow with minimal permissions, immutable action pins, exact toolchain checks, isolated zero-finding SBOM tooling, fail-closed audit/SBOM/classification/build capture, manifest validation, checkout cleanliness checks, and 90-day artifact upload. Advance to `P5 G1`; remote execution remains T1.7b. |
 | 2026-11-10 | Completed `P5 G1 / T1.7a`. Review refreshed immutable action pins and accepted permissions, clean-source semantics, fail-closed validation, and retention controls. Decision: continue to `P4 G1 / T1.7b`. |
 | 2026-11-10 | Completed `P4–P5 G1 / T1.7b`. GitHub Actions run `42792109526` passed on clean commit `38e286a674cb4fe0238f703f1a5f69e25c590274`; retained artifact ID `13752320598` and digest `0240a4384662f5851012db14f66c62ed438431e5ef82c31c83ff7c407605d866` were independently verified. G1 is complete; advance to `P1 G2`. MI-P6 remains blocked by the reproduced vulnerabilities. |
+| 2026-11-11 | Completed `P1 G2`. Exact package analysis found four authentication-only cookie calls. The advisory's JSON-derived attribute path is not directly exposed, but the vulnerable code ships and optional persistence stores the submitted login object, including the password, in a JavaScript-readable cookie while ignoring the configured `secure` flag. Decision: advance to `P2 G2`, preferring removal of client credential persistence in favor of server-owned session state. |
