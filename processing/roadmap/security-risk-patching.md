@@ -2,7 +2,7 @@
 
 **ID:** `RM-SEC-001`  
 **Status:** Active  
-**Current position:** P3 G2 — Divide cookie remediation into micro-tasks  
+**Current position:** P4 G2 — Import exact client source (`T2.1`)  
 **Owner:** Unassigned  
 **Created:** 2026-11-09  
 **Updated:** 2026-11-10  
@@ -73,19 +73,19 @@ The controlling analysis is [`../../docs/security-risk-assessment.md`](../../doc
 
 ## G2 — Remove vulnerable cookie handling
 
-**Position:** P3 G2 — Divide cookie remediation into micro-tasks  
+**Position:** P4 G2 — Import exact client source (`T2.1`)  
 **Exit condition:** No shipped path uses an affected `js-cookie` version, and hostile cookie-attribute inputs cannot change protected cookie policy.
 
 **P1 analysis:** [`../../docs/p1-g2-cookie-risk-analysis.md`](../../docs/p1-g2-cookie-risk-analysis.md)
 
 **P2 plan:** [`../../docs/p2-g2-safe-auth-persistence-plan.md`](../../docs/p2-g2-safe-auth-persistence-plan.md)
 
-- [ ] **T2.1** Inventory every cookie read, write, removal, default-attribute, and converter call in the client.
-- [ ] **T2.2** Decide whether to replace `js-cookie` with a minimal adapter or vendor a maintained client implementation.
-- [ ] **T2.3** Implement an allowlisted cookie-attribute model with safe defaults for path, domain, secure, same-site, and expiry behavior.
-- [ ] **T2.4** Reject `__proto__`, `prototype`, `constructor`, inherited properties, and unsupported attributes.
-- [ ] **T2.5** Add regression tests using hostile JSON-derived objects and verify the emitted cookie attributes.
-- [ ] **T2.6** Remove `js-cookie@2.2.1` and prove the affected package is absent from the production graph and built artifact.
+- [ ] **T2.1** [Import the exact OS.js client 3.7.1 source with immutable provenance and no behavior change.](../tasks/RM-SEC-001/T2.1-import-client-source.md) — ready
+- [ ] **T2.2** [Reproduce the forked client's build, package, and public API baseline.](../tasks/RM-SEC-001/T2.2-reproduce-client-baseline.md) — blocked by T2.1
+- [ ] **T2.3** [Add failing regression tests for credential persistence and hostile legacy configuration.](../tasks/RM-SEC-001/T2.3-add-cookie-security-tests.md) — blocked by T2.2
+- [ ] **T2.4** [Remove `js-cookie`, client credential persistence, and unsafe legacy enablement.](../tasks/RM-SEC-001/T2.4-remove-client-credential-persistence.md) — blocked by T2.3
+- [ ] **T2.5** [Integrate the fork-owned client and reconcile the root dependency graph.](../tasks/RM-SEC-001/T2.5-integrate-forked-client.md) — blocked by T2.4
+- [ ] **T2.6** [Produce clean retained absence evidence and make the G2 closure decision.](../tasks/RM-SEC-001/T2.6-prove-cookie-removal.md) — blocked by T2.5
 
 ## G3 — Eliminate unsafe merging paths
 
@@ -226,3 +226,4 @@ Additional evidence required before completion:
 | 2026-11-10 | Completed `P4–P5 G1 / T1.7b`. GitHub Actions run `42792109526` passed on clean commit `38e286a674cb4fe0238f703f1a5f69e25c590274`; retained artifact ID `13752320598` and digest `0240a4384662f5851012db14f66c62ed438431e5ef82c31c83ff7c407605d866` were independently verified. G1 is complete; advance to `P1 G2`. MI-P6 remains blocked by the reproduced vulnerabilities. |
 | 2026-11-11 | Completed `P1 G2`. Exact package analysis found four authentication-only cookie calls. The advisory's JSON-derived attribute path is not directly exposed, but the vulnerable code ships and optional persistence stores the submitted login object, including the password, in a JavaScript-readable cookie while ignoring the configured `secure` flag. Decision: advance to `P2 G2`, preferring removal of client credential persistence in favor of server-owned session state. |
 | 2026-11-11 | Completed `P2 G2`. Selected a fork-owned client source package, complete removal of `js-cookie` and browser credential replay, and a fail-closed migration error for legacy cookie enablement. Reload will require explicit login; G2 will not add an unreviewed session-resume API or absorb broader server hardening from G5. Decision: advance to `P3 G2` and create independent provenance, baseline-build, red-test, remediation, integration, and evidence tasks. |
+| 2026-11-11 | Completed `P3 G2`. Segregated the work into six sequential tasks: provenance import, baseline reproduction, red security tests, client remediation, root integration, and retained closure evidence. Only T2.1 is ready; every later task is dependency-blocked. Decision: advance to `P4 G2 / T2.1`. |
