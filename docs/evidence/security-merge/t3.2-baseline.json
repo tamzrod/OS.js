@@ -1,0 +1,139 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-11-12",
+  "nodeVersion": "v26.13.0",
+  "npmVersion": "11.20.0",
+  "packages": {
+    "common": {
+      "name": "@osjs/common",
+      "version": "3.0.12",
+      "lockSha256": "080ea451d5bad3347e7242517d82d6c348bed198035e733170ae99e83ae2810c",
+      "lockPackages": 1478,
+      "dist": {
+        "main.js": {
+          "bytes": 29123,
+          "sha256": "e770ee4421d71bd643c4d3f899c6e2cd35a84e82dee3b659779aace47cc8a938"
+        },
+        "main.js.map": {
+          "bytes": 91783,
+          "sha256": "6814b62371bea1576d38650e4135bdfb4cb398c04c4eaa702ab250bbf1e3422c"
+        }
+      },
+      "pack": {
+        "files": [
+          "CHANGELOG.md",
+          "LICENSE",
+          "README.md",
+          "dist/main.js",
+          "dist/main.js.map",
+          "index.d.ts",
+          "package.json"
+        ],
+        "size": 37969,
+        "unpackedSize": 131888,
+        "integrity": "sha512-hdPQ/P+8xYMn7RELVSr7YzqPABmZU/iOItOIsDBxiW3zBsGdJbEBTR+mr1bS+plSFwia9SXpkXbQdT7SClk9zw=="
+      }
+    },
+    "dialogs": {
+      "name": "@osjs/dialogs",
+      "version": "3.1.0",
+      "lockSha256": "fb85a7199295ebfea448be9f50394b4208b4953a5ff1b7a9ed991d7bed4775a0",
+      "lockPackages": 1474,
+      "dist": {
+        "main.css": {
+          "bytes": 1678,
+          "sha256": "b300b257f7e0d709d91c23f454ee08391388cf260689cb6812ab639f77d59798"
+        },
+        "main.js": {
+          "bytes": 70688,
+          "sha256": "34c2b0186b4bb690ab18d12fbc869e660704ec290cbeb293229e7b8e1c14727a"
+        },
+        "main.js.map": {
+          "bytes": 305737,
+          "sha256": "69417bf3a0b505f323c99149b385aca0e27d6df5dfd787e88249a4905ef5a9dd"
+        }
+      },
+      "pack": {
+        "files": [
+          "CHANGELOG.md",
+          "LICENSE",
+          "README.md",
+          "dist/main.css",
+          "dist/main.js",
+          "dist/main.js.map",
+          "package.json"
+        ],
+        "size": 90338,
+        "unpackedSize": 387631,
+        "integrity": "sha512-EZbNm8OBtfezuHUJGkWMvW5t+16V3bkDgF8UoGFIHYV61QBNASLA0E1mvo2+9tWkVo58GOLfBLyjKJywasPsWA=="
+      }
+    },
+    "server": {
+      "name": "@osjs/server",
+      "version": "3.2.3",
+      "lockSha256": "564f31f36c10101bf24a47200a519c7772b34fb7180ba7ed96d9e95d697d795d",
+      "lockPackages": 365,
+      "dist": {},
+      "pack": {
+        "files": [
+          "CHANGELOG.md",
+          "LICENSE",
+          "README.md",
+          "index.js",
+          "package.json",
+          "src/adapters/auth/null.js",
+          "src/adapters/settings/fs.js",
+          "src/adapters/settings/null.js",
+          "src/adapters/vfs/system.js",
+          "src/auth.js",
+          "src/config.js",
+          "src/core.js",
+          "src/filesystem.js",
+          "src/package.js",
+          "src/packages.js",
+          "src/providers/auth.js",
+          "src/providers/core.js",
+          "src/providers/packages.js",
+          "src/providers/settings.js",
+          "src/providers/vfs.js",
+          "src/settings.js",
+          "src/utils/core.js",
+          "src/utils/vfs.js",
+          "src/vfs.js"
+        ],
+        "size": 24878,
+        "unpackedSize": 117646,
+        "integrity": "sha512-n+Iys46PHkIVjb51kzcWgGmCvImHOn0w9ttb4jtRATK1FVLZaVTbZl7Xhcp7MpBkQ49uZsgWCJIxU8w2imt1Lw=="
+      }
+    },
+    "settings-application": {
+      "name": "@osjs/settings-application",
+      "version": "1.1.8",
+      "lockSha256": "082289534749282a66d44e84b2ca5e0195f6040d8be5adc94365cde93c82a4b1",
+      "lockPackages": 1325,
+      "dist": {
+        "main.js": {
+          "bytes": 38415,
+          "sha256": "90d533b68e9a06886e786b3d91227a84ce66fb1e249b68ab2ec2362978807441"
+        },
+        "main.js.map": {
+          "bytes": 195381,
+          "sha256": "db0a9ab330f14eb5ac043c808afb80db59683c921e75b5625e483967ec298a09"
+        }
+      },
+      "pack": {
+        "files": [
+          "LICENSE",
+          "README.md",
+          "dist/main.js",
+          "dist/main.js.map",
+          "metadata.json",
+          "package.json"
+        ],
+        "size": 60790,
+        "unpackedSize": 239210,
+        "integrity": "sha512-9w/zZ8th1BK/ZthLVaV/perg+ITcWTubvTDHyuuXXwZth+BluWQ03hgYUx3y82lyccGlh8ZcXMzmOZVCkNwznA=="
+      }
+    }
+  }
+}

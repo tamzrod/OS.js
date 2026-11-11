@@ -2,7 +2,7 @@
 
 **ID:** `RM-SEC-001`  
 **Status:** Active  
-**Current position:** P4 G3 — Reproduce merge-package baselines (`T3.2`)
+**Current position:** P5 G3 — Review merge-package baselines (`T3.2`)
 **Owner:** Unassigned  
 **Created:** 2026-11-09  
 **Updated:** 2026-11-11
@@ -90,7 +90,7 @@ The controlling analysis is [`../../docs/security-risk-assessment.md`](../../doc
 
 ## G3 — Eliminate unsafe merging paths
 
-**Position:** P4 G3 — Reproduce merge-package baselines (`T3.2`)
+**Position:** P5 G3 — Review merge-package baselines (`T3.2`)
 **Exit condition:** Security-sensitive configuration and state merges are schema-aware, own-property-only, and covered against recursive prototype manipulation.
 
 **P1 analysis:** [`../../docs/p1-g3-unsafe-merge-analysis.md`](../../docs/p1-g3-unsafe-merge-analysis.md)
@@ -98,7 +98,7 @@ The controlling analysis is [`../../docs/security-risk-assessment.md`](../../doc
 **P2 plan:** [`../../docs/p2-g3-safe-object-handling-plan.md`](../../docs/p2-g3-safe-object-handling-plan.md)
 
 - [x] **T3.1** [Import exact common, dialogs, server, and settings-application sources with immutable provenance.](../tasks/RM-SEC-001/T3.1-import-merge-package-sources.md) — P5 reviewed and accepted
-- [ ] **T3.2** [Retain and reproduce each imported package baseline.](../tasks/RM-SEC-001/T3.2-reproduce-merge-package-baselines.md) — ready
+- [ ] **T3.2** [Retain and reproduce each imported package baseline.](../tasks/RM-SEC-001/T3.2-reproduce-merge-package-baselines.md) — P4 complete; P5 review required
 - [ ] **T3.3** [Add failing hostile-object tests for all classified boundaries.](../tasks/RM-SEC-001/T3.3-add-unsafe-merge-red-tests.md) — blocked by T3.2
 - [ ] **T3.4** [Implement and verify the common descriptor-safe object primitive.](../tasks/RM-SEC-001/T3.4-implement-safe-object-primitive.md) — blocked by T3.3
 - [ ] **T3.5** [Migrate client merge, storage, and dotted-path operations.](../tasks/RM-SEC-001/T3.5-migrate-client-merge-paths.md) — blocked by T3.4
@@ -254,3 +254,4 @@ Additional evidence required before completion:
 | 2026-11-12 | Completed `P3 G3`. Segregated work into nine dependency-ordered tasks: exact source import, reproducible baselines, red tests, common primitive, three bounded migration streams, root integration, and retained closure evidence. Only T3.1 is ready; later work remains explicitly blocked. Decision: advance to `P4 G3 / T3.1`. |
 | 2026-11-12 | Completed `P4 G3 / T3.1`. Imported 99 tracked files from four exact upstream tags/commits for common, dialogs, server, and settings application, with licenses, provenance, per-file hashes, npm integrity bindings, and unchanged root dependency hashes. Published server sources are byte-identical and mapped browser sources reconcile; build/output reproduction remains T3.2. Advance to P5 review; T3.2 remains blocked. |
 | 2026-11-12 | Completed `P5 G3 / T3.1`. Independently matched all 99 committed paths and hashes to raw tagged clones, reproduced all four commit identities, confirmed package/integrity bindings and unchanged root dependency files, and accepted the documented stale settings repository field. Accept T3.1 and continue to `P4 G3 / T3.2`. |
+| 2026-11-12 | Completed `P4 G3 / T3.2`. Froze four exact package locks, replayed all with `npm ci`, passed isolated lint/style checks and server 12-suite/90-test Jest baseline, and produced byte-reproducible Node-26 production builds. Published JavaScript drift is lock/toolchain-derived because upstream retained no locks; exact outputs and package inventories now form the review baseline. Advance to P5; T3.3 remains blocked. |
