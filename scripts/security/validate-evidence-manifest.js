@@ -44,7 +44,7 @@ function validate(manifest, filename) {
   assert(manifest.schemaVersion === 1, 'schemaVersion must equal 1', errors);
   assert(EVIDENCE_ID.test(manifest.evidenceId || ''), 'evidenceId has an invalid format', errors);
   assert(manifest.roadmapId === 'RM-SEC-001', 'roadmapId must equal RM-SEC-001', errors);
-  assert(manifest.goalId === 'G1', 'goalId must equal G1', errors);
+  assert(['G1', 'G2'].includes(manifest.goalId), 'goalId must equal G1 or G2', errors);
   assert(isDate(manifest.generatedAt), 'generatedAt must be an ISO date-time', errors);
 
   const source = manifest.source;

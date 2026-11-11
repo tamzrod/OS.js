@@ -14,6 +14,7 @@ if (!sourceState) {
 }
 
 const EXPECTED_VERSION = '7.0.0';
+const GOAL_ID = process.env.EVIDENCE_GOAL_ID || 'G1';
 const EXPECTED_INTEGRITY = 'sha512-5KVebwZ21EDt5N6eW0b7QPiQ7eRJwjdsfUUoJsCIdk5Y110N5viVa9PX0Wsp4yZI+y75XhVNut8EalY8amhc7g==';
 const sha256Buffer = value => crypto.createHash('sha256').update(value).digest('hex');
 const sha256File = filename => sha256Buffer(fs.readFileSync(filename));
@@ -90,6 +91,9 @@ function structuralStats(document, id) {
   if (!identities.has('hyperapp@1.2.10') || !identities.has('hyperapp-nestable@1.1.0')) {
     throw new Error(`${id}: known peer-conflict components are missing`);
   }
+  if (GOAL_ID === 'G2' && [...identities].some(identity => identity.startsWith('js-cookie@'))) {
+    throw new Error(`${id}: forbidden js-cookie component is present`);
+  }
   return {components: components.length, dependencies: (document.dependencies || []).length, unresolvedRefs};
 }
 
@@ -161,7 +165,7 @@ async function main() {
   }
 
   const manifest = {
-    schemaVersion: 1, evidenceId, roadmapId: 'RM-SEC-001', goalId: 'G1', generatedAt: iso(),
+    schemaVersion: 1, evidenceId, roadmapId: 'RM-SEC-001', goalId: GOAL_ID, generatedAt: iso(),
     source: {commit, dirty: sourceDirty, statusSha256, lockfilePath: 'package-lock.json', lockfileSha256: lockHash},
     environment: {
       os: process.platform, arch: process.arch,

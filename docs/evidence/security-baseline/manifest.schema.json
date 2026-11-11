@@ -22,7 +22,7 @@
       "pattern": "^[0-9]{8}T[0-9]{6}Z_[0-9a-f]{12}_[0-9a-f]{12}$"
     },
     "roadmapId": { "const": "RM-SEC-001" },
-    "goalId": { "const": "G1" },
+    "goalId": { "enum": ["G1", "G2"] },
     "generatedAt": { "type": "string", "format": "date-time" },
     "source": { "$ref": "#/$defs/source" },
     "environment": { "$ref": "#/$defs/environment" },
