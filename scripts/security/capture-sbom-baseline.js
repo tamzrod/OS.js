@@ -15,6 +15,10 @@ if (!sourceState) {
 
 const EXPECTED_VERSION = '7.0.0';
 const GOAL_ID = process.env.EVIDENCE_GOAL_ID || 'G1';
+const EXPECTED_COMPONENTS = {
+  G1: {full: 1392, production: 344},
+  G2: {full: 1391, production: 1360}
+};
 const EXPECTED_INTEGRITY = 'sha512-5KVebwZ21EDt5N6eW0b7QPiQ7eRJwjdsfUUoJsCIdk5Y110N5viVa9PX0Wsp4yZI+y75XhVNut8EalY8amhc7g==';
 const sha256Buffer = value => crypto.createHash('sha256').update(value).digest('hex');
 const sha256File = filename => sha256Buffer(fs.readFileSync(filename));
@@ -135,8 +139,11 @@ async function main() {
   if (full.normalized !== fullRepeat.normalized || production.normalized !== productionRepeat.normalized) {
     throw new Error('SBOM output is not byte-reproducible');
   }
-  if (full.stats.components !== 1392 || production.stats.components !== 344) {
-    throw new Error('SBOM component totals differ from approved T1.5a baseline');
+  const expectedComponents = EXPECTED_COMPONENTS[GOAL_ID];
+  if (!expectedComponents || full.stats.components !== expectedComponents.full ||
+      production.stats.components !== expectedComponents.production) {
+    throw new Error(`${GOAL_ID}: SBOM component totals differ from approved baseline: ` +
+      `full=${full.stats.components}, production=${production.stats.components}`);
   }
 
   const validationModule = path.join(toolDir, 'node_modules/@cyclonedx/cyclonedx-library/dist.node/validation/index.node.js');
