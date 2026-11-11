@@ -1,0 +1,258 @@
+{
+  "upstreamRepository": "https://github.com/os-js/osjs-server.git",
+  "upstreamTag": "3.2.3",
+  "upstreamCommit": "0a16079b77e581f2f587c9a05ead1e68ce1e5463",
+  "npmName": "@osjs/server",
+  "npmVersion": "3.2.3",
+  "npmIntegrity": "sha512-VgoxuktsnOLbFwMz4Obu2aCTw1T0OWS5anR5UQ/NxpImqb2oTdKD+p7z5dc1IYSx+z4vesJz2MIdvqykY0gSbA==",
+  "rootPackageSha256": "3974b429adbfaa914a2e4ab95f40581a94b0bf667bd5f42cab83311df7a9a60d",
+  "rootLockfileSha256": "45f6faa2f08d04ff4271bf658236140e2e492552958aa5777c2e9dffd4b44d96",
+  "generatedAt": "2026-11-12",
+  "files": [
+    {
+      "path": "__mocks__/core.js",
+      "bytes": 1174,
+      "sha256": "9cf822d695319e46256ff4669de8e36ef921e18a2ad9701ae19affc9fce9f8eb"
+    },
+    {
+      "path": "__mocks__/dist/metadata.json",
+      "bytes": 237,
+      "sha256": "19953b5fac007ff5a16334f21e9a2cc9349a880393381ae779fdee918f9896c8"
+    },
+    {
+      "path": "__mocks__/packages.json",
+      "bytes": 32,
+      "sha256": "94205cc3b7e8b0d06acfe642f3a7a9265a21a8935e990ace800b5dc32e652c48"
+    },
+    {
+      "path": "__mocks__/packages/JestTest/metadata.json",
+      "bytes": 235,
+      "sha256": "568ef7563441e718e6bf8757ed5c3094235553be2fdaedd23d510df460984bf7"
+    },
+    {
+      "path": "__mocks__/packages/JestTest/server.js",
+      "bytes": 1763,
+      "sha256": "acb00409e26a2195d2054c52e1c7b497a72ce2046d40094b5e4ee04890214676"
+    },
+    {
+      "path": "__tests__/adapters/auth/null.js",
+      "bytes": 835,
+      "sha256": "75555306b2308eddeb37c1be8f7a872f599318ec08955b03d4aabcfd03f06381"
+    },
+    {
+      "path": "__tests__/adapters/settings/fs.js",
+      "bytes": 722,
+      "sha256": "1934f9e659eec28513d1aac8b55d1c32be0c1c563790f91d4d37412a8655820d"
+    },
+    {
+      "path": "__tests__/adapters/settings/null.js",
+      "bytes": 555,
+      "sha256": "c5b5fd0e6c3945840afdbb6f39dc3a3975a84b2bd560efcfa700124209f18799"
+    },
+    {
+      "path": "__tests__/adapters/vfs/system.js",
+      "bytes": 4463,
+      "sha256": "dd5819d99deec2e8b7f841809283855222e998c08eea0517716befbf967022c5"
+    },
+    {
+      "path": "__tests__/auth.js",
+      "bytes": 2906,
+      "sha256": "191507741533cf4e2d45cc6fd948ab909422fc35bdc23fde6af783891c8cef4e"
+    },
+    {
+      "path": "__tests__/core.js",
+      "bytes": 2264,
+      "sha256": "bd268d8b82edea959979a030426d43cd49bc7686d0abcafc5a5852b41b5fc1b0"
+    },
+    {
+      "path": "__tests__/filesystem.js",
+      "bytes": 3064,
+      "sha256": "7546788b48ce78984480e9991b456fe4bb00c371864d31da12e5b7397530972e"
+    },
+    {
+      "path": "__tests__/package.js",
+      "bytes": 3014,
+      "sha256": "47fdbb646bc966b925aaf7790866b98d71f7f1358656128394d3abc3e0b53052"
+    },
+    {
+      "path": "__tests__/packages.js",
+      "bytes": 1126,
+      "sha256": "4c374f250721396d37c8838b8ebdfd06987311d774629ac13f547b1584db0dc1"
+    },
+    {
+      "path": "__tests__/settings.js",
+      "bytes": 1319,
+      "sha256": "6d2dceba7b6d75f2278844486e723a56847e3cb9eb0a7dceac081afd61b7dd95"
+    },
+    {
+      "path": "__tests__/utils/core.js",
+      "bytes": 1638,
+      "sha256": "5456836d7da82c733fa20a438196547df1f326551b1e796d4d99ec126644c4cf"
+    },
+    {
+      "path": "__tests__/utils/vfs.js",
+      "bytes": 5034,
+      "sha256": "3f5154f859fccb0c99c87eb6f37a824bdd5245c5b3e6e2ad54d7abcff2da3335"
+    },
+    {
+      "path": ".github/FUNDING.yml",
+      "bytes": 171,
+      "sha256": "354c849334e1c7f14f67ef167f3acbe8ba6eca98533da557bb0efddbbfc22a54"
+    },
+    {
+      "path": ".github/workflows/codeclimate.yml",
+      "bytes": 505,
+      "sha256": "3becc9bcd84b5c0e0dd37cad8a1bac5a410f2080893d8272346b8a849ca9de23"
+    },
+    {
+      "path": ".github/workflows/codeql-analysis.yml",
+      "bytes": 2591,
+      "sha256": "ccda0910f19f0829ad57da3bf31979935beae5e5d9418c12a939e3ca67712f9c"
+    },
+    {
+      "path": ".github/workflows/lint.yml",
+      "bytes": 298,
+      "sha256": "396cce4d1e1c5233d77a3b837c2102c8a014bb3b69e375de91514287728b8b5e"
+    },
+    {
+      "path": ".github/workflows/test.yml",
+      "bytes": 395,
+      "sha256": "291c8c022b5e4c81f3e00941387c10c78bff8f8d53f0086025986d64abc2bc5a"
+    },
+    {
+      "path": ".github/workflows/www-esdoc.yml",
+      "bytes": 1346,
+      "sha256": "23453fd2bb24d484ab9d48241595bf62e44fa4e9547433799438bf409bf82e8d"
+    },
+    {
+      "path": ".gitignore",
+      "bytes": 72,
+      "sha256": "f85f1744bfdf417d1d7eea00393e239138bbcc31f66f23db23ab4e62b303d003"
+    },
+    {
+      "path": ".npmignore",
+      "bytes": 111,
+      "sha256": "bb31553d51b8c1c50223abd6750a7a3cc1b713fb74cb701337be51c3a76f3769"
+    },
+    {
+      "path": "CHANGELOG.md",
+      "bytes": 13228,
+      "sha256": "42df8df138212f591b61be622040cdc3f431a0066bae3b82d312b09bbb81b921"
+    },
+    {
+      "path": "index.js",
+      "bytes": 2282,
+      "sha256": "44d5bb44cee30c7c896aff7b71f489e0d8a71c88c51186728f30deb040f5e144"
+    },
+    {
+      "path": "LICENSE",
+      "bytes": 1403,
+      "sha256": "fecdc0c2b4ce2826da8821395047b5f7ec1f872465b648a0b98aebcf85ffa8b5"
+    },
+    {
+      "path": "package.json",
+      "bytes": 2879,
+      "sha256": "1f95700b1889f8a474168f002d39a2f02c102be46972188f4194eb7091d09fd9"
+    },
+    {
+      "path": "README.md",
+      "bytes": 2125,
+      "sha256": "c5d20576ab96117dcb4b3381ce2e17fb57a641376090774d5b510e0da8b42473"
+    },
+    {
+      "path": "src/adapters/auth/null.js",
+      "bytes": 1922,
+      "sha256": "2eb6fcdfd10f1bd47eb8b7a3f56cba93b423ed91f5d71517d0b2a07eba08db07"
+    },
+    {
+      "path": "src/adapters/settings/fs.js",
+      "bytes": 2467,
+      "sha256": "e4555ba21e49571a589763a3e00b925f6b9224768ca510128e3dbf74d2a57e92"
+    },
+    {
+      "path": "src/adapters/settings/null.js",
+      "bytes": 1808,
+      "sha256": "6226008f8fb123b8d523bd454fb6a38863a1a1b92b413aef051f156cd100206d"
+    },
+    {
+      "path": "src/adapters/vfs/system.js",
+      "bytes": 10958,
+      "sha256": "4bdc095c38edd88373fe1b6030e6c5b25a7373d28cea020c0d0fa3fc7afebc1f"
+    },
+    {
+      "path": "src/auth.js",
+      "bytes": 6641,
+      "sha256": "ea4e695eba6fb9df32180742f9ab2f89b58e36e659d2d6cb2c2abf21dca4053d"
+    },
+    {
+      "path": "src/config.js",
+      "bytes": 3492,
+      "sha256": "21e2dd82e37f9ca1e136a425203c221d256ace981974d7cbce08f6474785ed7a"
+    },
+    {
+      "path": "src/core.js",
+      "bytes": 7652,
+      "sha256": "14289ee2f88e78faf5bfd277f44dc9235e8e6a777042d8344737beeda34c0e9e"
+    },
+    {
+      "path": "src/filesystem.js",
+      "bytes": 8507,
+      "sha256": "b2525ddbef7fc83378d5393599f451eaad098f2f1c615c64e9eb283adb99d10c"
+    },
+    {
+      "path": "src/package.js",
+      "bytes": 4452,
+      "sha256": "8fe8f4066fb0b410ea043c38491ebe576f0e527317120ab1396ce4c8441a424e"
+    },
+    {
+      "path": "src/packages.js",
+      "bytes": 6749,
+      "sha256": "7eaa1d7994d8ae664c278d6249776a566d4266f7a738bbbdc54feaf2a395653a"
+    },
+    {
+      "path": "src/providers/auth.js",
+      "bytes": 2288,
+      "sha256": "b9a8e1c87c938da8b619399e82416f07b4e65d5dcd348d30258b03ac98dc4997"
+    },
+    {
+      "path": "src/providers/core.js",
+      "bytes": 7401,
+      "sha256": "0cbc01dfadd7a061665c0b00bff7d8887cef4e511a52ff88668de1429634320b"
+    },
+    {
+      "path": "src/providers/packages.js",
+      "bytes": 3108,
+      "sha256": "62bd513d86e3043ec3ab90cb7b35a316df3c3ca30528d075924b9ba664e168f0"
+    },
+    {
+      "path": "src/providers/settings.js",
+      "bytes": 2272,
+      "sha256": "8535ca915c7fc33b4038c747e2b02cb593991c3c73ae5127c213be7f991ff7a7"
+    },
+    {
+      "path": "src/providers/vfs.js",
+      "bytes": 2762,
+      "sha256": "4db61de02829a0c86bdd03dda9c17596aa305dc392371750dd453851dda7ff8e"
+    },
+    {
+      "path": "src/settings.js",
+      "bytes": 3357,
+      "sha256": "b845de2f636b7b598c7e8ca00b55e0060be683b8bc71cea86234d74cea4ee400"
+    },
+    {
+      "path": "src/utils/core.js",
+      "bytes": 3674,
+      "sha256": "3563b51e44f2a09450118c34d94ccac20040b8dc6d67ded5644a31bcac36179e"
+    },
+    {
+      "path": "src/utils/vfs.js",
+      "bytes": 6649,
+      "sha256": "b4d6dd44a25eac014ec855ce0ae2aa49c29db5621cb66ffab8a51dbc312c450a"
+    },
+    {
+      "path": "src/vfs.js",
+      "bytes": 9570,
+      "sha256": "14c01cc3fcc4036a49971f2d538b18899ade24f20731d1d131c7ae0b2bc99366"
+    }
+  ]
+}

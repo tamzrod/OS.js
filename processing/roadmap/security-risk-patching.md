@@ -2,7 +2,7 @@
 
 **ID:** `RM-SEC-001`  
 **Status:** Active  
-**Current position:** P4 G3 — Import exact merge-consumer sources (`T3.1`)
+**Current position:** P5 G3 — Review exact merge-consumer source import (`T3.1`)
 **Owner:** Unassigned  
 **Created:** 2026-11-09  
 **Updated:** 2026-11-11
@@ -90,14 +90,14 @@ The controlling analysis is [`../../docs/security-risk-assessment.md`](../../doc
 
 ## G3 — Eliminate unsafe merging paths
 
-**Position:** P4 G3 — Import exact merge-consumer sources (`T3.1`)
+**Position:** P5 G3 — Review exact merge-consumer source import (`T3.1`)
 **Exit condition:** Security-sensitive configuration and state merges are schema-aware, own-property-only, and covered against recursive prototype manipulation.
 
 **P1 analysis:** [`../../docs/p1-g3-unsafe-merge-analysis.md`](../../docs/p1-g3-unsafe-merge-analysis.md)
 
 **P2 plan:** [`../../docs/p2-g3-safe-object-handling-plan.md`](../../docs/p2-g3-safe-object-handling-plan.md)
 
-- [ ] **T3.1** [Import exact common, dialogs, server, and settings-application sources with immutable provenance.](../tasks/RM-SEC-001/T3.1-import-merge-package-sources.md) — ready
+- [ ] **T3.1** [Import exact common, dialogs, server, and settings-application sources with immutable provenance.](../tasks/RM-SEC-001/T3.1-import-merge-package-sources.md) — P4 complete; P5 review required
 - [ ] **T3.2** [Retain and reproduce each imported package baseline.](../tasks/RM-SEC-001/T3.2-reproduce-merge-package-baselines.md) — blocked by T3.1
 - [ ] **T3.3** [Add failing hostile-object tests for all classified boundaries.](../tasks/RM-SEC-001/T3.3-add-unsafe-merge-red-tests.md) — blocked by T3.2
 - [ ] **T3.4** [Implement and verify the common descriptor-safe object primitive.](../tasks/RM-SEC-001/T3.4-implement-safe-object-primitive.md) — blocked by T3.3
@@ -252,3 +252,4 @@ Additional evidence required before completion:
 | 2026-11-12 | Completed `P1 G3`. Inventoried 11 recursive merge calls across client, common, dialogs, server, and settings application plus unsafe local-storage and dotted-path copy surfaces. Reproduced poisoned-result inheritance in dialogs-local `deepmerge@2.2.1`; root `4.2.2` remains advisory-affected. Decision: proceed to `P2 G3` with a fork-owned descriptor-safe utility, call-site schemas, exact source imports, and red tests; do not treat a dependency downgrade as remediation. |
 | 2026-11-12 | Completed `P2 G3`. Selected a fork-owned common safe-object primitive that rejects reserved keys, accessors, inherited data, cycles, excessive depth, symbols, and unsupported objects, with explicit per-call-site schemas and array policy. Exact common/dialogs/server/settings sources, red tests, staged migrations, root integration, and retained evidence are separate boundaries. Decision: advance to `P3 G3`; dependency downgrade and bundle patching are rejected. |
 | 2026-11-12 | Completed `P3 G3`. Segregated work into nine dependency-ordered tasks: exact source import, reproducible baselines, red tests, common primitive, three bounded migration streams, root integration, and retained closure evidence. Only T3.1 is ready; later work remains explicitly blocked. Decision: advance to `P4 G3 / T3.1`. |
+| 2026-11-12 | Completed `P4 G3 / T3.1`. Imported 99 tracked files from four exact upstream tags/commits for common, dialogs, server, and settings application, with licenses, provenance, per-file hashes, npm integrity bindings, and unchanged root dependency hashes. Published server sources are byte-identical and mapped browser sources reconcile; build/output reproduction remains T3.2. Advance to P5 review; T3.2 remains blocked. |

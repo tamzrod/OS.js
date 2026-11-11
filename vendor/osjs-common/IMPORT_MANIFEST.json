@@ -1,0 +1,93 @@
+{
+  "upstreamRepository": "https://github.com/os-js/osjs-common.git",
+  "upstreamTag": "3.0.12",
+  "upstreamCommit": "f1143fd5438c50cf1755646df296b7212f539f66",
+  "npmName": "@osjs/common",
+  "npmVersion": "3.0.12",
+  "npmIntegrity": "sha512-Bu2o8tVOPh5mslgzo3KS1YTB4Yd1CyPmaQWxHHZ9fT2XRj6noupc84fIvVEmC8ewZsGLEHrnciZBjOiHgF6tJw==",
+  "rootPackageSha256": "3974b429adbfaa914a2e4ab95f40581a94b0bf667bd5f42cab83311df7a9a60d",
+  "rootLockfileSha256": "45f6faa2f08d04ff4271bf658236140e2e492552958aa5777c2e9dffd4b44d96",
+  "generatedAt": "2026-11-12",
+  "files": [
+    {
+      "path": ".github/FUNDING.yml",
+      "bytes": 171,
+      "sha256": "354c849334e1c7f14f67ef167f3acbe8ba6eca98533da557bb0efddbbfc22a54"
+    },
+    {
+      "path": ".github/workflows/lint.yml",
+      "bytes": 298,
+      "sha256": "396cce4d1e1c5233d77a3b837c2102c8a014bb3b69e375de91514287728b8b5e"
+    },
+    {
+      "path": ".github/workflows/www-esdoc.yml",
+      "bytes": 1278,
+      "sha256": "01070cb9135e3df31568b83724b9375d4c9cdb55961c5e05cbdfafa93efbf756"
+    },
+    {
+      "path": ".gitignore",
+      "bytes": 62,
+      "sha256": "2e1dad2ec44ff9f4f49bd0721ae33c62847bac98988e63dbc0b28780acaf4ebd"
+    },
+    {
+      "path": ".npmignore",
+      "bytes": 99,
+      "sha256": "0024789f759e9e860ae4362301cf5d6170f75fde72a28b9518fe485f9f579f11"
+    },
+    {
+      "path": "CHANGELOG.md",
+      "bytes": 2111,
+      "sha256": "5558a4b450bdcb5990c349ddf0567f8861a7e8b475b636a43ce226962a1487ff"
+    },
+    {
+      "path": "index.d.ts",
+      "bytes": 3564,
+      "sha256": "3d2ed9ba2f49a53a456166301fc9f60187ef00e2932620bbc0749affdeb4af46"
+    },
+    {
+      "path": "index.js",
+      "bytes": 1684,
+      "sha256": "1bab1602c66f7a4e9189cbdb8cc25b97c4f13ea7ff9202664149404912ea2ef2"
+    },
+    {
+      "path": "LICENSE",
+      "bytes": 1403,
+      "sha256": "fecdc0c2b4ce2826da8821395047b5f7ec1f872465b648a0b98aebcf85ffa8b5"
+    },
+    {
+      "path": "package.json",
+      "bytes": 2251,
+      "sha256": "030b457c94c3cf1e0cd9ec0e36285cbbb5bd821e5b27627f4fed4312961d8816"
+    },
+    {
+      "path": "README.md",
+      "bytes": 1653,
+      "sha256": "6be16612b5415c877c28e8a95520d0c30447c7594878f5ea59f685d45cd77551"
+    },
+    {
+      "path": "src/core.js",
+      "bytes": 4987,
+      "sha256": "b4139cead4bb5490528010e5a8184b8e31d654f4109d1bb978d5ca3aff6577aa"
+    },
+    {
+      "path": "src/esdoc.js",
+      "bytes": 174,
+      "sha256": "efce9f66ce93ceee983e0b1fb3abf7fe2615bafbefa99195e68c4d0d807d5b15"
+    },
+    {
+      "path": "src/service-provider.js",
+      "bytes": 2327,
+      "sha256": "b6c0df88c4114fc5890fd0e1a57c7759ba507184374393af4f29472734143a95"
+    },
+    {
+      "path": "src/utils.js",
+      "bytes": 4630,
+      "sha256": "20ef69361f1418fc45539903c51dbcf2ce17a3995e8183d70d599bbef86bc185"
+    },
+    {
+      "path": "webpack.config.js",
+      "bytes": 586,
+      "sha256": "a9a282639d37f7527b1cacdc79e44851ca4b62cb74cfb50be0a41c538af29364"
+    }
+  ]
+}
