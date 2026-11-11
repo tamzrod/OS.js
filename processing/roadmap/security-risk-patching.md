@@ -2,7 +2,7 @@
 
 **ID:** `RM-SEC-001`  
 **Status:** Active  
-**Current position:** P3 G3 — Divide safe-object remediation into micro-tasks
+**Current position:** P4 G3 — Import exact merge-consumer sources (`T3.1`)
 **Owner:** Unassigned  
 **Created:** 2026-11-09  
 **Updated:** 2026-11-11
@@ -90,18 +90,22 @@ The controlling analysis is [`../../docs/security-risk-assessment.md`](../../doc
 
 ## G3 — Eliminate unsafe merging paths
 
-**Position:** P3 G3 — Divide safe-object remediation into micro-tasks
+**Position:** P4 G3 — Import exact merge-consumer sources (`T3.1`)
 **Exit condition:** Security-sensitive configuration and state merges are schema-aware, own-property-only, and covered against recursive prototype manipulation.
 
 **P1 analysis:** [`../../docs/p1-g3-unsafe-merge-analysis.md`](../../docs/p1-g3-unsafe-merge-analysis.md)
 
 **P2 plan:** [`../../docs/p2-g3-safe-object-handling-plan.md`](../../docs/p2-g3-safe-object-handling-plan.md)
 
-- [ ] **T3.1** Inventory `deepmerge` and custom recursive merge call sites across client, common, dialogs, settings, and server paths.
-- [ ] **T3.2** Classify each merge input by trust source and identify persisted or remotely supplied objects.
-- [ ] **T3.3** Replace security-sensitive merges with explicit schema validation and own-property copying.
-- [ ] **T3.4** Add tests for nested prototype keys, arrays, getters, inherited values, and unexpected object types.
-- [ ] **T3.5** Remove obsolete `deepmerge` versions and verify no unsafe replacement utility enters the graph.
+- [ ] **T3.1** [Import exact common, dialogs, server, and settings-application sources with immutable provenance.](../tasks/RM-SEC-001/T3.1-import-merge-package-sources.md) — ready
+- [ ] **T3.2** [Retain and reproduce each imported package baseline.](../tasks/RM-SEC-001/T3.2-reproduce-merge-package-baselines.md) — blocked by T3.1
+- [ ] **T3.3** [Add failing hostile-object tests for all classified boundaries.](../tasks/RM-SEC-001/T3.3-add-unsafe-merge-red-tests.md) — blocked by T3.2
+- [ ] **T3.4** [Implement and verify the common descriptor-safe object primitive.](../tasks/RM-SEC-001/T3.4-implement-safe-object-primitive.md) — blocked by T3.3
+- [ ] **T3.5** [Migrate client merge, storage, and dotted-path operations.](../tasks/RM-SEC-001/T3.5-migrate-client-merge-paths.md) — blocked by T3.4
+- [ ] **T3.6** [Migrate common and server configuration boundaries.](../tasks/RM-SEC-001/T3.6-migrate-common-server-merge-paths.md) — blocked by T3.4
+- [ ] **T3.7** [Migrate dialogs and settings-application boundaries.](../tasks/RM-SEC-001/T3.7-migrate-dialogs-settings-merge-paths.md) — blocked by T3.4
+- [ ] **T3.8** [Integrate fork-owned packages and remove both `deepmerge` versions.](../tasks/RM-SEC-001/T3.8-integrate-safe-object-packages.md) — blocked by T3.5–T3.7
+- [ ] **T3.9** [Produce clean retained evidence and make the G3 closure decision.](../tasks/RM-SEC-001/T3.9-prove-safe-object-remediation.md) — blocked by T3.8
 
 ## G4 — Modernize the browser build and runtime
 
@@ -247,3 +251,4 @@ Additional evidence required before completion:
 | 2026-11-11 | Completed `P4–P5 G2 / T2.6`. Clean GitHub Actions run `42991970400` passed on commit `fb6dcbf12f7766d4b2be10f1d7cb46ea0e9216e8`; retained artifact `13841333939` and digest `64463aba3663a8cfdec0716eeb04a4753b9fc976cc17a50b547f59ca9e40233f` were independently verified. No dependency, source, distribution, manifest, lock, SBOM, or authentication path contains `js-cookie` or client credential persistence. G2 is complete; advance to `P1 G3`. MI-P6 remains blocked by unrelated production findings and later roadmap gates. |
 | 2026-11-12 | Completed `P1 G3`. Inventoried 11 recursive merge calls across client, common, dialogs, server, and settings application plus unsafe local-storage and dotted-path copy surfaces. Reproduced poisoned-result inheritance in dialogs-local `deepmerge@2.2.1`; root `4.2.2` remains advisory-affected. Decision: proceed to `P2 G3` with a fork-owned descriptor-safe utility, call-site schemas, exact source imports, and red tests; do not treat a dependency downgrade as remediation. |
 | 2026-11-12 | Completed `P2 G3`. Selected a fork-owned common safe-object primitive that rejects reserved keys, accessors, inherited data, cycles, excessive depth, symbols, and unsupported objects, with explicit per-call-site schemas and array policy. Exact common/dialogs/server/settings sources, red tests, staged migrations, root integration, and retained evidence are separate boundaries. Decision: advance to `P3 G3`; dependency downgrade and bundle patching are rejected. |
+| 2026-11-12 | Completed `P3 G3`. Segregated work into nine dependency-ordered tasks: exact source import, reproducible baselines, red tests, common primitive, three bounded migration streams, root integration, and retained closure evidence. Only T3.1 is ready; later work remains explicitly blocked. Decision: advance to `P4 G3 / T3.1`. |
