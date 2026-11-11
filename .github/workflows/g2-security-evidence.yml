@@ -2,9 +2,6 @@ name: G2 clean cookie-removal evidence
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - codex/rm-sec-001-g1-baseline
 
 permissions:
   contents: read

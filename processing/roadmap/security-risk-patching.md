@@ -2,7 +2,7 @@
 
 **ID:** `RM-SEC-001`  
 **Status:** Active  
-**Current position:** P4 G2 — Produce retained cookie-removal evidence (`T2.6`)
+**Current position:** P1 G3 — Understand unsafe merging paths
 **Owner:** Unassigned  
 **Created:** 2026-11-09  
 **Updated:** 2026-11-11
@@ -73,7 +73,7 @@ The controlling analysis is [`../../docs/security-risk-assessment.md`](../../doc
 
 ## G2 — Remove vulnerable cookie handling
 
-**Position:** P4 G2 — Produce retained cookie-removal evidence (`T2.6`)
+**Position:** Complete
 **Exit condition:** No shipped path uses an affected `js-cookie` version, and hostile cookie-attribute inputs cannot change protected cookie policy.
 
 **P1 analysis:** [`../../docs/p1-g2-cookie-risk-analysis.md`](../../docs/p1-g2-cookie-risk-analysis.md)
@@ -86,11 +86,11 @@ The controlling analysis is [`../../docs/security-risk-assessment.md`](../../doc
 - [x] **T2.3** [Add failing regression tests for credential persistence and hostile legacy configuration.](../tasks/RM-SEC-001/T2.3-add-cookie-security-tests.md) — P5 reviewed and accepted
 - [x] **T2.4** [Remove `js-cookie`, client credential persistence, and unsafe legacy enablement.](../tasks/RM-SEC-001/T2.4-remove-client-credential-persistence.md) — P5 reviewed and accepted
 - [x] **T2.5** [Integrate the fork-owned client and reconcile the root dependency graph.](../tasks/RM-SEC-001/T2.5-integrate-forked-client.md) — P5 reviewed and accepted
-- [ ] **T2.6** [Produce clean retained absence evidence and make the G2 closure decision.](../tasks/RM-SEC-001/T2.6-prove-cookie-removal.md) — ready
+- [x] **T2.6** [Produce clean retained absence evidence and make the G2 closure decision.](../tasks/RM-SEC-001/T2.6-prove-cookie-removal.md) — P5 reviewed and accepted
 
 ## G3 — Eliminate unsafe merging paths
 
-**Position:** Not started  
+**Position:** P1 G3 — Understand unsafe merging paths
 **Exit condition:** Security-sensitive configuration and state merges are schema-aware, own-property-only, and covered against recursive prototype manipulation.
 
 - [ ] **T3.1** Inventory `deepmerge` and custom recursive merge call sites across client, common, dialogs, settings, and server paths.
@@ -240,3 +240,4 @@ Additional evidence required before completion:
 | 2026-11-11 | Completed `P5 G2 / T2.4`. A fresh client-local install independently reproduced the exact lock, all 35 suites/317 tests, lint, production build/hash and 11 package paths. `js-cookie` is absent and the isolated production audit has zero high/critical findings. Accept remediation and continue to `P4 G2 / T2.5`. |
 | 2026-11-11 | Completed `P4 G2 / T2.5`. Switched root `@osjs/client` to the local fork, retained its reviewed `dist` entries, and regenerated the root lock under the pinned toolchain. Two clean installs are byte-stable; the 1,392-entry graph changes only for local-client provenance and `js-cookie` removal. Discovery/lint pass and the root build reproduces the approved G1 blocker. Advance to P5; T2.6 remains blocked. |
 | 2026-11-11 | Completed `P5 G2 / T2.5`. A fresh committed-state install reproduced the exact root lock/inventory, local client link and public entries, empty `js-cookie` tree, 11-package discovery, lint result, and approved root build blocker. Accept integration and continue to `P4 G2 / T2.6`. |
+| 2026-11-11 | Completed `P4–P5 G2 / T2.6`. Clean GitHub Actions run `42991970400` passed on commit `fb6dcbf12f7766d4b2be10f1d7cb46ea0e9216e8`; retained artifact `13841333939` and digest `64463aba3663a8cfdec0716eeb04a4753b9fc976cc17a50b547f59ca9e40233f` were independently verified. No dependency, source, distribution, manifest, lock, SBOM, or authentication path contains `js-cookie` or client credential persistence. G2 is complete; advance to `P1 G3`. MI-P6 remains blocked by unrelated production findings and later roadmap gates. |
