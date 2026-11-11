@@ -2,10 +2,10 @@
 
 **ID:** `RM-SEC-001`  
 **Status:** Active  
-**Current position:** P4 G2 — Retain reproducible client baseline (`T2.2a`)
+**Current position:** P5 G2 — Review reproducible client baseline (`T2.2a`)
 **Owner:** Unassigned  
 **Created:** 2026-11-09  
-**Updated:** 2026-11-10  
+**Updated:** 2026-11-11
 **Target:** MI-P6 security release gate  
 **Depends on:** None
 
@@ -73,7 +73,7 @@ The controlling analysis is [`../../docs/security-risk-assessment.md`](../../doc
 
 ## G2 — Remove vulnerable cookie handling
 
-**Position:** P4 G2 — Retain reproducible client baseline (`T2.2a`)
+**Position:** P5 G2 — Review reproducible client baseline (`T2.2a`)
 **Exit condition:** No shipped path uses an affected `js-cookie` version, and hostile cookie-attribute inputs cannot change protected cookie policy.
 
 **P1 analysis:** [`../../docs/p1-g2-cookie-risk-analysis.md`](../../docs/p1-g2-cookie-risk-analysis.md)
@@ -82,7 +82,7 @@ The controlling analysis is [`../../docs/security-risk-assessment.md`](../../doc
 
 - [x] **T2.1** [Import the exact OS.js client 3.7.1 source with immutable provenance and no behavior change.](../tasks/RM-SEC-001/T2.1-import-client-source.md)
 - [x] **T2.2** [Reproduce the forked client's build, package, and public API baseline.](../tasks/RM-SEC-001/T2.2-reproduce-client-baseline.md) — P5 reviewed; deterministic-evidence loop-back required
-- [ ] **T2.2a** [Retain and independently replay the exact client graph and output comparison.](../tasks/RM-SEC-001/T2.2a-retain-reproducible-client-baseline.md) — ready
+- [x] **T2.2a** [Retain and independently replay the exact client graph and output comparison.](../tasks/RM-SEC-001/T2.2a-retain-reproducible-client-baseline.md) — P4 complete; awaiting P5 review
 - [ ] **T2.3** [Add failing regression tests for credential persistence and hostile legacy configuration.](../tasks/RM-SEC-001/T2.3-add-cookie-security-tests.md) — blocked by T2.2
 - [ ] **T2.4** [Remove `js-cookie`, client credential persistence, and unsafe legacy enablement.](../tasks/RM-SEC-001/T2.4-remove-client-credential-persistence.md) — blocked by T2.3
 - [ ] **T2.5** [Integrate the fork-owned client and reconcile the root dependency graph.](../tasks/RM-SEC-001/T2.5-integrate-forked-client.md) — blocked by T2.4
@@ -232,3 +232,4 @@ Additional evidence required before completion:
 | 2026-11-11 | Completed `P5 G2 / T2.1`. Independent review reproduced the tag commit and npm integrity, validated every inventory hash and exclusion, found no unexplained upstream-tree difference, and matched 70 of 71 textual source files to published source maps with zero mismatches. The sole unmapped locale barrel is documented. Decision: accept the import and continue to `P4 G2 / T2.2`. |
 | 2026-11-11 | Completed `P4 G2 / T2.2`. On Node `26.13.0` and npm `11.20.0`, the exact imported client passed lint, 34 Jest suites/302 tests, development and production Webpack builds, and package inspection without unsafe runtime flags. Public exports, declarations, assets, and package paths are retained; generated bundle drift is classified as toolchain/dependency-derived because upstream supplied no lockfile. Advance to P5 review; T2.3 remains blocked. |
 | 2026-11-11 | Completed `P5 G2 / T2.2` with a bounded rejection. The execution observations pass, but the recorded resolution lock was not retained and the verifier does not replay the build or machine-check the claimed package/output comparison. Added T2.2a to retain the evidence lock, use `npm ci`, and close comparison coverage before T2.3 can be unblocked. |
+| 2026-11-11 | Completed `P4 G2 / T2.2a`. Retained the exact 1,468-package resolution lock outside the publishable client, replayed it in a fresh copy with `npm ci`, passed lint/34 suites/302 tests/production build, and enhanced the verifier to bind six output hashes and the exact 11-path package inventory. Advance to P5; T2.3 remains blocked. |
