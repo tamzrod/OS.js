@@ -2,7 +2,7 @@
 
 **ID:** `RM-SEC-001`  
 **Status:** Active  
-**Current position:** P1 G3 — Understand unsafe merging paths
+**Current position:** P2 G3 — Design safe object handling
 **Owner:** Unassigned  
 **Created:** 2026-11-09  
 **Updated:** 2026-11-11
@@ -90,8 +90,10 @@ The controlling analysis is [`../../docs/security-risk-assessment.md`](../../doc
 
 ## G3 — Eliminate unsafe merging paths
 
-**Position:** P1 G3 — Understand unsafe merging paths
+**Position:** P2 G3 — Design safe object handling
 **Exit condition:** Security-sensitive configuration and state merges are schema-aware, own-property-only, and covered against recursive prototype manipulation.
+
+**P1 analysis:** [`../../docs/p1-g3-unsafe-merge-analysis.md`](../../docs/p1-g3-unsafe-merge-analysis.md)
 
 - [ ] **T3.1** Inventory `deepmerge` and custom recursive merge call sites across client, common, dialogs, settings, and server paths.
 - [ ] **T3.2** Classify each merge input by trust source and identify persisted or remotely supplied objects.
@@ -241,3 +243,4 @@ Additional evidence required before completion:
 | 2026-11-11 | Completed `P4 G2 / T2.5`. Switched root `@osjs/client` to the local fork, retained its reviewed `dist` entries, and regenerated the root lock under the pinned toolchain. Two clean installs are byte-stable; the 1,392-entry graph changes only for local-client provenance and `js-cookie` removal. Discovery/lint pass and the root build reproduces the approved G1 blocker. Advance to P5; T2.6 remains blocked. |
 | 2026-11-11 | Completed `P5 G2 / T2.5`. A fresh committed-state install reproduced the exact root lock/inventory, local client link and public entries, empty `js-cookie` tree, 11-package discovery, lint result, and approved root build blocker. Accept integration and continue to `P4 G2 / T2.6`. |
 | 2026-11-11 | Completed `P4–P5 G2 / T2.6`. Clean GitHub Actions run `42991970400` passed on commit `fb6dcbf12f7766d4b2be10f1d7cb46ea0e9216e8`; retained artifact `13841333939` and digest `64463aba3663a8cfdec0716eeb04a4753b9fc976cc17a50b547f59ca9e40233f` were independently verified. No dependency, source, distribution, manifest, lock, SBOM, or authentication path contains `js-cookie` or client credential persistence. G2 is complete; advance to `P1 G3`. MI-P6 remains blocked by unrelated production findings and later roadmap gates. |
+| 2026-11-12 | Completed `P1 G3`. Inventoried 11 recursive merge calls across client, common, dialogs, server, and settings application plus unsafe local-storage and dotted-path copy surfaces. Reproduced poisoned-result inheritance in dialogs-local `deepmerge@2.2.1`; root `4.2.2` remains advisory-affected. Decision: proceed to `P2 G3` with a fork-owned descriptor-safe utility, call-site schemas, exact source imports, and red tests; do not treat a dependency downgrade as remediation. |
