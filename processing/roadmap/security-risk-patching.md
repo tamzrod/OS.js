@@ -2,7 +2,7 @@
 
 **ID:** `RM-SEC-001`  
 **Status:** Active  
-**Current position:** P5 G2 — Review red cookie-security tests (`T2.3`)
+**Current position:** P4 G2 — Remove client credential persistence (`T2.4`)
 **Owner:** Unassigned  
 **Created:** 2026-11-09  
 **Updated:** 2026-11-11
@@ -73,7 +73,7 @@ The controlling analysis is [`../../docs/security-risk-assessment.md`](../../doc
 
 ## G2 — Remove vulnerable cookie handling
 
-**Position:** P5 G2 — Review red cookie-security tests (`T2.3`)
+**Position:** P4 G2 — Remove client credential persistence (`T2.4`)
 **Exit condition:** No shipped path uses an affected `js-cookie` version, and hostile cookie-attribute inputs cannot change protected cookie policy.
 
 **P1 analysis:** [`../../docs/p1-g2-cookie-risk-analysis.md`](../../docs/p1-g2-cookie-risk-analysis.md)
@@ -83,8 +83,8 @@ The controlling analysis is [`../../docs/security-risk-assessment.md`](../../doc
 - [x] **T2.1** [Import the exact OS.js client 3.7.1 source with immutable provenance and no behavior change.](../tasks/RM-SEC-001/T2.1-import-client-source.md)
 - [x] **T2.2** [Reproduce the forked client's build, package, and public API baseline.](../tasks/RM-SEC-001/T2.2-reproduce-client-baseline.md) — accepted with completed T2.2a loop-back
 - [x] **T2.2a** [Retain and independently replay the exact client graph and output comparison.](../tasks/RM-SEC-001/T2.2a-retain-reproducible-client-baseline.md) — P5 reviewed and accepted
-- [x] **T2.3** [Add failing regression tests for credential persistence and hostile legacy configuration.](../tasks/RM-SEC-001/T2.3-add-cookie-security-tests.md) — P4 complete; awaiting P5 review
-- [ ] **T2.4** [Remove `js-cookie`, client credential persistence, and unsafe legacy enablement.](../tasks/RM-SEC-001/T2.4-remove-client-credential-persistence.md) — blocked by T2.3
+- [x] **T2.3** [Add failing regression tests for credential persistence and hostile legacy configuration.](../tasks/RM-SEC-001/T2.3-add-cookie-security-tests.md) — P5 reviewed and accepted
+- [ ] **T2.4** [Remove `js-cookie`, client credential persistence, and unsafe legacy enablement.](../tasks/RM-SEC-001/T2.4-remove-client-credential-persistence.md) — ready
 - [ ] **T2.5** [Integrate the fork-owned client and reconcile the root dependency graph.](../tasks/RM-SEC-001/T2.5-integrate-forked-client.md) — blocked by T2.4
 - [ ] **T2.6** [Produce clean retained absence evidence and make the G2 closure decision.](../tasks/RM-SEC-001/T2.6-prove-cookie-removal.md) — blocked by T2.5
 
@@ -235,3 +235,4 @@ Additional evidence required before completion:
 | 2026-11-11 | Completed `P4 G2 / T2.2a`. Retained the exact 1,468-package resolution lock outside the publishable client, replayed it in a fresh copy with `npm ci`, passed lint/34 suites/302 tests/production build, and enhanced the verifier to bind six output hashes and the exact 11-path package inventory. Advance to P5; T2.3 remains blocked. |
 | 2026-11-11 | Completed `P5 G2 / T2.2a`. An independent fresh replay reproduced the retained lock and full 1,468-package graph, passed lint, 34 suites/302 tests and production build, and matched all six output hashes and 11 package paths. Accept T2.2/T2.2a and continue to `P4 G2 / T2.3`; the vulnerable evidence graph remains reproduction-only. |
 | 2026-11-11 | Completed `P4 G2 / T2.3`. Added native browser-boundary security tests with no production changes. All 34 original suites/302 tests remain green; the new suite has six expected red failures and six passing compatibility/hostile-key cases. The failures isolate fail-closed legacy configuration, credential serialization, and cookie writes during login/logout/standalone flows. Advance to P5; T2.4 remains blocked. |
+| 2026-11-11 | Completed `P5 G2 / T2.3`. A fresh exact-lock install independently reproduced 34 passing original suites and only the new security suite failing, with 308 passing and six expected failing tests. Commit-scope review found no production or dependency changes. Accept the red contract and continue to `P4 G2 / T2.4`. |
