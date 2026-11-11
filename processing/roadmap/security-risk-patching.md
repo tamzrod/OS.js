@@ -2,7 +2,7 @@
 
 **ID:** `RM-SEC-001`  
 **Status:** Active  
-**Current position:** P4 G2 — Integrate fork-owned client (`T2.5`)
+**Current position:** P5 G2 — Review fork-owned client integration (`T2.5`)
 **Owner:** Unassigned  
 **Created:** 2026-11-09  
 **Updated:** 2026-11-11
@@ -73,7 +73,7 @@ The controlling analysis is [`../../docs/security-risk-assessment.md`](../../doc
 
 ## G2 — Remove vulnerable cookie handling
 
-**Position:** P4 G2 — Integrate fork-owned client (`T2.5`)
+**Position:** P5 G2 — Review fork-owned client integration (`T2.5`)
 **Exit condition:** No shipped path uses an affected `js-cookie` version, and hostile cookie-attribute inputs cannot change protected cookie policy.
 
 **P1 analysis:** [`../../docs/p1-g2-cookie-risk-analysis.md`](../../docs/p1-g2-cookie-risk-analysis.md)
@@ -85,7 +85,7 @@ The controlling analysis is [`../../docs/security-risk-assessment.md`](../../doc
 - [x] **T2.2a** [Retain and independently replay the exact client graph and output comparison.](../tasks/RM-SEC-001/T2.2a-retain-reproducible-client-baseline.md) — P5 reviewed and accepted
 - [x] **T2.3** [Add failing regression tests for credential persistence and hostile legacy configuration.](../tasks/RM-SEC-001/T2.3-add-cookie-security-tests.md) — P5 reviewed and accepted
 - [x] **T2.4** [Remove `js-cookie`, client credential persistence, and unsafe legacy enablement.](../tasks/RM-SEC-001/T2.4-remove-client-credential-persistence.md) — P5 reviewed and accepted
-- [ ] **T2.5** [Integrate the fork-owned client and reconcile the root dependency graph.](../tasks/RM-SEC-001/T2.5-integrate-forked-client.md) — ready
+- [x] **T2.5** [Integrate the fork-owned client and reconcile the root dependency graph.](../tasks/RM-SEC-001/T2.5-integrate-forked-client.md) — P4 complete; awaiting P5 review
 - [ ] **T2.6** [Produce clean retained absence evidence and make the G2 closure decision.](../tasks/RM-SEC-001/T2.6-prove-cookie-removal.md) — blocked by T2.5
 
 ## G3 — Eliminate unsafe merging paths
@@ -238,3 +238,4 @@ Additional evidence required before completion:
 | 2026-11-11 | Completed `P5 G2 / T2.3`. A fresh exact-lock install independently reproduced 34 passing original suites and only the new security suite failing, with 308 passing and six expected failing tests. Commit-scope review found no production or dependency changes. Accept the red contract and continue to `P4 G2 / T2.4`. |
 | 2026-11-11 | Completed `P4 G2 / T2.4`. Removed `js-cookie`, all client credential-cookie operations/defaults, and added an own-descriptor migration guard. The exact client graph contains no `js-cookie`; all 35 suites/317 tests, lint, production build, package and artifact scans pass. The isolated production graph has zero high/critical findings. Advance to P5; root integration remains T2.5. |
 | 2026-11-11 | Completed `P5 G2 / T2.4`. A fresh client-local install independently reproduced the exact lock, all 35 suites/317 tests, lint, production build/hash and 11 package paths. `js-cookie` is absent and the isolated production audit has zero high/critical findings. Accept remediation and continue to `P4 G2 / T2.5`. |
+| 2026-11-11 | Completed `P4 G2 / T2.5`. Switched root `@osjs/client` to the local fork, retained its reviewed `dist` entries, and regenerated the root lock under the pinned toolchain. Two clean installs are byte-stable; the 1,392-entry graph changes only for local-client provenance and `js-cookie` removal. Discovery/lint pass and the root build reproduces the approved G1 blocker. Advance to P5; T2.6 remains blocked. |

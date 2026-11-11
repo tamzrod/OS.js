@@ -1,0 +1,68 @@
+{
+  "formatVersion": 1,
+  "before": {
+    "lockfileVersion": 3,
+    "lockfileSha256": "5ab111720c4d3159aece1462feae3ff45bd470b73af19ea0683f0c4ee828a10d",
+    "packageCount": 1392
+  },
+  "after": {
+    "lockfileVersion": 3,
+    "lockfileSha256": "45f6faa2f08d04ff4271bf658236140e2e492552958aa5777c2e9dffd4b44d96",
+    "packageCount": 1392
+  },
+  "equivalent": false,
+  "added": [
+    {
+      "path": "vendor/osjs-client",
+      "name": "@osjs/client",
+      "version": "3.7.1",
+      "resolved": null,
+      "integrity": null,
+      "dev": false,
+      "optional": false
+    }
+  ],
+  "approvedAdditions": [],
+  "unapprovedAdditions": [
+    {
+      "path": "vendor/osjs-client",
+      "name": "@osjs/client",
+      "version": "3.7.1",
+      "resolved": null,
+      "integrity": null,
+      "dev": false,
+      "optional": false
+    }
+  ],
+  "missingApprovedAdditions": [],
+  "removed": [
+    {
+      "path": "node_modules/js-cookie",
+      "name": "js-cookie",
+      "version": "2.2.1",
+      "resolved": "https://registry.npmjs.org/js-cookie/-/js-cookie-2.2.1.tgz",
+      "integrity": "sha512-HvdH2LzI/EAZcUwA8+0nKNtWHqS+ZmijLA30RwZA0bo7ToCckjK5MkGhjED9KoRcXO6BaGI3I9UIzSA1FKFPOQ==",
+      "dev": false,
+      "optional": false
+    }
+  ],
+  "changed": [
+    {
+      "path": "node_modules/@osjs/client",
+      "differences": {
+        "version": {
+          "before": "3.7.1",
+          "after": null
+        },
+        "resolved": {
+          "before": "https://registry.npmjs.org/@osjs/client/-/client-3.7.1.tgz",
+          "after": "vendor/osjs-client"
+        },
+        "integrity": {
+          "before": "sha512-Ov99zmdlzD2uOaVPpKy4xD2WA45wtTCgplDbgt3qzhyfU7j70fJwlMJ3SWX3xCc2lFvf2o7AQBczHdPxGpmQdA==",
+          "after": null
+        }
+      }
+    }
+  ]
+}

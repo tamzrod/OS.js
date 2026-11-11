@@ -38,6 +38,12 @@ There's also a [contribution guide](https://github.com/os-js/OS.js/blob/master/C
 
 ## Installation
 
+### Authentication persistence migration
+
+This fork removes browser-managed authentication credential persistence and the vulnerable `js-cookie` dependency. Deployments that previously enabled `auth.cookie` must remove that configuration and perform the documented one-time server-side legacy-cookie cleanup before rollout. Reload requires explicit login unless a separately reviewed server-session resume feature is added.
+
+See [the G2 authentication cookie migration guide](docs/g2-cookie-persistence-migration.md) for configuration, cleanup, and operational details.
+
 > OS.js runs on `http://localhost:8000` by default.
 
 ### Using a pre-made image
