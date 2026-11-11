@@ -130,6 +130,17 @@ describe('Auth credential-persistence security contract', () => {
     expect(authAdapter.init).not.toHaveBeenCalled();
   });
 
+  test.each([
+    ['a non-object policy', true],
+    ['an array policy', []],
+    ['a non-Boolean own enabled value', {enabled: 'true'}]
+  ])('rejects %s before adapter initialization', async (label, cookie) => {
+    const {auth, authAdapter} = createHarness({cookie});
+
+    await expect(auth.init()).rejects.toThrow(/cookie.*configuration|Boolean/i);
+    expect(authAdapter.init).not.toHaveBeenCalled();
+  });
+
   test('startup does not read or replay a legacy cookie when persistence is disabled', async () => {
     document.cookie = 'osjs.auth=%7B%22username%22%3A%22legacy%22%2C%22password%22%3A%22secret%22%7D; path=/';
     persistence.cookieWrites.mockClear();
