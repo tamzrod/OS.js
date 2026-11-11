@@ -2,7 +2,7 @@
 'use strict';
 const crypto=require('crypto'),fs=require('fs'),path=require('path'),{spawnSync}=require('child_process');
 const [outputRoot,toolDir]=process.argv.slice(2);if(!toolDir){console.error('Usage: run-g2-evidence-ci.js <output-root> <sbom-tool-dir>');process.exit(2)}
-const sourceDir=process.cwd(),runtimeDir=path.dirname(path.dirname(process.execPath)),runtimeBin=path.join(runtimeDir,'bin'),npm=path.join(runtimeBin,'npm'),commit=spawnSync('git',['rev-parse','HEAD'],{cwd:sourceDir,encoding:'utf8'}).stdout.trim(),status=spawnSync('git',['status','--porcelain=v1','--untracked-files=all'],{cwd:sourceDir,encoding:'utf8'}).stdout;
+const sourceDir=process.cwd(),runtimeDir=path.dirname(path.dirname(process.execPath)),runtimeBin=path.dirname(process.execPath),npm='npm',commit=spawnSync('git',['rev-parse','HEAD'],{cwd:sourceDir,encoding:'utf8'}).stdout.trim(),status=spawnSync('git',['status','--porcelain=v1','--untracked-files=all'],{cwd:sourceDir,encoding:'utf8'}).stdout;
 if(status!=='')throw new Error(`evidence requires a clean checkout:\n${status}`);
 const timestamp=new Date().toISOString().replace(/[-:]/g,'').replace(/\.\d{3}Z$/,'Z'),sha256File=f=>crypto.createHash('sha256').update(fs.readFileSync(f)).digest('hex'),lockHash=sha256File(path.join(sourceDir,'package-lock.json')),evidenceId=`${timestamp}_${commit.slice(0,12)}_${lockHash.slice(0,12)}`,env={...process.env,PATH:`${runtimeBin}:${process.env.PATH}`,CI:'true'},iso=()=>new Date().toISOString();fs.mkdirSync(outputRoot,{recursive:true});
 const artifacts=[],commands=[];

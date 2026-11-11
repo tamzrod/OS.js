@@ -19,9 +19,14 @@ const EXPECTED_INTEGRITY = 'sha512-5KVebwZ21EDt5N6eW0b7QPiQ7eRJwjdsfUUoJsCIdk5Y1
 const sha256Buffer = value => crypto.createHash('sha256').update(value).digest('hex');
 const sha256File = filename => sha256Buffer(fs.readFileSync(filename));
 const iso = () => new Date().toISOString();
-const runtimeBin = path.join(runtimeDir, 'bin');
-const node = path.join(runtimeBin, 'node');
-const npmCli = path.join(runtimeDir, 'lib/node_modules/npm/bin/npm-cli.js');
+const runtimeBin = path.dirname(process.execPath);
+const node = process.execPath;
+const npmLookup = spawnSync('which', ['npm'], {encoding: 'utf8'});
+const npmCommand = npmLookup.status === 0 ? npmLookup.stdout.trim() : 'npm';
+const npmCli = npmCommand === 'npm' ? process.env.npm_execpath : fs.realpathSync(npmCommand);
+if (!npmCli) {
+  throw new Error(`unable to resolve npm for runtime ${runtimeDir}`);
+}
 const runner = path.join(toolDir, 'node_modules/.bin/cyclonedx-npm');
 const toolLock = JSON.parse(fs.readFileSync(path.join(toolDir, 'package-lock.json')));
 const toolPackage = toolLock.packages['node_modules/@cyclonedx/cyclonedx-npm'];
@@ -34,7 +39,7 @@ const manifestHash = sha256File(path.join(sourceDir, 'package.json'));
 const evidenceId = `${timestamp}_${commit.slice(0, 12)}_${lockHash.slice(0, 12)}`;
 const env = {
   ...process.env,
-  PATH: `${runtimeBin}:/usr/bin:/bin`,
+  PATH: `${runtimeBin}:${process.env.PATH}`,
   npm_execpath: npmCli,
   CI: 'true'
 };
