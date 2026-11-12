@@ -2,10 +2,10 @@
 
 **ID:** `RM-SEC-001`  
 **Status:** Active  
-**Current position:** P4 G3 — Implement safe-object primitive (`T3.4`)
+**Current position:** P5 G3 — Review safe-object primitive (`T3.4`)
 **Owner:** Unassigned  
 **Created:** 2026-11-09  
-**Updated:** 2026-11-11
+**Updated:** 2026-11-13
 **Target:** MI-P6 security release gate  
 **Depends on:** None
 
@@ -90,7 +90,7 @@ The controlling analysis is [`../../docs/security-risk-assessment.md`](../../doc
 
 ## G3 — Eliminate unsafe merging paths
 
-**Position:** P4 G3 — Implement safe-object primitive (`T3.4`)
+**Position:** P5 G3 — Review safe-object primitive (`T3.4`)
 **Exit condition:** Security-sensitive configuration and state merges are schema-aware, own-property-only, and covered against recursive prototype manipulation.
 
 **P1 analysis:** [`../../docs/p1-g3-unsafe-merge-analysis.md`](../../docs/p1-g3-unsafe-merge-analysis.md)
@@ -100,7 +100,7 @@ The controlling analysis is [`../../docs/security-risk-assessment.md`](../../doc
 - [x] **T3.1** [Import exact common, dialogs, server, and settings-application sources with immutable provenance.](../tasks/RM-SEC-001/T3.1-import-merge-package-sources.md) — P5 reviewed and accepted
 - [x] **T3.2** [Retain and reproduce each imported package baseline.](../tasks/RM-SEC-001/T3.2-reproduce-merge-package-baselines.md) — P5 reviewed and accepted
 - [x] **T3.3** [Add failing hostile-object tests for all classified boundaries.](../tasks/RM-SEC-001/T3.3-add-unsafe-merge-red-tests.md) — P5 reviewed and accepted
-- [ ] **T3.4** [Implement and verify the common descriptor-safe object primitive.](../tasks/RM-SEC-001/T3.4-implement-safe-object-primitive.md) — ready
+- [ ] **T3.4** [Implement and verify the common descriptor-safe object primitive.](../tasks/RM-SEC-001/T3.4-implement-safe-object-primitive.md) — P5 review
 - [ ] **T3.5** [Migrate client merge, storage, and dotted-path operations.](../tasks/RM-SEC-001/T3.5-migrate-client-merge-paths.md) — blocked by T3.4
 - [ ] **T3.6** [Migrate common and server configuration boundaries.](../tasks/RM-SEC-001/T3.6-migrate-common-server-merge-paths.md) — blocked by T3.4
 - [ ] **T3.7** [Migrate dialogs and settings-application boundaries.](../tasks/RM-SEC-001/T3.7-migrate-dialogs-settings-merge-paths.md) — blocked by T3.4
@@ -258,3 +258,4 @@ Additional evidence required before completion:
 | 2026-11-12 | Completed `P5 G3 / T3.2`. A fresh committed-state clone replayed all four exact locks, isolated lint/style checks, 12 server suites/90 tests, and three production builds; all seven output hashes matched and the checkout remained clean. Accept T3.2 and continue to `P4 G3 / T3.3`. |
 | 2026-11-12 | Completed `P4 G3 / T3.3`. Added a production-neutral red suite bound to all 11 merge call sites. Inventory and ordinary compatibility pass; 10 expected failures isolate reserved keys, accessors, inherited/symbol/instance inputs, cycles, implicit arrays, dialogs poisoned inheritance, local-storage keys, and dotted paths. Advance to P5; T3.4 remains blocked. |
 | 2026-11-12 | Completed `P5 G3 / T3.3`. Reproduced the exact 2-pass/10-fail contract under Node 26, verified all source bindings and expected failure modes, and confirmed commit scope is tests/docs only. Accept T3.3 and continue to `P4 G3 / T3.4`. |
+| 2026-11-13 | Completed `P4 G3 / T3.4`. Added a fork-owned descriptor-safe object primitive with explicit array policy, typed rejection, public JavaScript/TypeScript exports, and 12 passing hostile-input/compatibility tests. Package lint has zero errors and the retained production bundle includes the primitive. Advance to P5 review; T3.5 remains blocked. |

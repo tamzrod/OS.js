@@ -30,4 +30,5 @@
 
 export * from './src/core.js';
 export * from './src/service-provider.js';
+export * from './src/safe-object.js';
 export {EventHandler as EventEmitter} from '@osjs/event-emitter';

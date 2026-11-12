@@ -159,3 +159,17 @@ export class CoreBase extends EventEmitter {
    */
   has(name: string): boolean;
 }
+
+export type SafeObjectPolicy = {
+  array: 'replace' | 'concat';
+  allowFunctions?: boolean;
+  maxDepth?: number;
+};
+
+export class UnsafeObjectInputError extends TypeError {
+  path: string;
+}
+
+export function assertSafeObject(value: unknown, policy: SafeObjectPolicy): true;
+export function safeMerge<T>(base: T, override: unknown, policy: SafeObjectPolicy): T;
+export function safeSetPath<T>(base: T, path: string | string[], value: unknown, policy: SafeObjectPolicy): T;
