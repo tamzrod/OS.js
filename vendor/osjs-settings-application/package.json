@@ -23,8 +23,8 @@
     "metadata.json"
   ],
   "dependencies": {
+    "@osjs/common": "file:../osjs-common",
     "@osjs/gui": "^4.0.30",
-    "deepmerge": "^4.2.2",
     "hyperapp": "^1.2.10"
   },
   "devDependencies": {

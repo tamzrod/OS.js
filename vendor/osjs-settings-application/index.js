@@ -28,7 +28,7 @@
  * @licence Simplified BSD License
  */
 
-import merge from 'deepmerge';
+import {safeSetPath, UnsafeObjectInputError} from '@osjs/common';
 import osjs from 'osjs';
 import {h, app} from 'hyperapp';
 import {name as applicationName} from './metadata.json';
@@ -78,11 +78,16 @@ const fieldMap = () => {
 // Resolves a tree by dot notation
 const resolve = (tree, key, defaultValue) => {
   try {
-    const value = key.split(/\./g)
+    const keys = key.split(/\./g);
+    safeSetPath({}, keys, null, {array: 'replace'});
+    const value = keys
       .reduce((result, key) => result[key], Object.assign({}, tree));
 
     return typeof value === 'undefined' ? defaultValue : value;
   } catch (e) {
+    if (e instanceof UnsafeObjectInputError) {
+      throw e;
+    }
     return defaultValue;
   }
 };
@@ -98,19 +103,9 @@ const resolveValue = (key, value) => key === 'desktop.iconview.enabled' // FIXME
 // Resolves a new value in our tree
 // FIXME: There must be a better way
 const resolveNewSetting = state => (key, value) => {
-  const object = {};
-  const keys = key.split(/\./g);
-
-  let previous = object;
-  for (let i = 0; i < keys.length; i++) {
-    const j = keys[i];
-    const last = i >= keys.length - 1;
-
-    previous[j] = last ? resolveValue(key, value) : {};
-    previous = previous[j];
-  }
-
-  const settings = merge(state.settings, object);
+  const settings = safeSetPath(state.settings, key, resolveValue(key, value), {
+    array: 'replace'
+  });
   return {settings};
 };
 

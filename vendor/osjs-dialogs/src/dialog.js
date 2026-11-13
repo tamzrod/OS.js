@@ -29,9 +29,9 @@
  */
 
 import {h} from 'hyperapp';
-import merge from 'deepmerge';
-import plain from 'is-plain-object';
 import {Box, Button, Toolbar} from '@osjs/gui';
+
+const {safeMerge} = require('@osjs/common');
 
 let dialogCount = 0;
 
@@ -64,7 +64,7 @@ const defaultButton = (n, _) => {
  * Creates options
  */
 const createOptions = (options, args) =>
-  merge({
+  safeMerge({
     id: null,
     className: 'unknown',
     defaultValue: null,
@@ -89,9 +89,7 @@ const createOptions = (options, args) =>
         },
       }
     }
-  }, options, {
-    isMergeableObject: plain
-  });
+  }, options, {array: 'replace', allowFunctions: true});
 
 /**
  * OS.js default Dialog implementation
@@ -144,8 +142,9 @@ export default class Dialog {
    * @param {Function} cb Callback from window
    */
   render(options, cb) {
-    const opts = merge(this.options.window || {}, options, {
-      isMergeableObject: plain
+    const opts = safeMerge(this.options.window || {}, options, {
+      array: 'replace',
+      allowFunctions: true
     });
 
     this.win = this.core.make('osjs/window', opts);
