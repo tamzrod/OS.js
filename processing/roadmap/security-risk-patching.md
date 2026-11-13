@@ -2,7 +2,7 @@
 
 **ID:** `RM-SEC-001`  
 **Status:** Active  
-**Current position:** P5 G3 — Review dialogs/settings migration (`T3.7`)
+**Current position:** P4 G3 — Integrate safe-object packages (`T3.8`)
 **Owner:** Unassigned  
 **Created:** 2026-11-09  
 **Updated:** 2026-11-13
@@ -90,7 +90,7 @@ The controlling analysis is [`../../docs/security-risk-assessment.md`](../../doc
 
 ## G3 — Eliminate unsafe merging paths
 
-**Position:** P5 G3 — Review dialogs/settings migration (`T3.7`)
+**Position:** P4 G3 — Integrate safe-object packages (`T3.8`)
 **Exit condition:** Security-sensitive configuration and state merges are schema-aware, own-property-only, and covered against recursive prototype manipulation.
 
 **P1 analysis:** [`../../docs/p1-g3-unsafe-merge-analysis.md`](../../docs/p1-g3-unsafe-merge-analysis.md)
@@ -103,8 +103,8 @@ The controlling analysis is [`../../docs/security-risk-assessment.md`](../../doc
 - [x] **T3.4** [Implement and verify the common descriptor-safe object primitive.](../tasks/RM-SEC-001/T3.4-implement-safe-object-primitive.md) — P5 reviewed and accepted
 - [x] **T3.5** [Migrate client merge, storage, and dotted-path operations.](../tasks/RM-SEC-001/T3.5-migrate-client-merge-paths.md) — P5 reviewed and accepted after T3.6 loop-back
 - [x] **T3.6** [Migrate common and server configuration boundaries.](../tasks/RM-SEC-001/T3.6-migrate-common-server-merge-paths.md) — P5 reviewed and accepted
-- [ ] **T3.7** [Migrate dialogs and settings-application boundaries.](../tasks/RM-SEC-001/T3.7-migrate-dialogs-settings-merge-paths.md) — P5 review
-- [ ] **T3.8** [Integrate fork-owned packages and remove both `deepmerge` versions.](../tasks/RM-SEC-001/T3.8-integrate-safe-object-packages.md) — blocked by T3.5–T3.7
+- [x] **T3.7** [Migrate dialogs and settings-application boundaries.](../tasks/RM-SEC-001/T3.7-migrate-dialogs-settings-merge-paths.md) — P5 reviewed and accepted
+- [ ] **T3.8** [Integrate fork-owned packages and remove both `deepmerge` versions.](../tasks/RM-SEC-001/T3.8-integrate-safe-object-packages.md) — ready
 - [ ] **T3.9** [Produce clean retained evidence and make the G3 closure decision.](../tasks/RM-SEC-001/T3.9-prove-safe-object-remediation.md) — blocked by T3.8
 
 ## G4 — Modernize the browser build and runtime
@@ -265,3 +265,4 @@ Additional evidence required before completion:
 | 2026-11-13 | Completed `P4 G3 / T3.6`. Replaced common bootstrap and server CLI/config merges, removed both direct runtime dependencies, added three server security/precedence tests, and passed common 12/12 plus server 13 suites/93 tests. Rebuilt the client after refreshing linked metadata; all 321 tests pass and common/client bundles contain no deepmerge implementation markers. Advance to joint P5 review for T3.6 and the T3.5 loop-back. |
 | 2026-11-13 | Completed joint `P5 G3 / T3.5–T3.6`. A clean clone replayed all three exact locks, common 12/12 tests/build, server 13 suites/93 tests, and client 36 suites/321 tests/build. All retained hashes matched and common/client bundles and source maps contain no deepmerge implementation. Accept both tasks and continue to `P4 G3 / T3.7`. |
 | 2026-11-13 | Completed `P4 G3 / T3.7`. Migrated both dialogs merge boundaries and settings dotted-path/update handling to the reviewed primitive, removed both direct dependencies, and rebuilt clean outputs. Lint/style/build checks pass and source, manifests, bundles, and source maps contain no deepmerge runtime implementation. Advance to P5 review. |
+| 2026-11-13 | Completed `P5 G3 / T3.7`. A clean clone installed both exact locks, rebuilt dialogs and settings application, reproduced all six retained hashes, and passed source/bundle/source-map absence scans. Accept T3.7 and continue to `P4 G3 / T3.8`. |
