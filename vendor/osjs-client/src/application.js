@@ -27,7 +27,7 @@
  * @author  Anders Evenrud <andersevenrud@gmail.com>
  * @license Simplified BSD License
  */
-import merge from 'deepmerge';
+import {safeMerge} from '@osjs/common';
 import {EventEmitter} from '@osjs/event-emitter';
 import {loadOptionsFromConfig} from './utils/windows';
 import Websocket from './websocket';
@@ -336,7 +336,10 @@ export default class Application extends EventEmitter {
 
     const configWindows = this.core.config('application.windows', []);
     const applyOptions = loadOptionsFromConfig(configWindows, this.metadata.name, options.id);
-    const instance = new Window(this.core, merge(options, applyOptions));
+    const instance = new Window(this.core, safeMerge(options, applyOptions, {
+      array: 'replace',
+      allowFunctions: true
+    }));
 
     if (this.options.restore) {
       const windows = this.options.restore.windows || [];

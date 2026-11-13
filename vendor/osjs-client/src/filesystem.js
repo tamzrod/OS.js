@@ -35,7 +35,7 @@ import defaultAdapter from './adapters/vfs/null';
 import systemAdapter from './adapters/vfs/system';
 import appsAdapter from './adapters/vfs/apps';
 import logger from './logger';
-import merge from 'deepmerge';
+import {safeMerge} from '@osjs/common';
 
 /**
  * VFS Mountpoint attributes
@@ -346,7 +346,7 @@ export default class Filesystem extends EventEmitter {
     const name = props.adapter || this.core.config('vfs.defaultAdapter');
     const adapter = {...defaultAdapter, ...this.adapters[name](this.core)};
 
-    const result = merge({
+    const result = safeMerge({
       enabled: true,
       mounted: false,
       adapter: name,
@@ -356,7 +356,7 @@ export default class Filesystem extends EventEmitter {
         searchable: true,
         readOnly: false
       }
-    }, props);
+    }, props, {array: 'replace', allowFunctions: true});
 
     return {
       _adapter: adapter,

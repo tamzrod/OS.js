@@ -28,7 +28,7 @@
  * @license Simplified BSD License
  */
 
-import merge from 'deepmerge';
+import {safeMerge, safeSetPath} from '@osjs/common';
 import simplejsonconf from 'simplejsonconf';
 import localStorageSettings from './adapters/settings/localstorage';
 import serverSettings from './adapters/settings/server';
@@ -164,9 +164,7 @@ export default class Settings {
 
     return this.adapter.load()
       .then(settings => {
-        this.settings = merge(defaults, settings, {
-          arrayMerge: (dest, source) => source
-        });
+        this.settings = safeMerge(defaults, settings, {array: 'replace'});
 
         this.core.emit('osjs/settings:load');
 
@@ -190,7 +188,14 @@ export default class Settings {
   get(ns, key, defaultValue) {
     if (typeof ns === 'undefined') {
       return {...this.settings};
-    } else if (typeof this.settings[ns] === 'undefined') {
+    }
+
+    safeSetPath({}, [ns], null, {array: 'replace'});
+    if (key) {
+      safeSetPath({}, key, null, {array: 'replace'});
+    }
+
+    if (typeof this.settings[ns] === 'undefined') {
       return key ? defaultValue : defaultValue || {};
     }
 
@@ -215,21 +220,8 @@ export default class Settings {
       return this;
     }
 
-    if (typeof this.settings[ns] === 'undefined') {
-      this.settings[ns] = {};
-    }
-
-    if (key) {
-      try {
-        const sjc = simplejsonconf(this.settings[ns]);
-        sjc.set(key, value);
-        this.settings[ns] = sjc.get();
-      } catch (e) {
-        logger.warn('Error while setting settings for', key, e);
-      }
-    } else {
-      this.settings[ns] = {...value};
-    }
+    const path = key ? [ns, ...key.split('.')] : [ns];
+    this.settings = safeSetPath(this.settings, path, value, {array: 'replace'});
 
     return this;
   }
@@ -240,6 +232,7 @@ export default class Settings {
    * @return {Promise<boolean>}
    */
   clear(ns) {
+    safeSetPath({}, [ns], null, {array: 'replace'});
     return this.adapter.clear(ns)
       .then(result => {
         if (result && this.settings[ns]) {

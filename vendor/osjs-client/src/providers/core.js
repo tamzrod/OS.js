@@ -43,10 +43,9 @@ import {style, script, playSound} from '../utils/dom';
 import {resourceResolver} from '../utils/desktop';
 import * as dnd from '../utils/dnd';
 import {BasicApplication} from '../basic-application.js';
-import {ServiceProvider} from '@osjs/common';
+import {safeMerge, ServiceProvider} from '@osjs/common';
 import {EventEmitter} from '@osjs/event-emitter';
 import logger from '../logger';
-import merge from 'deepmerge';
 
 /**
  * Core Provider Locale Contract
@@ -390,7 +389,10 @@ export default class CoreServiceProvider extends ServiceProvider {
    * @return {CoreProviderLocaleContract}
    */
   createLocaleContract() {
-    const strs = merge(translations, this.options.locales || {});
+    const strs = safeMerge({...translations}, this.options.locales || {}, {
+      array: 'replace',
+      allowFunctions: true
+    });
     const translate = translatable(this.core)(strs);
 
     return {

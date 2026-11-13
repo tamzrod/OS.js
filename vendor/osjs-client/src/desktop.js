@@ -41,7 +41,7 @@ import {
 } from './utils/desktop';
 import Window from './window';
 import Search from './search';
-import merge from 'deepmerge';
+import {safeMerge} from '@osjs/common';
 import logger from './logger';
 
 /**
@@ -520,9 +520,7 @@ export default class Desktop extends EventEmitter {
         ? settings
         : this.core.make('osjs/settings').get('osjs/desktop');
 
-      newSettings = merge(defaultSettings, userSettings, {
-        arrayMerge: (dest, source) => source
-      });
+      newSettings = safeMerge(defaultSettings, userSettings, {array: 'replace'});
     }
 
     const applyOverlays = (test, list) => {

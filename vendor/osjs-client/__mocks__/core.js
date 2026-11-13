@@ -2,7 +2,6 @@ import Core from '../src/core';
 import CoreServiceProvider from '../src/providers/core';
 import SettingsServiceProvider from '../src/providers/settings';
 import * as config from '../src/config';
-import merge from 'deepmerge';
 import {ServiceProvider} from '@osjs/common';
 
 class MockDesktopServiceProvider extends ServiceProvider {
@@ -25,7 +24,7 @@ class MockDesktopServiceProvider extends ServiceProvider {
 }
 
 export const createInstance = () => {
-  const core = new Core(merge(config, {
+  const core = new Core({...config,
     settings: {
       lock: ['osjs/locked']
     },
@@ -36,7 +35,7 @@ export const createInstance = () => {
     ws: {
       disabled: true
     }
-  }));
+  });
 
   core.logger = new Proxy({}, {
     get: () => () => {}

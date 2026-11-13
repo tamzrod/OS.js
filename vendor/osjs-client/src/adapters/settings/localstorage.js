@@ -29,6 +29,7 @@
  */
 
 import logger from '../../logger';
+import {safeMerge} from '@osjs/common';
 
 /**
  * LocalStorage Settings adapter
@@ -54,7 +55,7 @@ const localStorageSettings = core => ({
     return Promise.resolve(true);
   },
 
-  load: () => Promise.resolve(Object.keys(localStorage).reduce((o, v) => {
+  load: () => Promise.resolve().then(() => Object.keys(localStorage).reduce((o, v) => {
     let value = localStorage.getItem(v);
     try {
       value = JSON.parse(value);
@@ -62,7 +63,7 @@ const localStorageSettings = core => ({
       logger.warn('localStorageAdapter parse error', e);
     }
 
-    return Object.assign(o, {[v]: value});
+    return safeMerge(o, {[v]: value}, {array: 'replace'});
   }, {}))
 });
 
