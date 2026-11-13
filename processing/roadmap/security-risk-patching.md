@@ -2,7 +2,7 @@
 
 **ID:** `RM-SEC-001`  
 **Status:** Active  
-**Current position:** P4 G3 — Migrate common/server configuration (`T3.6`)
+**Current position:** P5 G3 — Review common/server migration and T3.5 loop-back (`T3.6`)
 **Owner:** Unassigned  
 **Created:** 2026-11-09  
 **Updated:** 2026-11-13
@@ -90,7 +90,7 @@ The controlling analysis is [`../../docs/security-risk-assessment.md`](../../doc
 
 ## G3 — Eliminate unsafe merging paths
 
-**Position:** P4 G3 — Migrate common/server configuration (`T3.6`)
+**Position:** P5 G3 — Review common/server migration and T3.5 loop-back (`T3.6`)
 **Exit condition:** Security-sensitive configuration and state merges are schema-aware, own-property-only, and covered against recursive prototype manipulation.
 
 **P1 analysis:** [`../../docs/p1-g3-unsafe-merge-analysis.md`](../../docs/p1-g3-unsafe-merge-analysis.md)
@@ -102,7 +102,7 @@ The controlling analysis is [`../../docs/security-risk-assessment.md`](../../doc
 - [x] **T3.3** [Add failing hostile-object tests for all classified boundaries.](../tasks/RM-SEC-001/T3.3-add-unsafe-merge-red-tests.md) — P5 reviewed and accepted
 - [x] **T3.4** [Implement and verify the common descriptor-safe object primitive.](../tasks/RM-SEC-001/T3.4-implement-safe-object-primitive.md) — P5 reviewed and accepted
 - [ ] **T3.5** [Migrate client merge, storage, and dotted-path operations.](../tasks/RM-SEC-001/T3.5-migrate-client-merge-paths.md) — P5 loop-back pending T3.6 bundle cleanup
-- [ ] **T3.6** [Migrate common and server configuration boundaries.](../tasks/RM-SEC-001/T3.6-migrate-common-server-merge-paths.md) — ready; also prerequisite for T3.5 acceptance
+- [ ] **T3.6** [Migrate common and server configuration boundaries.](../tasks/RM-SEC-001/T3.6-migrate-common-server-merge-paths.md) — P5 review; also resolves T3.5 bundle loop-back
 - [ ] **T3.7** [Migrate dialogs and settings-application boundaries.](../tasks/RM-SEC-001/T3.7-migrate-dialogs-settings-merge-paths.md) — blocked by T3.4
 - [ ] **T3.8** [Integrate fork-owned packages and remove both `deepmerge` versions.](../tasks/RM-SEC-001/T3.8-integrate-safe-object-packages.md) — blocked by T3.5–T3.7
 - [ ] **T3.9** [Produce clean retained evidence and make the G3 closure decision.](../tasks/RM-SEC-001/T3.9-prove-safe-object-remediation.md) — blocked by T3.8
@@ -262,3 +262,4 @@ Additional evidence required before completion:
 | 2026-11-13 | Completed `P5 G3 / T3.4`. A clean clone replayed the exact lock, zero-error lint, all 12 focused tests, and the production build with byte-identical retained hashes. Implementation inspection confirmed descriptor-safe reads, non-mutating output, reserved-key rejection, bounded traversal, and no ambient setter invocation. Accept T3.4 and continue to `P4 G3 / T3.5`. |
 | 2026-11-13 | Completed `P4 G3 / T3.5`. Migrated all five client merges plus local-storage accumulation and dotted settings paths to the reviewed primitive. The client directly declares/imports no `deepmerge`; lint/style, 36 suites/321 tests, and production build pass. Advance to P5, where the bundle must be checked for the common package's pre-T3.6 implementation before acceptance. |
 | 2026-11-13 | `P5 G3 / T3.5` looped back on one exit criterion. Client-owned source and direct dependencies are clean and all 321 tests pass, but the production bundle still embeds `deepmerge` through common's pre-T3.6 `CoreBase`. Decision: execute T3.6, then rebuild/rescan and return to T3.5 P5; do not weaken the distribution-absence gate. |
+| 2026-11-13 | Completed `P4 G3 / T3.6`. Replaced common bootstrap and server CLI/config merges, removed both direct runtime dependencies, added three server security/precedence tests, and passed common 12/12 plus server 13 suites/93 tests. Rebuilt the client after refreshing linked metadata; all 321 tests pass and common/client bundles contain no deepmerge implementation markers. Advance to joint P5 review for T3.6 and the T3.5 loop-back. |

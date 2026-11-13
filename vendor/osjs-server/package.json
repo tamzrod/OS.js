@@ -34,12 +34,11 @@
   },
   "homepage": "https://github.com/os-js/osjs-server#readme",
   "dependencies": {
-    "@osjs/common": "^3.0.12",
+    "@osjs/common": "file:../osjs-common",
     "body-parser": "^1.19.0",
     "chokidar": "^3.4.3",
     "connect-loki": "^1.1.0",
     "consola": "^2.15.0",
-    "deepmerge": "^4.2.2",
     "express": "^4.17.1",
     "express-http-proxy": "^1.6.2",
     "express-session": "^1.17.1",

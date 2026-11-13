@@ -30,8 +30,8 @@
 
 import {resolveTreeByKey, providerHandler} from './utils.js';
 import {EventEmitter} from '@osjs/event-emitter';
-import merge from 'deepmerge';
 import omitDeep from 'omit-deep';
+import {safeMerge} from './safe-object.js';
 
 /**
  * Core
@@ -49,12 +49,13 @@ export class CoreBase extends EventEmitter {
   constructor(defaultConfiguration, configuration, options) {
     super('Core');
 
-    // https://github.com/KyleAMathews/deepmerge#webpack-bug
-    const merger = merge.default ? merge.default : merge;
     const omitted = omitDeep(defaultConfiguration, options.omit || []);
 
     this.logger = console;
-    this.configuration = merger(omitted, configuration);
+    this.configuration = safeMerge(omitted, configuration, {
+      array: 'replace',
+      allowFunctions: true
+    });
     this.options = options;
     this.booted = false;
     this.started = false;

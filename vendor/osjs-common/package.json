@@ -30,7 +30,6 @@
   "dependencies": {
     "@osjs/event-emitter": "^1.0.10",
     "async-dependency-graph": "^1.1.4",
-    "deepmerge": "^4.2.2",
     "omit-deep": "^0.3.0"
   },
   "devDependencies": {

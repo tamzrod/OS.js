@@ -35,9 +35,8 @@ const path = require('path');
 const morgan = require('morgan');
 const express = require('express');
 const minimist = require('minimist');
-const deepmerge = require('deepmerge');
 const consola = require('consola');
-const {CoreBase} = require('@osjs/common');
+const {CoreBase, safeMerge} = require('@osjs/common');
 const {argvToConfig, createSession, createWebsocket, parseJson} = require('./utils/core.js');
 const {defaultConfiguration} = require('./config.js');
 const logger = consola.withTag('Core');
@@ -66,10 +65,13 @@ class Core extends CoreBase {
     const keys = Object.keys(argvToConfig).filter(k => Object.prototype.hasOwnProperty.call(argv, k));
     const argvConfig = keys.reduce((o, k) => {
       logger.info(`CLI argument '--${k}' overrides`, val(k));
-      return {...o, ...deepmerge(o, val(k))};
+      return safeMerge(o, val(k), {array: 'replace', allowFunctions: true});
     }, {});
 
-    super(defaultConfiguration, deepmerge(cfg, argvConfig), options);
+    super(defaultConfiguration, safeMerge(cfg, argvConfig, {
+      array: 'replace',
+      allowFunctions: true
+    }), options);
 
     this.logger = consola.withTag('Internal');
 
