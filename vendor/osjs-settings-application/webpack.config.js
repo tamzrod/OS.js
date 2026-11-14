@@ -1,19 +1,9 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 
 const mode = process.env.NODE_ENV || 'development';
 const minimize = mode === 'production';
-const plugins = [];
-
-if (mode === 'production') {
-  plugins.push(new OptimizeCSSAssetsPlugin({
-    cssProcessorOptions: {
-      discardComments: true
-    },
-  }));
-}
-
 module.exports = {
   mode,
   devtool: 'source-map',
@@ -22,6 +12,7 @@ module.exports = {
   ],
   optimization: {
     minimize,
+    minimizer: ['...', new CssMinimizerPlugin()],
   },
   externals: {
     osjs: 'OSjs'
@@ -30,8 +21,7 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: '[name].css',
       chunkFilename: '[id].css'
-    }),
-    ...plugins
+    })
   ],
   module: {
     rules: [

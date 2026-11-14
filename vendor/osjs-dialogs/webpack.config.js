@@ -1,19 +1,9 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 
 const mode = process.env.NODE_ENV || 'development';
 const minimize = mode === 'production';
-const plugins = [];
-
-if (mode === 'production') {
-  plugins.push(new OptimizeCSSAssetsPlugin({
-    cssProcessorOptions: {
-      discardComments: true
-    },
-  }));
-}
-
 module.exports = {
   mode,
   devtool: 'source-map',
@@ -21,21 +11,24 @@ module.exports = {
     path.resolve(__dirname, 'index.js'),
   ],
   output: {
-    library: 'osjsDialogs',
-    libraryTarget: 'umd',
-    umdNamedDefine: true,
+    library: {
+      name: 'osjsDialogs',
+      type: 'umd',
+      umdNamedDefine: true
+    },
+    globalObject: 'this',
     sourceMapFilename: '[file].map',
     filename: '[name].js'
   },
   optimization: {
     minimize,
+    minimizer: ['...', new CssMinimizerPlugin()],
   },
   plugins: [
     new MiniCssExtractPlugin({
       filename: '[name].css',
       chunkFilename: '[id].css'
-    }),
-    ...plugins
+    })
   ],
   module: {
     rules: [

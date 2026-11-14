@@ -26,4 +26,5 @@
  *
  * @author  Anders Evenrud <andersevenrud@gmail.com>
  * @licence Simplified BSD License
- */.osjs-dialog-buttons{justify-content:flex-end}.osjs-dialog-message,.osjs-dialog-status{margin-bottom:1em;min-height:1em;line-height:1.5}
+ */.osjs-dialog-buttons{justify-content:flex-end}.osjs-dialog-message,.osjs-dialog-status{line-height:1.5;margin-bottom:1em;min-height:1em}
+/*# sourceMappingURL=main.css.map*/

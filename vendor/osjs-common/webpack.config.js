@@ -11,7 +11,9 @@ module.exports = {
     path.resolve(__dirname, 'index.js'),
   ],
   output: {
-    libraryTarget: 'commonjs',
+    library: {
+      type: 'commonjs'
+    },
     sourceMapFilename: '[file].map',
     filename: '[name].js'
   },

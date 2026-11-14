@@ -17,8 +17,8 @@
   "scripts": {
     "test": "npm run eslint && npm run stylelint",
     "eslint": "eslint index.js 'src/**/*.js'",
-    "build": "webpack",
-    "watch": "webpack --watch",
+    "build": "node ../../node_modules/webpack/bin/webpack.js",
+    "watch": "node ../../node_modules/webpack/bin/webpack.js --watch",
     "stylelint": "stylelint index.scss 'src/**/*.scss'",
     "prepublishOnly": "npm run test && rm ./dist/* && NODE_ENV=production npm run build"
   },
