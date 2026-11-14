@@ -2,7 +2,7 @@
 
 **ID:** `RM-SEC-001`  
 **Status:** Active  
-**Current position:** P1 G4 — Understand browser build/runtime modernization
+**Current position:** P2 G4 — Plan browser build/runtime modernization
 **Owner:** Unassigned  
 **Created:** 2026-11-09  
 **Updated:** 2026-11-14
@@ -109,8 +109,10 @@ The controlling analysis is [`../../docs/security-risk-assessment.md`](../../doc
 
 ## G4 — Modernize the browser build and runtime
 
-**Position:** P1 G4 — Understand the problem
+**Position:** P2 G4 — Plan the work
 **Exit condition:** The client builds reproducibly on the selected Node LTS using a maintained toolchain without legacy OpenSSL mode.
+
+**P1 analysis:** [`../../docs/p1-g4-build-runtime-modernization-analysis.md`](../../docs/p1-g4-build-runtime-modernization-analysis.md)
 
 - [ ] **T4.1** Record the current build inputs and produce a reference artifact for behavior comparison.
 - [ ] **T4.2** Replace Webpack 4, webpack-cli 3, and incompatible loaders/plugins with maintained versions or an approved modern bundler.
@@ -238,6 +240,7 @@ Additional evidence required before completion:
 | 2026-11-11 | Completed `P2 G2`. Selected a fork-owned client source package, complete removal of `js-cookie` and browser credential replay, and a fail-closed migration error for legacy cookie enablement. Reload will require explicit login; G2 will not add an unreviewed session-resume API or absorb broader server hardening from G5. Decision: advance to `P3 G2` and create independent provenance, baseline-build, red-test, remediation, integration, and evidence tasks. |
 | 2026-11-11 | Completed `P3 G2`. Segregated the work into six sequential tasks: provenance import, baseline reproduction, red security tests, client remediation, root integration, and retained closure evidence. Only T2.1 is ready; every later task is dependency-blocked. Decision: advance to `P4 G2 / T2.1`. |
 | 2026-11-14 | Completed `P4–P5 G3 / T3.9`. Clean run `43573814585` passed on commit `be53d2b3`; artifact `14105024296` independently reconciled 20 hashes, all security/compatibility tests, both SBOMs, audits, and 124-file release scans. G3 is complete; advance to `P1 G4`. MI-P6 remains blocked. |
+| 2026-11-14 | Completed `P1 G4`. Five fork-owned Webpack 4 configurations and their output contracts were inventoried. The pinned Node 26 build reproduces `ERR_OSSL_EVP_UNSUPPORTED`; the legacy chain also carries direct/transitive critical and high findings. Decision: preserve CommonJS/UMD/external/browser contracts through a coordinated reference-first Webpack 5 migration. Advance to `P2 G4`. |
 | 2026-11-11 | Completed `P4 G2 / T2.1`. Imported 122 tracked files from official client tag `3.7.1` at commit `53b8376d9681cf5429e6882417da9d421b1b869c`, added explicit upstream provenance and a 123-file hash inventory, reconciled package/source-map identity with the locked npm artifact, and preserved root manifest and lockfile hashes. Advance to P5 review; T2.2 remains blocked. |
 | 2026-11-11 | Completed `P5 G2 / T2.1`. Independent review reproduced the tag commit and npm integrity, validated every inventory hash and exclusion, found no unexplained upstream-tree difference, and matched 70 of 71 textual source files to published source maps with zero mismatches. The sole unmapped locale barrel is documented. Decision: accept the import and continue to `P4 G2 / T2.2`. |
 | 2026-11-11 | Completed `P4 G2 / T2.2`. On Node `26.13.0` and npm `11.20.0`, the exact imported client passed lint, 34 Jest suites/302 tests, development and production Webpack builds, and package inspection without unsafe runtime flags. Public exports, declarations, assets, and package paths are retained; generated bundle drift is classified as toolchain/dependency-derived because upstream supplied no lockfile. Advance to P5 review; T2.3 remains blocked. |
