@@ -2,7 +2,7 @@
 
 **ID:** `RM-SEC-001`  
 **Status:** Active  
-**Current position:** P4 G4 — Capture the build reference contract (`T4.1`)
+**Current position:** P5 G4 — Review the build reference contract (`T4.1`)
 **Owner:** Unassigned  
 **Created:** 2026-11-09  
 **Updated:** 2026-11-14
@@ -109,14 +109,14 @@ The controlling analysis is [`../../docs/security-risk-assessment.md`](../../doc
 
 ## G4 — Modernize the browser build and runtime
 
-**Position:** P4 G4 — Capture the build reference contract (`T4.1`)
+**Position:** P5 G4 — Review the build reference contract (`T4.1`)
 **Exit condition:** The client builds reproducibly on the selected Node LTS using a maintained toolchain without legacy OpenSSL mode.
 
 **P1 analysis:** [`../../docs/p1-g4-build-runtime-modernization-analysis.md`](../../docs/p1-g4-build-runtime-modernization-analysis.md)
 
 **P2 plan:** [`../../docs/p2-g4-build-runtime-modernization-plan.md`](../../docs/p2-g4-build-runtime-modernization-plan.md)
 
-- [ ] **T4.1** [Capture exact build inputs and a normalized reference artifact/contract.](../tasks/RM-SEC-001/T4.1-capture-build-reference.md) — ready
+- [ ] **T4.1** [Capture exact build inputs and a normalized reference artifact/contract.](../tasks/RM-SEC-001/T4.1-capture-build-reference.md) — P4 implemented; P5 review pending
 - [ ] **T4.2** [Pin one maintained root-managed Webpack 5 toolchain and remove obsolete build chains.](../tasks/RM-SEC-001/T4.2-pin-webpack5-toolchain.md) — blocked by T4.1
 - [ ] **T4.3** [Migrate common, client, dialogs, and settings builds while preserving library contracts.](../tasks/RM-SEC-001/T4.3-migrate-library-builds.md) — blocked by T4.2
 - [ ] **T4.4** [Migrate the root browser build and prove deterministic production output.](../tasks/RM-SEC-001/T4.4-migrate-root-build.md) — blocked by T4.3
@@ -246,6 +246,7 @@ Additional evidence required before completion:
 | 2026-11-14 | Completed `P1 G4`. Five fork-owned Webpack 4 configurations and their output contracts were inventoried. The pinned Node 26 build reproduces `ERR_OSSL_EVP_UNSUPPORTED`; the legacy chain also carries direct/transitive critical and high findings. Decision: preserve CommonJS/UMD/external/browser contracts through a coordinated reference-first Webpack 5 migration. Advance to `P2 G4`. |
 | 2026-11-14 | Completed `P2 G4`. Selected a single root-managed exact Webpack 5 toolchain, Webpack 5 asset modules, css-minimizer-webpack-plugin, dependency-order package migration, normalized behavior contracts, static-host smoke tests, security reconciliation, and retained clean closure evidence. Advance to `P3 G4`. |
 | 2026-11-14 | Completed `P3 G4`. Decomposed modernization into seven sequential tasks: reference capture, shared toolchain pinning, library migrations, root migration, browser/policy verification, security reconciliation, and retained closure evidence. Only T4.1 is ready; advance to `P4 G4 / T4.1`. |
+| 2026-11-14 | Completed `P4 G4 / T4.1`. An isolated clean source copy installed the exact lock under Node 26/npm 11, then produced a comparison-only Webpack 4 production build under checksum-verified Node 16.20.2 with no legacy-provider override. Retained a normalized 37-file root contract plus package/input identities. Advance to P5 review. |
 | 2026-11-11 | Completed `P4 G2 / T2.1`. Imported 122 tracked files from official client tag `3.7.1` at commit `53b8376d9681cf5429e6882417da9d421b1b869c`, added explicit upstream provenance and a 123-file hash inventory, reconciled package/source-map identity with the locked npm artifact, and preserved root manifest and lockfile hashes. Advance to P5 review; T2.2 remains blocked. |
 | 2026-11-11 | Completed `P5 G2 / T2.1`. Independent review reproduced the tag commit and npm integrity, validated every inventory hash and exclusion, found no unexplained upstream-tree difference, and matched 70 of 71 textual source files to published source maps with zero mismatches. The sole unmapped locale barrel is documented. Decision: accept the import and continue to `P4 G2 / T2.2`. |
 | 2026-11-11 | Completed `P4 G2 / T2.2`. On Node `26.13.0` and npm `11.20.0`, the exact imported client passed lint, 34 Jest suites/302 tests, development and production Webpack builds, and package inspection without unsafe runtime flags. Public exports, declarations, assets, and package paths are retained; generated bundle drift is classified as toolchain/dependency-derived because upstream supplied no lockfile. Advance to P5 review; T2.3 remains blocked. |
