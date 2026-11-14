@@ -2,7 +2,7 @@
 
 **ID:** `RM-SEC-001`  
 **Status:** Active  
-**Current position:** P5 G3 — Review retained safe-object evidence (`T3.9`)
+**Current position:** P1 G4 — Understand browser build/runtime modernization
 **Owner:** Unassigned  
 **Created:** 2026-11-09  
 **Updated:** 2026-11-14
@@ -90,7 +90,7 @@ The controlling analysis is [`../../docs/security-risk-assessment.md`](../../doc
 
 ## G3 — Eliminate unsafe merging paths
 
-**Position:** P5 G3 — Review retained safe-object evidence (`T3.9`)
+**Position:** Complete
 **Exit condition:** Security-sensitive configuration and state merges are schema-aware, own-property-only, and covered against recursive prototype manipulation.
 
 **P1 analysis:** [`../../docs/p1-g3-unsafe-merge-analysis.md`](../../docs/p1-g3-unsafe-merge-analysis.md)
@@ -105,11 +105,11 @@ The controlling analysis is [`../../docs/security-risk-assessment.md`](../../doc
 - [x] **T3.6** [Migrate common and server configuration boundaries.](../tasks/RM-SEC-001/T3.6-migrate-common-server-merge-paths.md) — P5 reviewed and accepted
 - [x] **T3.7** [Migrate dialogs and settings-application boundaries.](../tasks/RM-SEC-001/T3.7-migrate-dialogs-settings-merge-paths.md) — P5 reviewed and accepted
 - [x] **T3.8** [Integrate fork-owned packages and remove both `deepmerge` versions.](../tasks/RM-SEC-001/T3.8-integrate-safe-object-packages.md) — P5 reviewed and accepted
-- [ ] **T3.9** [Produce clean retained evidence and make the G3 closure decision.](../tasks/RM-SEC-001/T3.9-prove-safe-object-remediation.md) — P4 implemented; clean retained execution pending
+- [x] **T3.9** [Produce clean retained evidence and make the G3 closure decision.](../tasks/RM-SEC-001/T3.9-prove-safe-object-remediation.md) — P5 reviewed and accepted
 
 ## G4 — Modernize the browser build and runtime
 
-**Position:** Not started  
+**Position:** P1 G4 — Understand the problem
 **Exit condition:** The client builds reproducibly on the selected Node LTS using a maintained toolchain without legacy OpenSSL mode.
 
 - [ ] **T4.1** Record the current build inputs and produce a reference artifact for behavior comparison.
@@ -204,6 +204,7 @@ Additional evidence required before completion:
 | 2026-11-09 | Block unchanged OS.js integration and define zero high/critical production findings as a release gate. | The legacy baseline contains direct and transitive security risks in shipped dependencies and has no compatible automatic remediation path. |
 | 2026-11-09 | Treat browser, server, and build graphs as separate review surfaces. | Production exposure and supply-chain exposure require different evidence and remediation, while a minimal browser artifact can reduce attack surface. |
 | 2026-11-10 | Close G1 using retained clean evidence from commit `38e286a674cb4fe0238f703f1a5f69e25c590274`. | CI reproduced the reviewed dependency, audit, SBOM, classification, discovery, and expected-build baseline with clean source identity and validated artifact hashes. |
+| 2026-11-14 | Close G3 using retained clean evidence from commit `be53d2b364d5516f845da993d9fdbd88af46abd5`. | Hostile-input and compatibility suites passed; the root lock, reviewed shipped sources/bundles, both validated SBOMs, and audits contain no `deepmerge`. Unrelated audit findings remain blockers. |
 
 ## Progress log
 
@@ -236,6 +237,7 @@ Additional evidence required before completion:
 | 2026-11-11 | Completed `P1 G2`. Exact package analysis found four authentication-only cookie calls. The advisory's JSON-derived attribute path is not directly exposed, but the vulnerable code ships and optional persistence stores the submitted login object, including the password, in a JavaScript-readable cookie while ignoring the configured `secure` flag. Decision: advance to `P2 G2`, preferring removal of client credential persistence in favor of server-owned session state. |
 | 2026-11-11 | Completed `P2 G2`. Selected a fork-owned client source package, complete removal of `js-cookie` and browser credential replay, and a fail-closed migration error for legacy cookie enablement. Reload will require explicit login; G2 will not add an unreviewed session-resume API or absorb broader server hardening from G5. Decision: advance to `P3 G2` and create independent provenance, baseline-build, red-test, remediation, integration, and evidence tasks. |
 | 2026-11-11 | Completed `P3 G2`. Segregated the work into six sequential tasks: provenance import, baseline reproduction, red security tests, client remediation, root integration, and retained closure evidence. Only T2.1 is ready; every later task is dependency-blocked. Decision: advance to `P4 G2 / T2.1`. |
+| 2026-11-14 | Completed `P4–P5 G3 / T3.9`. Clean run `43573814585` passed on commit `be53d2b3`; artifact `14105024296` independently reconciled 20 hashes, all security/compatibility tests, both SBOMs, audits, and 124-file release scans. G3 is complete; advance to `P1 G4`. MI-P6 remains blocked. |
 | 2026-11-11 | Completed `P4 G2 / T2.1`. Imported 122 tracked files from official client tag `3.7.1` at commit `53b8376d9681cf5429e6882417da9d421b1b869c`, added explicit upstream provenance and a 123-file hash inventory, reconciled package/source-map identity with the locked npm artifact, and preserved root manifest and lockfile hashes. Advance to P5 review; T2.2 remains blocked. |
 | 2026-11-11 | Completed `P5 G2 / T2.1`. Independent review reproduced the tag commit and npm integrity, validated every inventory hash and exclusion, found no unexplained upstream-tree difference, and matched 70 of 71 textual source files to published source maps with zero mismatches. The sole unmapped locale barrel is documented. Decision: accept the import and continue to `P4 G2 / T2.2`. |
 | 2026-11-11 | Completed `P4 G2 / T2.2`. On Node `26.13.0` and npm `11.20.0`, the exact imported client passed lint, 34 Jest suites/302 tests, development and production Webpack builds, and package inspection without unsafe runtime flags. Public exports, declarations, assets, and package paths are retained; generated bundle drift is classified as toolchain/dependency-derived because upstream supplied no lockfile. Advance to P5 review; T2.3 remains blocked. |
