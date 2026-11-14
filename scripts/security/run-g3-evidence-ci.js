@@ -64,9 +64,9 @@ execute('integration_verifier', process.execPath, ['scripts/security/verify-g3-i
 execute('hostile_boundary_tests', process.execPath, ['--test', 'scripts/security/g3-safe-object.green.test.cjs'], 'security-test', 'release', 'hostile-boundary-tests.txt');
 
 const jest = path.join(sourceDir, 'vendor/osjs-client/node_modules/jest/bin/jest.js');
-execute('common_security_tests', process.execPath, [jest, '--config', 'vendor/osjs-common/package.json', '--runInBand', '--coverage=false', 'vendor/osjs-common/__tests__/safe-object.js'], 'security-test', 'common', 'common-security-tests.txt');
+execute('common_security_tests', process.execPath, [jest, '--config', 'package.json', '--runInBand', '--coverage=false', '__tests__/safe-object.js'], 'security-test', 'common', 'common-security-tests.txt', undefined, {cwd: path.join(sourceDir, 'vendor/osjs-common')});
 npm('client_tests', ['run', 'jest', '--', '--runInBand', '--coverage=false'], 'compatibility-test', 'client', 'client-tests.txt', undefined, path.join(sourceDir, 'vendor/osjs-client'));
-execute('server_tests', process.execPath, [jest, '--config', 'vendor/osjs-server/package.json', '--runInBand', '--coverage=false'], 'compatibility-test', 'server', 'server-tests.txt');
+execute('server_tests', process.execPath, [jest, '--config', 'package.json', '--runInBand', '--coverage=false'], 'compatibility-test', 'server', 'server-tests.txt', undefined, {cwd: path.join(sourceDir, 'vendor/osjs-server')});
 npm('dialogs_lint', ['test'], 'compatibility-test', 'dialogs', 'dialogs-lint.txt', undefined, path.join(sourceDir, 'vendor/osjs-dialogs'));
 npm('settings_lint', ['run', 'eslint'], 'compatibility-test', 'settings-application', 'settings-lint.txt', undefined, path.join(sourceDir, 'vendor/osjs-settings-application'));
 
