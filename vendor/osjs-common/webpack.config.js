@@ -1,10 +1,7 @@
 const path = require('path');
-const mode = process.env.NODE_ENV || 'development';
-const minimize = mode === 'production';
 const plugins = [];
 
 module.exports = {
-  mode,
   target: 'node',
   devtool: 'source-map',
   entry: [
@@ -16,9 +13,6 @@ module.exports = {
     },
     sourceMapFilename: '[file].map',
     filename: '[name].js'
-  },
-  optimization: {
-    minimize,
   },
   plugins: [
     ...plugins

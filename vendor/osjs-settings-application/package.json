@@ -5,8 +5,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "eslint": "eslint *.js",
-    "build": "node ../../node_modules/webpack/bin/webpack.js",
-    "watch": "node ../../node_modules/webpack/bin/webpack.js --watch",
+    "build": "node ../../scripts/build-webpack.cjs production",
+    "watch": "node ../../scripts/build-webpack.cjs development watch",
     "stylelint": "stylelint index.scss src/**/*.scss",
     "prepublishOnly": "npm run eslint && npm run stylelint && rm ./dist/* && NODE_ENV=production npm run build"
   },
