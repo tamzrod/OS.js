@@ -20,6 +20,8 @@ const KINDS = new Set([
   'dependency-classification',
   'package-discovery-log',
   'build-log',
+  'security-test',
+  'compatibility-test',
   'source-context'
 ]);
 
@@ -44,7 +46,7 @@ function validate(manifest, filename) {
   assert(manifest.schemaVersion === 1, 'schemaVersion must equal 1', errors);
   assert(EVIDENCE_ID.test(manifest.evidenceId || ''), 'evidenceId has an invalid format', errors);
   assert(manifest.roadmapId === 'RM-SEC-001', 'roadmapId must equal RM-SEC-001', errors);
-  assert(['G1', 'G2'].includes(manifest.goalId), 'goalId must equal G1 or G2', errors);
+  assert(['G1', 'G2', 'G3'].includes(manifest.goalId), 'goalId must equal G1, G2, or G3', errors);
   assert(isDate(manifest.generatedAt), 'generatedAt must be an ISO date-time', errors);
 
   const source = manifest.source;
