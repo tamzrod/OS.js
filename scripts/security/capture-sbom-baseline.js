@@ -17,7 +17,8 @@ const EXPECTED_VERSION = '7.0.0';
 const GOAL_ID = process.env.EVIDENCE_GOAL_ID || 'G1';
 const EXPECTED_COMPONENTS = {
   G1: {full: 1392, production: 344},
-  G2: {full: 1391, production: 1360}
+  G2: {full: 1391, production: 1360},
+  G3: {full: 1691, production: 1660}
 };
 const EXPECTED_INTEGRITY = 'sha512-5KVebwZ21EDt5N6eW0b7QPiQ7eRJwjdsfUUoJsCIdk5Y110N5viVa9PX0Wsp4yZI+y75XhVNut8EalY8amhc7g==';
 const sha256Buffer = value => crypto.createHash('sha256').update(value).digest('hex');
@@ -102,6 +103,9 @@ function structuralStats(document, id) {
   }
   if (GOAL_ID === 'G2' && [...identities].some(identity => identity.startsWith('js-cookie@'))) {
     throw new Error(`${id}: forbidden js-cookie component is present`);
+  }
+  if (GOAL_ID === 'G3' && [...identities].some(identity => identity.startsWith('deepmerge@'))) {
+    throw new Error(`${id}: forbidden deepmerge component is present`);
   }
   return {components: components.length, dependencies: (document.dependencies || []).length, unresolvedRefs};
 }
