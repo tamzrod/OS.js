@@ -32,9 +32,7 @@
     "async-dependency-graph": "^1.1.4",
     "omit-deep": "^0.3.0"
   },
-  "devDependencies": {
-    "@osjs/dev-meta": "^2.0.0"
-  },
+  "devDependencies": {},
   "author": "Anders Evenrud <andersevenrud@gmail.com>",
   "license": "BSD-2-Clause",
   "bugs": {
