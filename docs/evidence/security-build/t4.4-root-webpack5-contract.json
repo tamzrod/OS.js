@@ -1,0 +1,229 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "2d0db4bb0d747360557bf33b01f6efce229278d6",
+  "runtimeVersion": "Node v26.13.0",
+  "buildSystem": "webpack 5.112.2",
+  "mode": "production",
+  "commandPolicy": {
+    "legacyOpenSSLProvider": false
+  },
+  "summary": {
+    "files": 38,
+    "javascript": 2,
+    "css": 2,
+    "sourceMaps": 4,
+    "fonts": 24,
+    "images": 3
+  },
+  "html": {
+    "title": "OS.js",
+    "references": [
+      "favicon.png",
+      "osjs.css",
+      "osjs.js",
+      "vendors~osjs.css",
+      "vendors~osjs.js"
+    ],
+    "missingReferences": []
+  },
+  "requiredAssets": [
+    "index.html",
+    "favicon.png",
+    "osjs.js",
+    "osjs.css",
+    "vendors~osjs.js",
+    "vendors~osjs.css"
+  ],
+  "assets": [
+    {
+      "path": ".gitignore",
+      "bytes": 2,
+      "sha256": "cdbcae15105d6b781e620813c79c7e868740d4e9cc53ce6f5fcbbc12387adf4b"
+    },
+    {
+      "path": "0a980ab62d8f976c8392.png",
+      "bytes": 1034,
+      "sha256": "709719c1d3aad1d8d36bf3cdf47ce5c37f2c5a615a435a59c9c5f53e7afeb03d"
+    },
+    {
+      "path": "c321a96bf36fe6ee8d62.png",
+      "bytes": 102543,
+      "sha256": "195a76837c40b0965f156ecd2dd749e321ad0c4c0cd5a90dea94b10c0ee056c5"
+    },
+    {
+      "path": "favicon.png",
+      "bytes": 7625,
+      "sha256": "d0e9af43a6ee7c78be88270dd13bf89aafafee8495097538e25533b4d78e1442"
+    },
+    {
+      "path": "fonts/roboto-latin-100.woff",
+      "bytes": 20368,
+      "sha256": "c4ead4de9f7aff237d06b530ead8413d1357427f6a925944342bb4e2b1dce6d0"
+    },
+    {
+      "path": "fonts/roboto-latin-100.woff2",
+      "bytes": 15808,
+      "sha256": "12823d585605238121554aff8bb060a235dc36f37efd9fb1e7e6ea1a9622bc35"
+    },
+    {
+      "path": "fonts/roboto-latin-100italic.woff",
+      "bytes": 21704,
+      "sha256": "5a3a9840414768fa2ec988b33c9e966fdffe2db7e560a270b3a9c6ba01f17718"
+    },
+    {
+      "path": "fonts/roboto-latin-100italic.woff2",
+      "bytes": 17008,
+      "sha256": "26c91ea43b79b1d456695de468f503e0141e9eb767fe164daf8bf3f3a101256f"
+    },
+    {
+      "path": "fonts/roboto-latin-300.woff",
+      "bytes": 20348,
+      "sha256": "76b05400fff9da5b43862e3713099e3913916a629560265ed24b19d031227cbf"
+    },
+    {
+      "path": "fonts/roboto-latin-300.woff2",
+      "bytes": 15784,
+      "sha256": "29f6da0a8c21c5681511bb9b08663d3fd2c5d09c9bd8054ec354c563b8c8b7c1"
+    },
+    {
+      "path": "fonts/roboto-latin-300italic.woff",
+      "bytes": 22204,
+      "sha256": "0be0ae6efd852b3695cb7a76286096f60e93b7d31c16e0b71ca35eced7fde8f6"
+    },
+    {
+      "path": "fonts/roboto-latin-300italic.woff2",
+      "bytes": 17448,
+      "sha256": "9e02524ebecd813fc4bcb40336bb2b033871b1fdcbd234229dee4189dc44850d"
+    },
+    {
+      "path": "fonts/roboto-latin-400.woff",
+      "bytes": 20268,
+      "sha256": "c1dc87f99c7ff228806117d58f085c6c573057fa237228081802b7d8d3cf7684"
+    },
+    {
+      "path": "fonts/roboto-latin-400.woff2",
+      "bytes": 15736,
+      "sha256": "48c3fa6f86c54f1d9bb519220713d4b0a1f8cd1a589a3c03b9fa82e98ecb13e3"
+    },
+    {
+      "path": "fonts/roboto-latin-400italic.woff",
+      "bytes": 21952,
+      "sha256": "80815efe3bd9317c666df0f2e6d701335e178954f64eb1e99103fea81c2aa137"
+    },
+    {
+      "path": "fonts/roboto-latin-400italic.woff2",
+      "bytes": 17324,
+      "sha256": "401e6c25801ba2d59795d05a6dd973f95566b41070d3939ba9307d65860ae50e"
+    },
+    {
+      "path": "fonts/roboto-latin-500.woff",
+      "bytes": 20464,
+      "sha256": "ba98f991d002c6bfaaf7b874652ffdcde9261a86925db87df3ed2861ea080adf"
+    },
+    {
+      "path": "fonts/roboto-latin-500.woff2",
+      "bytes": 15872,
+      "sha256": "24369e1b2461af9dcefecaf9cc93d64cf22a4c5bac32506100b9e21014507bcf"
+    },
+    {
+      "path": "fonts/roboto-latin-500italic.woff",
+      "bytes": 22020,
+      "sha256": "6f2974a396dc0695d071e842551e7af9c72f0ef8d2d076fe73a523b1a3c2d0e7"
+    },
+    {
+      "path": "fonts/roboto-latin-500italic.woff2",
+      "bytes": 17316,
+      "sha256": "8688b62042738eba39e8bc2edf86ae832905e8ee3241b55835526465d9eb8e1b"
+    },
+    {
+      "path": "fonts/roboto-latin-700.woff",
+      "bytes": 20356,
+      "sha256": "806ea46c426af8fc24e5cf42a210228739696933d36299eb28aee64f69fc71f1"
+    },
+    {
+      "path": "fonts/roboto-latin-700.woff2",
+      "bytes": 15816,
+      "sha256": "b4d07892cde715d50bb69c1982df496385d1dfd8f9d1867c31f19a3c8634cfae"
+    },
+    {
+      "path": "fonts/roboto-latin-700italic.woff",
+      "bytes": 21588,
+      "sha256": "eec142608e8b417e2acb6e5301a750047a04e2c5a6563223caae499e19ea08ee"
+    },
+    {
+      "path": "fonts/roboto-latin-700italic.woff2",
+      "bytes": 17020,
+      "sha256": "5cc2e47701ee7dc9e0ba16303e170db0fcb2df2989b7763ac705893d37b4e237"
+    },
+    {
+      "path": "fonts/roboto-latin-900.woff",
+      "bytes": 20392,
+      "sha256": "e8586f9db7c0503a984c944ad2f1f783bf6051aea2a066bc21fdedc8fe7fa68a"
+    },
+    {
+      "path": "fonts/roboto-latin-900.woff2",
+      "bytes": 15712,
+      "sha256": "edcdf3f60252a5987bedc9c86b5422d972ba509bbbe60d58925310c744a33e28"
+    },
+    {
+      "path": "fonts/roboto-latin-900italic.woff",
+      "bytes": 22304,
+      "sha256": "6a80d9cb4f49b5951b407f8905cfa887f1e3f2e2ec4369bf58eac633b2e05948"
+    },
+    {
+      "path": "fonts/roboto-latin-900italic.woff2",
+      "bytes": 17520,
+      "sha256": "95e60b9391931dc4d5cc9b3b0c28b0eb2751b9066037f7594ba76c47739c187b"
+    },
+    {
+      "path": "index.html",
+      "bytes": 489,
+      "sha256": "c3534f6e71b0e249c1d842e82bc0f4f18c105d06391a219c99864e296517f8ec"
+    },
+    {
+      "path": "osjs.css",
+      "bytes": 1611,
+      "sha256": "6dffc6fb8dcf91daeef5ffc76b012ff038f2dce7cfbbc3eb0a0090f072b07ce1"
+    },
+    {
+      "path": "osjs.css.map",
+      "bytes": 2185,
+      "sha256": "9f5ce5b1c9fc37a72b9085a9d6f8f25f04b5346ede58c50f2265c31b6627afb4"
+    },
+    {
+      "path": "osjs.js",
+      "bytes": 339833,
+      "sha256": "b05da3cc2496ee795d9820ab9d3d708be9b76774b4fdf9422ef036570ed258f1"
+    },
+    {
+      "path": "osjs.js.LICENSE.txt",
+      "bytes": 1542,
+      "sha256": "1803ed3337ad1e75a20f551875048a1d84cd8f0437e2c23610d6f7004fd904f2"
+    },
+    {
+      "path": "osjs.js.map",
+      "bytes": 1156352,
+      "sha256": "11467c930b1033231e8edc3bb2c033bd7c056216e926e7245f2196e394d41226"
+    },
+    {
+      "path": "vendors~osjs.css",
+      "bytes": 29959,
+      "sha256": "491c4d7e0a6d9d138f68e181ca5df0fcfb3509304270b936b251f05c3f8d2301"
+    },
+    {
+      "path": "vendors~osjs.css.map",
+      "bytes": 54638,
+      "sha256": "bdb2eca0e2535d31ee3eb6f1258152add96b0ebaaae1e945453f70043264cc2d"
+    },
+    {
+      "path": "vendors~osjs.js",
+      "bytes": 56445,
+      "sha256": "dfe683ae6756d428317dd517bebeabed2664786dde1e113a91e333851654b370"
+    },
+    {
+      "path": "vendors~osjs.js.map",
+      "bytes": 247248,
+      "sha256": "7f99591bd0a687396c1c26ce4efae67a1626936d3e4c0ddbd17e1def082b55f3"
+    }
+  ]
+}

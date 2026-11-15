@@ -17,8 +17,8 @@
     "make:application": "osjs-cli make:application",
     "make:iframe-application": "osjs-cli make:iframe-application",
     "make:provider": "osjs-cli make:provider",
-    "build": "webpack",
-    "watch": "webpack --watch"
+    "build": "node scripts/build-webpack.cjs production",
+    "watch": "node scripts/build-webpack.cjs development watch"
   },
   "keywords": [
     "osjs"

@@ -5,9 +5,9 @@ const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
 
-const [directory, sourceCommit, runtimeVersion] = process.argv.slice(2);
+const [directory, sourceCommit, runtimeVersion, buildSystem = 'webpack 4.46.0'] = process.argv.slice(2);
 if (!runtimeVersion) {
-  console.error('Usage: capture-build-contract.cjs <dist-directory> <source-commit> <runtime-version>');
+  console.error('Usage: capture-build-contract.cjs <dist-directory> <source-commit> <runtime-version> [build-system]');
   process.exit(2);
 }
 
@@ -24,7 +24,9 @@ const assets = walk(root).map(filename => ({
 })).sort((a, b) => a.path.localeCompare(b.path));
 const bySuffix = suffix => assets.filter(asset => asset.path.endsWith(suffix)).length;
 const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
-const references = [...html.matchAll(/(?:src|href)=["']([^"']+)["']/g)].map(match => match[1]).sort();
+const references = [...html.matchAll(/(?:src|href)=(?:"([^"]+)"|'([^']+)'|([^\s>]+))/g)]
+  .map(match => match[1] || match[2] || match[3])
+  .sort();
 const missingReferences = references.filter(reference =>
   !/^(?:https?:|data:|#)/.test(reference) && !fs.existsSync(path.join(root, reference.replace(/^\//, '')))
 );
@@ -33,7 +35,7 @@ const contract = {
   schemaVersion: 1,
   sourceCommit,
   runtimeVersion,
-  buildSystem: 'webpack 4.46.0',
+  buildSystem,
   mode: 'production',
   commandPolicy: {legacyOpenSSLProvider: false},
   summary: {
