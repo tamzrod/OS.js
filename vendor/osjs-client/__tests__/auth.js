@@ -30,7 +30,7 @@ describe('Auth', () => {
       password: 'demo'
     })
       .then(result => {
-        expect(cb).toBeCalled();
+        expect(cb).toHaveBeenCalled();
         expect(result).toBe(true);
       });
   });
@@ -85,7 +85,7 @@ describe('Auth', () => {
       password: 'test'
     });
 
-    setTimeout(() => expect(fn).toBeCalled(), 25);
+    setTimeout(() => expect(fn).toHaveBeenCalled(), 25);
   });
 
   test('#login - failure', () => {
@@ -106,8 +106,8 @@ describe('Auth', () => {
     return a.login()
       .then(() => a.logout())
       .then(() => {
-        expect(fnError).toBeCalled();
-        expect(fnStop).toBeCalled();
+        expect(fnError).toHaveBeenCalled();
+        expect(fnStop).toHaveBeenCalled();
       });
   });
 });

@@ -105,6 +105,7 @@
     ]
   },
   "jest": {
+    "testEnvironment": "jsdom",
     "collectCoverage": true,
     "coverageReporters": [
       "lcov"

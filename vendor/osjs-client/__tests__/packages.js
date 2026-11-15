@@ -124,7 +124,7 @@ describe('Packages', () =>  {
 
     return packages.launch('Package2')
       .then(() => {
-        expect(cb).toBeCalled();
+        expect(cb).toHaveBeenCalled();
       });
   });
 
@@ -151,7 +151,7 @@ describe('Packages', () =>  {
 
         return packages.launch('Package4')
           .then(() => {
-            expect(fn).toBeCalled();
+            expect(fn).toHaveBeenCalled();
           });
       });
   });
@@ -180,7 +180,7 @@ describe('Packages', () =>  {
 
     return pkgs.launch(name)
       .then(() => {
-        expect(fn).toBeCalled();
+        expect(fn).toHaveBeenCalled();
       });
   });
 });

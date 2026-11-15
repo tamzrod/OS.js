@@ -8,7 +8,7 @@ describe('Websocket', () => {
     const onopen = jest.fn(() => {});
     ws.on('open', onopen);
     ws.open();
-    setTimeout(() => expect(onopen).toBeCalled(), 10);
+    setTimeout(() => expect(onopen).toHaveBeenCalled(), 10);
   });
 
   test('Should send message', () => {
@@ -21,6 +21,6 @@ describe('Websocket', () => {
     const onclose = jest.fn(() => {});
     ws.on('close', onclose);
     ws.close();
-    expect(onclose).toBeCalled();
+    expect(onclose).toHaveBeenCalled();
   });
 });

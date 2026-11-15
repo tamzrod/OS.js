@@ -26,9 +26,9 @@ function retain(id, kind, scope, suffix, type, content) {
     sha256: hash(target), retention: 'ci', location: `ci-artifact:${filename}`});
   return id;
 }
-function run(id, executable, args, kind, scope, accept = code => code === 0) {
+function run(id, executable, args, kind, scope, accept = code => code === 0, cwd = root) {
   const startedAt = new Date().toISOString();
-  const result = spawnSync(executable, args, {cwd: root, env, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024});
+  const result = spawnSync(executable, args, {cwd, env, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024});
   if (result.error) throw result.error;
   const exitCode = result.status ?? 255;
   const artifactId = retain(id, kind, scope, `${id}.txt`, 'text/plain', `[stdout]\n${result.stdout}\n[stderr]\n${result.stderr}`);
@@ -41,7 +41,6 @@ const node = (id, args, kind = 'security-test', scope = 'release') => run(id, pr
 const npm = (id, args, kind, scope, accept) => run(id, process.execPath, [npmCli, ...args], kind, scope, accept);
 
 node('toolchain', ['scripts/security/verify-g4-toolchain.cjs']);
-npm('install_client_test_graph', ['ci', '--ignore-scripts', '--prefix', 'vendor/osjs-client'], 'install-log', 'client');
 for (const name of ['common', 'client', 'dialogs', 'settings-application']) {
   npm(`build_${name}`, ['run', '--prefix', `vendor/osjs-${name}`, 'build'], 'build-log', name);
 }
@@ -51,7 +50,8 @@ node('root_contract', ['scripts/security/verify-g4-root-build.cjs']);
 node('browser_policy', ['scripts/security/verify-g4-browser-policy.cjs']);
 node('g3_integration', ['scripts/security/verify-g3-integration.cjs']);
 node('hostile_boundaries', ['--test', 'scripts/security/g3-safe-object.green.test.cjs']);
-npm('client_tests', ['run', '--prefix', 'vendor/osjs-client', 'jest', '--', '--runInBand', '--coverage=false'], 'compatibility-test', 'client');
+run('client_tests', path.join(toolDir, 'node_modules/jest/bin/jest.js'), ['--runInBand', '--coverage=false'],
+  'compatibility-test', 'client', code => code === 0, path.join(root, 'vendor/osjs-client'));
 
 const full = npm('audit_full', ['audit', '--json'], 'npm-audit', 'full', code => code === 1);
 const production = npm('audit_production', ['audit', '--omit=dev', '--json'], 'npm-audit', 'production', code => code === 1);
