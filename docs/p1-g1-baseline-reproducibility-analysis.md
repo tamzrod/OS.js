@@ -66,7 +66,7 @@ Results:
 1. `npm ci --ignore-scripts` completed.
 2. `npm run package:discover` completed and discovered 11 packages.
 3. `npm run build` failed in Webpack 4 with `ERR_OSSL_EVP_UNSUPPORTED` from `crypto.createHash`.
-4. No `--openssl-legacy-provider` flag was used because the security roadmap explicitly prohibits adopting that workaround.
+4. No legacy OpenSSL provider override was used because the security roadmap explicitly prohibits adopting that workaround.
 
 The experiment proves that the unbounded `node >=10` engine declaration is inaccurate for the current runtime. It also establishes that install success alone is not a reproducible-build result.
 
@@ -106,7 +106,7 @@ The experiment proves that the unbounded `node >=10` engine declaration is inacc
 - Replacing unsafe merge paths; that belongs to G3.
 - Modernizing the official server; that belongs to G5.
 - Claiming that the baseline is safe to deploy.
-- Using `--openssl-legacy-provider` as a supported solution.
+- Using the legacy OpenSSL provider override as a supported solution.
 
 ## Constraints
 

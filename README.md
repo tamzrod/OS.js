@@ -84,7 +84,7 @@ You can also install this directly onto your system by using the following set o
 > `.nvmrc` to select the supported Node version. Other versions are rejected by
 > the project manifest. The legacy Webpack build is not yet compatible with this
 > runtime; remediation is tracked by the security roadmap and must not use
-> `--openssl-legacy-provider`.
+> the legacy OpenSSL provider override.
 
 ```bash
 # Install the exact locked dependencies

@@ -43,7 +43,7 @@ Byte identity is not expected across a bundler/minifier migration. T4.1 therefor
 ## Constraints and boundaries
 
 - Node 26.13.0/npm 11.20.0 remains the enforced runtime unless a later explicit roadmap decision changes it.
-- No command, script, CI setting, or documentation may introduce `--openssl-legacy-provider`.
+- No command, script, CI setting, or documentation may introduce a legacy OpenSSL provider override.
 - A temporary older runtime may be used only in an isolated reference-capture task if its exact identity and containment are recorded; its output cannot be release evidence.
 - G4 owns browser/package build tooling. Server dependency and denial-of-service remediation remains G5; minimal browser packaging remains G6.
 - Source maps require an explicit release policy because they can disclose source even when they are necessary for comparison and debugging.

@@ -38,7 +38,7 @@ Gate: a production root build succeeds from clean source and matches the normali
 
 Serve the artifact from a clean static host. Verify bootstrap, package metadata, chunks, CSS, fonts/images, CSP-compatible behavior, and source-map policy. Search repository configuration, scripts, CI, and documentation for legacy-provider workarounds.
 
-Gate: smoke tests pass and no `--openssl-legacy-provider` occurrence or environment equivalent exists.
+Gate: smoke tests pass and no legacy OpenSSL provider override or environment equivalent exists.
 
 ### 6. Reconcile security evidence
 

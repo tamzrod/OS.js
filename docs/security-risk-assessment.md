@@ -59,7 +59,7 @@ Multiple OS.js packages use `deepmerge`, and two major versions are locked. All 
 
 ### 4. Toolchain and runtime
 
-Webpack 4 and its plugin ecosystem account for many transitive findings and make modern Node support brittle. The existing `engines.node` value (`>=10.0.0`) falsely implies compatibility with every later Node release and permits end-of-life runtimes. `--openssl-legacy-provider` must not be adopted as a permanent workaround because it re-enables legacy cryptographic behavior rather than fixing the toolchain.
+Webpack 4 and its plugin ecosystem account for many transitive findings and make modern Node support brittle. The existing `engines.node` value (`>=10.0.0`) falsely implies compatibility with every later Node release and permits end-of-life runtimes. The legacy OpenSSL provider override must not be adopted as a permanent workaround because it re-enables legacy cryptographic behavior rather than fixing the toolchain.
 
 The fork should select an actively supported Node LTS line, pin it in developer and CI configuration, set a bounded engine range, and replace Webpack 4 and incompatible plugins. The migration must produce equivalent assets and preserve CSP compatibility.
 
@@ -68,7 +68,7 @@ The fork should select an actively supported Node LTS line, pin it in developer 
 1. **Establish a reproducible baseline.** Pin the supported Node and npm versions, regenerate the lockfile intentionally, record an SBOM, and make `npm ci` the only CI install path.
 2. **Remove vulnerable cookie handling.** Replace `js-cookie` usage or port the client into the fork with a tested safe adapter. Add regression tests using JSON with `__proto__`, `constructor`, and inherited cookie attributes.
 3. **Replace unsafe merges.** Inventory every `deepmerge` call and replace security-sensitive merges with schema-aware, own-property-only operations. Add nested prototype-pollution tests.
-4. **Modernize the browser build.** Move off Webpack 4 and obsolete plugins without using `--openssl-legacy-provider`. Pin an active Node LTS line and test clean builds on it.
+4. **Modernize the browser build.** Move off Webpack 4 and obsolete plugins without using a legacy OpenSSL provider override. Pin an active Node LTS line and test clean builds on it.
 5. **Modernize or remove the official server.** Upgrade HTTP, WebSocket, upload, glob, UUID, and archive paths; remove unused server features and packages to reduce attack surface.
 6. **Separate browser and server deliverables.** Produce a minimal browser-only package so server and CLI dependencies are not shipped where they are unnecessary.
 7. **Restore security automation.** Run production audit, full audit, lockfile review, secret scanning, SAST, dependency review, and targeted prototype-pollution/DoS regression tests in CI.
@@ -81,7 +81,7 @@ MI-P6 may resume only when all of the following are true:
 - `npm audit --omit=dev --audit-level=high` reports **zero high and zero critical** findings.
 - Full-tree high/critical findings are either removed or documented as non-shipping build-only risks with tested containment; the target should be zero.
 - The vulnerable `js-cookie` dependency and unsafe merge paths are removed or demonstrably remediated by tests.
-- Builds and tests pass on the selected supported Node LTS without `--openssl-legacy-provider`.
+- Builds and tests pass on the selected supported Node LTS without a legacy OpenSSL provider override.
 - The dependency lockfile is committed, deterministic under `npm ci`, and reviewed.
 - Security regression tests cover hostile cookie attributes, recursive prototype keys, oversized/malformed HTTP inputs, WebSocket resource exhaustion, and relevant upload/archive paths.
 - A browser-only production artifact is verified not to contain server, CLI, or development dependencies.

@@ -9,7 +9,7 @@
 
 ## Goal outcome
 
-A clean environment can reproduce a documented dependency installation and security-evidence set from an exact commit and lockfile using pinned, supported tools. The evidence must record the legacy build failure honestly and must not enable `--openssl-legacy-provider`.
+A clean environment can reproduce a documented dependency installation and security-evidence set from an exact commit and lockfile using pinned, supported tools. The evidence must record the legacy build failure honestly and must not enable a legacy OpenSSL provider override.
 
 ## Decisions
 
