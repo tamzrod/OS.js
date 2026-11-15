@@ -122,7 +122,7 @@ The controlling analysis is [`../../docs/security-risk-assessment.md`](../../doc
 - [x] **T4.4** [Migrate the root browser build and prove deterministic production output.](../tasks/RM-SEC-001/T4.4-migrate-root-build.md) — P5 accepted at `997182c7`
 - [x] **T4.5** [Verify static-host browser behavior, CSP/assets/source maps, and workaround absence.](../tasks/RM-SEC-001/T4.5-verify-browser-build.md) — P5 accepted at `06bd070a`
 - [x] **T4.6** [Reconcile build-chain audits, SBOMs, dependency scans, and residual ownership.](../tasks/RM-SEC-001/T4.6-reconcile-build-security.md) — P5 reviewed and accepted
-- [ ] **T4.7** [Produce clean retained evidence and make the G4 closure decision.](../tasks/RM-SEC-001/T4.7-prove-build-modernization.md) — P4 ready
+- [ ] **T4.7** [Produce clean retained evidence and make the G4 closure decision.](../tasks/RM-SEC-001/T4.7-prove-build-modernization.md) — workflow implemented; remote run pending
 
 ## G5 — Reduce and patch the server surface
 

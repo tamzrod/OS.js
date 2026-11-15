@@ -18,7 +18,8 @@ const GOAL_ID = process.env.EVIDENCE_GOAL_ID || 'G1';
 const EXPECTED_COMPONENTS = {
   G1: {full: 1392, production: 344},
   G2: {full: 1391, production: 1360},
-  G3: {full: 1691, production: 1660}
+  G3: {full: 1691, production: 1660},
+  G4: {full: 1004, production: 437}
 };
 const EXPECTED_INTEGRITY = 'sha512-5KVebwZ21EDt5N6eW0b7QPiQ7eRJwjdsfUUoJsCIdk5Y110N5viVa9PX0Wsp4yZI+y75XhVNut8EalY8amhc7g==';
 const sha256Buffer = value => crypto.createHash('sha256').update(value).digest('hex');
@@ -106,6 +107,14 @@ function structuralStats(document, id) {
   }
   if (GOAL_ID === 'G3' && [...identities].some(identity => identity.startsWith('deepmerge@'))) {
     throw new Error(`${id}: forbidden deepmerge component is present`);
+  }
+  if (GOAL_ID === 'G4') {
+    for (const forbidden of ['deepmerge@', 'js-cookie@', '@osjs/dev-meta@', 'file-loader@',
+      'optimize-css-assets-webpack-plugin@', 'webpack@4.']) {
+      if ([...identities].some(identity => identity.startsWith(forbidden))) {
+        throw new Error(`${id}: forbidden G4 component ${forbidden} is present`);
+      }
+    }
   }
   return {components: components.length, dependencies: (document.dependencies || []).length, unresolvedRefs};
 }
