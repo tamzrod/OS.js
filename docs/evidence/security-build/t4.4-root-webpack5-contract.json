@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "2d0db4bb0d747360557bf33b01f6efce229278d6",
+  "sourceCommit": "2f8b874049442c15d77baab2ae165779aa3833cf",
   "runtimeVersion": "Node v26.13.0",
   "buildSystem": "webpack 5.112.2",
   "mode": "production",
