@@ -41,6 +41,7 @@ const node = (id, args, kind = 'security-test', scope = 'release') => run(id, pr
 const npm = (id, args, kind, scope, accept) => run(id, process.execPath, [npmCli, ...args], kind, scope, accept);
 
 node('toolchain', ['scripts/security/verify-g4-toolchain.cjs']);
+npm('install_client_test_graph', ['ci', '--ignore-scripts', '--prefix', 'vendor/osjs-client'], 'install-log', 'client');
 for (const name of ['common', 'client', 'dialogs', 'settings-application']) {
   npm(`build_${name}`, ['run', '--prefix', `vendor/osjs-${name}`, 'build'], 'build-log', name);
 }
