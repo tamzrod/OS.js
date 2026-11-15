@@ -75,7 +75,8 @@ retain('source_identity', 'source-context', 'source', 'source-identity.json', 'a
 const manifest = {schemaVersion: 1, evidenceId, roadmapId: 'RM-SEC-001', goalId: 'G4', generatedAt: new Date().toISOString(),
   source: {commit, dirty: false, statusSha256: null, lockfilePath: 'package-lock.json', lockfileSha256: lockHash},
   environment: {os: process.platform, arch: process.arch, nodeVersion: process.version,
-    npmVersion: spawnSync(process.execPath, [npmCli, '--version'], {encoding: 'utf8', env}).stdout.trim()}, commands, artifacts};
+    npmVersion: spawnSync(process.execPath, [npmCli, '--version'], {encoding: 'utf8', env}).stdout.trim(),
+    registry: spawnSync(process.execPath, [npmCli, 'config', 'get', 'registry'], {encoding: 'utf8', env}).stdout.trim()}, commands, artifacts};
 const manifestFile = path.join(outputRoot, `${evidenceId}_manifest.json`);
 fs.writeFileSync(manifestFile, `${JSON.stringify(manifest, null, 2)}\n`);
 const manifests = [manifestFile, ...fs.readdirSync(sbomDir).filter(name => name.endsWith('_manifest.json')).map(name => path.join(sbomDir, name))];
