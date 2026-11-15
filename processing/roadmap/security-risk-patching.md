@@ -2,7 +2,7 @@
 
 **ID:** `RM-SEC-001`  
 **Status:** Active  
-**Current position:** P5 G4 — Review build-chain security reconciliation (`T4.6`)
+**Current position:** P4 G4 — Produce clean retained modernization evidence (`T4.7`)
 **Owner:** Unassigned  
 **Created:** 2026-11-09  
 **Updated:** 2026-11-16
@@ -109,7 +109,7 @@ The controlling analysis is [`../../docs/security-risk-assessment.md`](../../doc
 
 ## G4 — Modernize the browser build and runtime
 
-**Position:** P5 G4 — Review build-chain security reconciliation (`T4.6`)
+**Position:** P4 G4 — Produce clean retained modernization evidence (`T4.7`)
 **Exit condition:** The client builds reproducibly on the selected Node LTS using a maintained toolchain without legacy OpenSSL mode.
 
 **P1 analysis:** [`../../docs/p1-g4-build-runtime-modernization-analysis.md`](../../docs/p1-g4-build-runtime-modernization-analysis.md)
@@ -121,8 +121,8 @@ The controlling analysis is [`../../docs/security-risk-assessment.md`](../../doc
 - [x] **T4.3** [Migrate common, client, dialogs, and settings builds while preserving library contracts.](../tasks/RM-SEC-001/T4.3-migrate-library-builds.md) — P5 accepted at `16b3a990`
 - [x] **T4.4** [Migrate the root browser build and prove deterministic production output.](../tasks/RM-SEC-001/T4.4-migrate-root-build.md) — P5 accepted at `997182c7`
 - [x] **T4.5** [Verify static-host browser behavior, CSP/assets/source maps, and workaround absence.](../tasks/RM-SEC-001/T4.5-verify-browser-build.md) — P5 accepted at `06bd070a`
-- [ ] **T4.6** [Reconcile build-chain audits, SBOMs, dependency scans, and residual ownership.](../tasks/RM-SEC-001/T4.6-reconcile-build-security.md) — P4 complete; P5 review pending
-- [ ] **T4.7** [Produce clean retained evidence and make the G4 closure decision.](../tasks/RM-SEC-001/T4.7-prove-build-modernization.md) — blocked by T4.6
+- [x] **T4.6** [Reconcile build-chain audits, SBOMs, dependency scans, and residual ownership.](../tasks/RM-SEC-001/T4.6-reconcile-build-security.md) — P5 reviewed and accepted
+- [ ] **T4.7** [Produce clean retained evidence and make the G4 closure decision.](../tasks/RM-SEC-001/T4.7-prove-build-modernization.md) — P4 ready
 
 ## G5 — Reduce and patch the server surface
 
@@ -257,6 +257,7 @@ Additional evidence required before completion:
 | 2026-11-15 | Completed `P4 G4 / T4.5`. Chromium loaded the clean static artifact and CSP-enabled variant through the OS.js login UI with all JS/CSS/font/image resources present; only the expected static-host `/login` warning remained. Four public maps and correct MIME/nosniff behavior were verified, and repository/operational scans contain no legacy-provider command token or override. Advance to P5 review. |
 | 2026-11-15 | Completed `P5 G4 / T4.5`. Fresh remote commit `06bd070a` replayed browser-policy, root/library-build, and G3 verifiers with a clean tree. Review accepted the bounded static-host `/login` warning and explicit four-map public-artifact policy. Continue to `P4 G4 / T4.6`. |
 | 2026-11-16 | Completed `P4 G4 / T4.6`. Fresh audits reduced the G3 full baseline from 62 high/12 critical to 21 high/2 critical; production remains blocked at 17 high/2 critical. Reproducible SBOMs and a retained verifier prove the obsolete Webpack 4/meta-loader chain is absent and assign every residual production high/critical finding to G5 server, CLI, or removable application work. Advance to P5 review; MI-P6 remains blocked. |
+| 2026-11-16 | Completed `P5 G4 / T4.6`. Fresh remote commit `48de1503` reproduced both audit inventories and SBOM structures, every G3/G4 verifier, and the Node 26 production build with a clean tree. Accept T4.6 and continue to `P4 G4 / T4.7`; MI-P6 remains blocked at 17 high/2 critical production findings. |
 | 2026-11-11 | Completed `P4 G2 / T2.1`. Imported 122 tracked files from official client tag `3.7.1` at commit `53b8376d9681cf5429e6882417da9d421b1b869c`, added explicit upstream provenance and a 123-file hash inventory, reconciled package/source-map identity with the locked npm artifact, and preserved root manifest and lockfile hashes. Advance to P5 review; T2.2 remains blocked. |
 | 2026-11-11 | Completed `P5 G2 / T2.1`. Independent review reproduced the tag commit and npm integrity, validated every inventory hash and exclusion, found no unexplained upstream-tree difference, and matched 70 of 71 textual source files to published source maps with zero mismatches. The sole unmapped locale barrel is documented. Decision: accept the import and continue to `P4 G2 / T2.2`. |
 | 2026-11-11 | Completed `P4 G2 / T2.2`. On Node `26.13.0` and npm `11.20.0`, the exact imported client passed lint, 34 Jest suites/302 tests, development and production Webpack builds, and package inspection without unsafe runtime flags. Public exports, declarations, assets, and package paths are retained; generated bundle drift is classified as toolchain/dependency-derived because upstream supplied no lockfile. Advance to P5 review; T2.3 remains blocked. |
