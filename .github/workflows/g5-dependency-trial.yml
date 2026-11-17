@@ -6,6 +6,7 @@ on:
       - codex/rm-sec-001-g1-baseline
     paths:
       - 'scripts/security/g5-music-removal-trial.cjs'
+      - 'src/server/security-profile.js'
       - '.github/workflows/g5-dependency-trial.yml'
   workflow_dispatch:
 
