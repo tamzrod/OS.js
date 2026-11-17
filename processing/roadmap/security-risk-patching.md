@@ -2,7 +2,7 @@
 
 **ID:** `RM-SEC-001`  
 **Status:** Active  
-**Current position:** P2 G5 — Plan the minimal server security boundary
+**Current position:** P3 G5 — Define T5.1 implementation contract
 **Owner:** Unassigned  
 **Created:** 2026-11-09  
 **Updated:** 2026-11-16
@@ -126,12 +126,14 @@ The controlling analysis is [`../../docs/security-risk-assessment.md`](../../doc
 
 ## G5 — Reduce and patch the server surface
 
-**Position:** P2 G5 — Plan the minimal server security boundary
+**Position:** P3 G5 — Define T5.1 implementation contract
 **Exit condition:** Required server capabilities use maintained dependencies and have tested resource limits; unused capabilities are absent.
 
 **P1 analysis:** [`../../docs/p1-g5-server-surface-analysis.md`](../../docs/p1-g5-server-surface-analysis.md)
 
-- [ ] **T5.1** Decide which official server capabilities Media Intelligence actually requires.
+**P2 plan:** [`../../docs/p2-g5-minimal-server-security-plan.md`](../../docs/p2-g5-minimal-server-security-plan.md)
+
+- [ ] **T5.1** [Define and test the production server capability contract and fail-closed startup boundary.](../tasks/RM-SEC-001/T5.1-capability-contract.md)
 - [ ] **T5.2** Remove unused server providers, upload/archive handlers, CLI features, and applications from the production graph.
 - [ ] **T5.3** Upgrade or replace HTTP parsing, query parsing, WebSocket, glob, UUID, archive, and metadata-processing chains.
 - [ ] **T5.4** Add explicit request body, header, timeout, connection, upload, and decompression limits.
@@ -215,6 +217,8 @@ Additional evidence required before completion:
 | 2026-11-18 | Close G4 using retained clean evidence from commit `70c981165f9184b123a0e45e361285c8be11b683`. | Run `43777453710` and artifact `14187270695` prove supported Node 26/Webpack 5 builds, security and browser contracts, tests, audits, SBOMs, and workaround absence from clean source. Production findings remain G5 blockers. |
 
 ## Progress log
+
+| 2026-11-18 | Completed P2 G5 at commit `ac413200`: selected default-off production capabilities, optional server profile, fail-closed startup gates, and bounded T5.1–T5.6 order. Advance to P3 G5 and T5.1 contract; G5 remains open. |
 
 | Date | Update |
 |---|---|
