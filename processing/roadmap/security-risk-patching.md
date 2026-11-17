@@ -2,7 +2,7 @@
 
 **ID:** `RM-SEC-001`  
 **Status:** Active  
-**Current position:** P4 G5 / T5.1 — Implement and test production capability contract
+**Current position:** P3 G5 / T5.2 — Scope production provider and dependency removal
 **Owner:** Unassigned  
 **Created:** 2026-11-09  
 **Updated:** 2026-11-16
@@ -126,14 +126,14 @@ The controlling analysis is [`../../docs/security-risk-assessment.md`](../../doc
 
 ## G5 — Reduce and patch the server surface
 
-**Position:** P4 G5 / T5.1 — Implement and test production capability contract
+**Position:** P3 G5 / T5.2 — Scope production provider and dependency removal
 **Exit condition:** Required server capabilities use maintained dependencies and have tested resource limits; unused capabilities are absent.
 
 **P1 analysis:** [`../../docs/p1-g5-server-surface-analysis.md`](../../docs/p1-g5-server-surface-analysis.md)
 
 **P2 plan:** [`../../docs/p2-g5-minimal-server-security-plan.md`](../../docs/p2-g5-minimal-server-security-plan.md)
 
-- [ ] **T5.1** [Define and test the production server capability contract and fail-closed startup boundary.](../tasks/RM-SEC-001/T5.1-capability-contract.md)
+- [x] **T5.1** [Define and test the production server capability contract and fail-closed startup boundary.](../tasks/RM-SEC-001/T5.1-capability-contract.md) — P5 accepted; production Node remains blocked
 - [ ] **T5.2** Remove unused server providers, upload/archive handlers, CLI features, and applications from the production graph.
 - [ ] **T5.3** Upgrade or replace HTTP parsing, query parsing, WebSocket, glob, UUID, archive, and metadata-processing chains.
 - [ ] **T5.4** Add explicit request body, header, timeout, connection, upload, and decompression limits.
@@ -217,6 +217,8 @@ Additional evidence required before completion:
 | 2026-11-18 | Close G4 using retained clean evidence from commit `70c981165f9184b123a0e45e361285c8be11b683`. | Run `43777453710` and artifact `14187270695` prove supported Node 26/Webpack 5 builds, security and browser contracts, tests, audits, SBOMs, and workaround absence from clean source. Production findings remain G5 blockers. |
 
 ## Progress log
+
+| 2026-11-18 | Closed T5.1 after [G5 startup-gate CI run 44198337864](https://github.com/tamzrod/OS.js/actions/runs/44198337864) passed on code head `59fbf80`. Production Node startup deliberately remains blocked, with all G5 server-reachability remediation pending. Advance to P3 G5 / T5.2 planning. |
 
 | 2026-11-18 | Completed P3 G5 at commit `766841aa`: recorded T5.1 entry points, negative-test requirements, acceptance criteria and stop boundary. P4 T5.1 is ready, but no code or security tests have yet been implemented. |
 
