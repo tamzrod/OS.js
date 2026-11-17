@@ -51,7 +51,13 @@ class AuthServiceProvider extends ServiceProvider {
   async init() {
     const {route, routeAuthenticated} = this.core.make('osjs/express');
 
-    route('post', '/register', (req, res) => this.auth.register(req, res));
+    // Never expose registration by default. It can be explicitly enabled
+    // for isolated development only; production never registers this route.
+    const {auth = {}, development = false} = this.core.configuration;
+    if (development === true && auth.allowRegistration === true) {
+      route('post', '/register', (req, res) => this.auth.register(req, res));
+    }
+
     route('post', '/login', (req, res) => this.auth.login(req, res));
     routeAuthenticated('post', '/logout', (req, res) => this.auth.logout(req, res));
 
