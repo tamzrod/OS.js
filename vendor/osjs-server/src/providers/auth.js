@@ -54,7 +54,8 @@ class AuthServiceProvider extends ServiceProvider {
     // Never expose registration by default. It can be explicitly enabled
     // for isolated development only; production never registers this route.
     const {auth = {}, development = false} = this.core.configuration;
-    if (development === true && auth.allowRegistration === true) {
+    if (development === true && Object.prototype.hasOwnProperty.call(auth, 'allowRegistration') &&
+        auth.allowRegistration === true) {
       route('post', '/register', (req, res) => this.auth.register(req, res));
     }
 
