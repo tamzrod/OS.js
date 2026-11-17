@@ -66,6 +66,8 @@ const defaultConfiguration = {
     */
   ],
   auth: {
+    // Public registration is development-only and must be explicitly enabled.
+    allowRegistration: false,
     vfsGroups: [],
     defaultGroups: [],
     requiredGroups: [],
