@@ -38,6 +38,9 @@
 // https://manual.os-js.org/resource/official/
 //
 
+// Reject unsafe deployments before constructing the server or providers.
+require('./security-profile.js').assertProductionStartup();
+
 const {
   Core,
   CoreServiceProvider,
