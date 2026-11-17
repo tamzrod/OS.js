@@ -48,7 +48,13 @@ const validateCapabilities = input => {
 };
 
 const assertProductionStartup = (environment = process.env) => {
-  const env = ownData(environment, 'environment');
+  // Node's process.env is a special host object, not a plain object. Read
+  // only recognized fields instead of trusting its prototype or enumeration.
+  const env = environment === process.env ? {
+    NODE_ENV: process.env.NODE_ENV,
+    OSJS_DEPLOYMENT_PROFILE: process.env.OSJS_DEPLOYMENT_PROFILE,
+    OSJS_CAPABILITIES: process.env.OSJS_CAPABILITIES
+  } : ownData(environment, 'environment');
   const production = /^prod/i.test(String(env.NODE_ENV || ''));
   const selected = env.OSJS_DEPLOYMENT_PROFILE;
 
