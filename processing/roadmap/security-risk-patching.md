@@ -2,7 +2,7 @@
 
 **ID:** `RM-SEC-001`  
 **Status:** Active  
-**Current position:** P1 G5 — Understand required server capabilities and attack surface
+**Current position:** P2 G5 — Plan the minimal server security boundary
 **Owner:** Unassigned  
 **Created:** 2026-11-09  
 **Updated:** 2026-11-16
@@ -126,8 +126,10 @@ The controlling analysis is [`../../docs/security-risk-assessment.md`](../../doc
 
 ## G5 — Reduce and patch the server surface
 
-**Position:** P1 G5 — Analyze required capabilities and attack surface
+**Position:** P2 G5 — Plan the minimal server security boundary
 **Exit condition:** Required server capabilities use maintained dependencies and have tested resource limits; unused capabilities are absent.
+
+**P1 analysis:** [`../../docs/p1-g5-server-surface-analysis.md`](../../docs/p1-g5-server-surface-analysis.md)
 
 - [ ] **T5.1** Decide which official server capabilities Media Intelligence actually requires.
 - [ ] **T5.2** Remove unused server providers, upload/archive handlers, CLI features, and applications from the production graph.
@@ -260,6 +262,7 @@ Additional evidence required before completion:
 | 2026-11-16 | Completed `P4 G4 / T4.6`. Fresh audits reduced the G3 full baseline from 62 high/12 critical to 21 high/2 critical; production remains blocked at 17 high/2 critical. Reproducible SBOMs and a retained verifier prove the obsolete Webpack 4/meta-loader chain is absent and assign every residual production high/critical finding to G5 server, CLI, or removable application work. Advance to P5 review; MI-P6 remains blocked. |
 | 2026-11-16 | Completed `P5 G4 / T4.6`. Fresh remote commit `48de1503` reproduced both audit inventories and SBOM structures, every G3/G4 verifier, and the Node 26 production build with a clean tree. Accept T4.6 and continue to `P4 G4 / T4.7`; MI-P6 remains blocked at 17 high/2 critical production findings. |
 | 2026-11-18 | Completed `P4–P5 G4 / T4.7`. Clean run `43777453710` passed on commit `70c98116`; artifact `14187270695` independently reconciled 25 retained files, both manifests, all 15 commands, 321 client tests, builds, contracts, audits, and SBOMs. G4 is complete. Advance to `P1 G5`; MI-P6 remains blocked at 17 high/2 critical production findings. |
+| 2026-11-18 | Completed `P1 G5`. The generic bootstrap enables core HTTP/session/WebSocket, packages, VFS/upload, null authentication, and settings with almost no production overrides. Severe findings sit on unconditional HTTP/server chains, optional CLI/VFS tooling, and the removable music application. Decision: use a capability allowlist, fail closed on insecure defaults, remove unused surfaces first, then patch and limit the retained graph. Advance to `P2 G5`. |
 | 2026-11-11 | Completed `P4 G2 / T2.1`. Imported 122 tracked files from official client tag `3.7.1` at commit `53b8376d9681cf5429e6882417da9d421b1b869c`, added explicit upstream provenance and a 123-file hash inventory, reconciled package/source-map identity with the locked npm artifact, and preserved root manifest and lockfile hashes. Advance to P5 review; T2.2 remains blocked. |
 | 2026-11-11 | Completed `P5 G2 / T2.1`. Independent review reproduced the tag commit and npm integrity, validated every inventory hash and exclusion, found no unexplained upstream-tree difference, and matched 70 of 71 textual source files to published source maps with zero mismatches. The sole unmapped locale barrel is documented. Decision: accept the import and continue to `P4 G2 / T2.2`. |
 | 2026-11-11 | Completed `P4 G2 / T2.2`. On Node `26.13.0` and npm `11.20.0`, the exact imported client passed lint, 34 Jest suites/302 tests, development and production Webpack builds, and package inspection without unsafe runtime flags. Public exports, declarations, assets, and package paths are retained; generated bundle drift is classified as toolchain/dependency-derived because upstream supplied no lockfile. Advance to P5 review; T2.3 remains blocked. |
