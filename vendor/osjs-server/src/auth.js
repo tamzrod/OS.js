@@ -83,14 +83,33 @@ class Auth {
       ...options
     };
 
+    // Never fall back to accept-any-username authentication in a production
+    // context, even if the application entry-point startup guard is bypassed.
+    const production = /^prod/i.test(process.env.NODE_ENV || '') ||
+      core.configuration.development === false;
+    const adapterFactory = this.options.adapter;
+
+    if (production && (typeof adapterFactory !== 'function' ||
+        adapterFactory === nullAdapter)) {
+      throw new Error('Production authentication requires a non-null adapter');
+    }
+
     /**
      * @type {AuthAdapter}
      */
-    this.adapter = nullAdapter(core, this.options.config);
+    this.adapter = production ? null : nullAdapter(core, this.options.config);
 
     try {
-      this.adapter = this.options.adapter(core, this.options.config);
+      const adapter = adapterFactory(core, this.options.config);
+      if (!adapter || typeof adapter.login !== 'function') {
+        throw new Error('Authentication adapter must implement login');
+      }
+      this.adapter = adapter;
     } catch (e) {
+      if (production) {
+        // Swallowing an adapter failure here previously re-enabled null auth.
+        throw e;
+      }
       this.core.logger.warn(e);
     }
   }
