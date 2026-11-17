@@ -1,0 +1,31 @@
+name: G5 fail-closed server startup regression
+
+on:
+  push:
+    branches:
+      - codex/rm-sec-001-g1-baseline
+  pull_request:
+    paths:
+      - 'src/server/**'
+      - 'scripts/security/g5-capability-contract.test.cjs'
+      - '.github/workflows/g5-capability-contract.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  startup-gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout exact source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Set up pinned Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with:
+          node-version-file: .nvmrc
+      - name: Execute dependency-free startup security tests
+        run: node --test scripts/security/g5-capability-contract.test.cjs
