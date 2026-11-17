@@ -68,6 +68,7 @@ try {
     throw Error('Expected missing stylelint-config-standard dev dependency');
   }
   manifest.devDependencies['stylelint-config-standard'] = '20.0.0';
+  manifest.devDependencies['stylelint-scss'] = '3.20.1';
   fs.writeFileSync(manifestPath, JSON.stringify(manifest, null, 2) + '\n');
 
   run('regenerate-lock', 'npm', ['install', '--package-lock-only', '--ignore-scripts',
