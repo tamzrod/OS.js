@@ -61,6 +61,13 @@ try {
     throw Error('Expected direct music player dependency is missing: stop rather than guess');
   }
   delete manifest.dependencies['@osjs/musicplayer-application'];
+  // The baseline root stylelint task extends the standard preset but its
+  // manifest omits that preset. Pin the compatible Stylelint 13-era version,
+  // keeping this test-only repair out of production dependencies.
+  if (manifest.devDependencies['stylelint-config-standard']) {
+    throw Error('Expected missing stylelint-config-standard dev dependency');
+  }
+  manifest.devDependencies['stylelint-config-standard'] = '20.0.0';
   fs.writeFileSync(manifestPath, JSON.stringify(manifest, null, 2) + '\n');
 
   run('regenerate-lock', 'npm', ['install', '--package-lock-only', '--ignore-scripts',
