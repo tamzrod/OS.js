@@ -2,7 +2,7 @@
 
 **ID:** `RM-SEC-001`  
 **Status:** Active  
-**Current position:** P3 G5 — Define T5.1 implementation contract
+**Current position:** P4 G5 / T5.1 — Implement and test production capability contract
 **Owner:** Unassigned  
 **Created:** 2026-11-09  
 **Updated:** 2026-11-16
@@ -126,7 +126,7 @@ The controlling analysis is [`../../docs/security-risk-assessment.md`](../../doc
 
 ## G5 — Reduce and patch the server surface
 
-**Position:** P3 G5 — Define T5.1 implementation contract
+**Position:** P4 G5 / T5.1 — Implement and test production capability contract
 **Exit condition:** Required server capabilities use maintained dependencies and have tested resource limits; unused capabilities are absent.
 
 **P1 analysis:** [`../../docs/p1-g5-server-surface-analysis.md`](../../docs/p1-g5-server-surface-analysis.md)
@@ -217,6 +217,8 @@ Additional evidence required before completion:
 | 2026-11-18 | Close G4 using retained clean evidence from commit `70c981165f9184b123a0e45e361285c8be11b683`. | Run `43777453710` and artifact `14187270695` prove supported Node 26/Webpack 5 builds, security and browser contracts, tests, audits, SBOMs, and workaround absence from clean source. Production findings remain G5 blockers. |
 
 ## Progress log
+
+| 2026-11-18 | Completed P3 G5 at commit `766841aa`: recorded T5.1 entry points, negative-test requirements, acceptance criteria and stop boundary. P4 T5.1 is ready, but no code or security tests have yet been implemented. |
 
 | 2026-11-18 | Completed P2 G5 at commit `ac413200`: selected default-off production capabilities, optional server profile, fail-closed startup gates, and bounded T5.1–T5.6 order. Advance to P3 G5 and T5.1 contract; G5 remains open. |
 
