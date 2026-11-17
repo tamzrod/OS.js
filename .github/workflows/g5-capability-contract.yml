@@ -8,6 +8,9 @@ on:
     paths:
       - 'src/server/**'
       - 'scripts/security/g5-capability-contract.test.cjs'
+      - 'scripts/security/g5-registration-routes.test.cjs'
+      - 'vendor/osjs-server/src/providers/auth.js'
+      - 'vendor/osjs-server/src/config.js'
       - '.github/workflows/g5-capability-contract.yml'
   workflow_dispatch:
 
@@ -28,4 +31,4 @@ jobs:
         with:
           node-version-file: .nvmrc
       - name: Execute dependency-free startup security tests
-        run: node --test scripts/security/g5-capability-contract.test.cjs
+        run: node --test scripts/security/g5-capability-contract.test.cjs scripts/security/g5-registration-routes.test.cjs
