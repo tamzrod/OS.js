@@ -32,7 +32,7 @@ const path = require('path');
 const express = require('express');
 const chokidar = require('chokidar');
 const bodyParser = require('body-parser');
-const proxy = require('express-http-proxy');
+// Proxy implementation is loaded only for explicitly configured development routes.
 const nocache = require('nocache');
 const {ServiceProvider} = require('@osjs/common');
 const {isAuthenticated, closeWatches} = require('../utils/core.js');
@@ -232,14 +232,40 @@ class CoreServiceProvider extends ServiceProvider {
    */
   initProxies() {
     const {app, configuration} = this.core;
-    const proxies = (configuration.proxy || []).map(item => ({
-      source: null,
-      destination: null,
-      options: {},
-      ...item
-    })).filter(item => item.source && item.destination);
+    const configured = configuration.proxy;
 
-    proxies.forEach(item => {
+    if (configured != null && !Array.isArray(configured)) {
+      throw new Error('OS.js proxy routes must be an array');
+    }
+
+    if (!configured || configured.length === 0) {
+      return;
+    }
+
+    // The generic HTTP proxy is development tooling, not an approved
+    // production capability. Refuse the entire configuration rather than
+    // silently accepting an exposed network forwarding route.
+    if (configuration.development !== true ||
+        /^prod/i.test(process.env.NODE_ENV || '')) {
+      throw new Error('OS.js reverse proxy is disabled outside development');
+    }
+
+    const routes = configured.map(item => {
+      if (!item || Object.getPrototypeOf(item) !== Object.prototype ||
+          !Object.prototype.hasOwnProperty.call(item, 'source') ||
+          !Object.prototype.hasOwnProperty.call(item, 'destination') ||
+          typeof item.source !== 'string' || !item.source.startsWith('/') ||
+          typeof item.destination !== 'string' || !item.destination ||
+          Object.prototype.hasOwnProperty.call(item, '__proto__')) {
+        throw new Error('Invalid OS.js development proxy route');
+      }
+      return {source: item.source, destination: item.destination, options: item.options || {}};
+    });
+
+    // Lazy import removes this module and its transitive dependencies from
+    // the ordinary boot path when proxy support is not used.
+    const proxy = require('express-http-proxy');
+    routes.forEach(item => {
       this.core.logger.info(`Proxying ${item.source} -> ${item.destination}`);
       app.use(item.source, proxy(item.destination, item.options));
     });
