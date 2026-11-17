@@ -43,7 +43,9 @@ const validateCapabilities = input => {
     }
   }
 
-  for (const key of CAPABILITIES) result[key] = values[key] === true;
+  for (const key of CAPABILITIES) {
+    result[key] = values[key] === true;
+  }
   return Object.freeze(result);
 };
 
@@ -60,7 +62,9 @@ const assertProductionStartup = (environment = process.env) => {
 
   // Production is never inferred from the absence of NODE_ENV. A declared
   // deployment profile triggers the security gate even in development.
-  if (!production && selected === undefined) return {development: true};
+  if (!production && selected === undefined) {
+    return {development: true};
+  }
 
   if (typeof selected !== 'string' || !['browser-only', 'server'].includes(selected)) {
     throw new Error('OS.js production requires an explicit valid OSJS_DEPLOYMENT_PROFILE');
