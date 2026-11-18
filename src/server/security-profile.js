@@ -55,15 +55,22 @@ const assertProductionStartup = (environment = process.env) => {
   const env = environment === process.env ? {
     NODE_ENV: process.env.NODE_ENV,
     OSJS_DEPLOYMENT_PROFILE: process.env.OSJS_DEPLOYMENT_PROFILE,
-    OSJS_CAPABILITIES: process.env.OSJS_CAPABILITIES
+    OSJS_CAPABILITIES: process.env.OSJS_CAPABILITIES,
+    OSJS_UNSAFE_LOCAL_DEV: process.env.OSJS_UNSAFE_LOCAL_DEV
   } : ownData(environment, 'environment');
   const production = /^prod/i.test(String(env.NODE_ENV || ''));
   const selected = env.OSJS_DEPLOYMENT_PROFILE;
 
-  // Production is never inferred from the absence of NODE_ENV. A declared
-  // deployment profile triggers the security gate even in development.
+  // Legacy null authentication is development-only, and it must never be
+  // enabled merely by omitting NODE_ENV. Require an exact, explicit opt-in.
+  // The application configuration binds this mode to 127.0.0.1 only.
   if (!production && selected === undefined) {
-    return {development: true};
+    if (env.NODE_ENV === 'development' &&
+        env.OSJS_UNSAFE_LOCAL_DEV === 'true' &&
+        env.OSJS_CAPABILITIES === undefined) {
+      return {development: true};
+    }
+    throw new Error('OS.js development server requires NODE_ENV=development and OSJS_UNSAFE_LOCAL_DEV=true (loopback only)');
   }
 
   if (typeof selected !== 'string' || !['browser-only', 'server'].includes(selected)) {
