@@ -4,21 +4,9 @@ const minimize = mode === 'production';
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const {DefinePlugin} = webpack;
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const npm = require('./package.json');
-const plugins = [];
-
-if (mode === 'production') {
-  plugins.push(new OptimizeCSSAssetsPlugin({
-    cssProcessorOptions: {
-      discardComments: true,
-      map: {
-        inline: false
-      }
-    },
-  }));
-}
 
 module.exports = {
   mode,
@@ -32,13 +20,29 @@ module.exports = {
   },
   optimization: {
     minimize,
+    minimizer: ['...', new CssMinimizerPlugin()],
     splitChunks: {
-      chunks: 'all'
+      chunks: 'all',
+      cacheGroups: {
+        vendorStyles: {
+          test: /[\\/](node_modules|vendor)[\\/]/,
+          name: 'vendors~osjs',
+          type: 'css/mini-extract',
+          chunks: 'all',
+          enforce: true
+        },
+        defaultVendors: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendors~osjs',
+          priority: -10,
+          reuseExistingChunk: true
+        }
+      }
     }
   },
   plugins: [
     new DefinePlugin({
-      OSJS_VERSION: npm.version
+      OSJS_VERSION: JSON.stringify(npm.version)
     }),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, 'src/client/index.ejs'),
@@ -47,27 +51,21 @@ module.exports = {
     }),
     new MiniCssExtractPlugin({
       filename: '[name].css'
-    }),
-    ...plugins
+    })
   ],
   module: {
     rules: [
       {
         test: /\.(svg|png|jpe?g|gif|webp)$/,
-        use: [
-          {
-            loader: 'file-loader'
-          }
-        ]
+        exclude: /typeface/,
+        type: 'asset/resource'
       },
       {
         test: /\.(eot|svg|ttf|woff|woff2)$/,
         include: /typeface/,
-        use: {
-          loader: 'file-loader',
-          options: {
-            name: 'fonts/[name].[ext]'
-          }
+        type: 'asset/resource',
+        generator: {
+          filename: 'fonts/[name][ext]'
         }
       },
       {
@@ -98,6 +96,7 @@ module.exports = {
       {
         test: /\.js$/,
         enforce: 'pre',
+        exclude: /vendor[\\/].*[\\/]dist/,
         use: {
           loader: 'source-map-loader'
         }

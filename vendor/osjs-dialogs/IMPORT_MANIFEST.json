@@ -1,0 +1,138 @@
+{
+  "upstreamRepository": "https://github.com/os-js/osjs-dialogs.git",
+  "upstreamTag": "3.1.0",
+  "upstreamCommit": "6dc49f55c599a2b627ceda3cc64e805d027d6268",
+  "npmName": "@osjs/dialogs",
+  "npmVersion": "3.1.0",
+  "npmIntegrity": "sha512-kyG2iaTLTEj2qHAW+b5eRQBNRRkJb5UG6OrfXpu2onHRLqE4l3xbPXsVqsLAg5jbUEyRhHm3SuXCH2MRY8Wtfg==",
+  "rootPackageSha256": "3974b429adbfaa914a2e4ab95f40581a94b0bf667bd5f42cab83311df7a9a60d",
+  "rootLockfileSha256": "45f6faa2f08d04ff4271bf658236140e2e492552958aa5777c2e9dffd4b44d96",
+  "generatedAt": "2026-11-12",
+  "files": [
+    {
+      "path": ".github/FUNDING.yml",
+      "bytes": 171,
+      "sha256": "354c849334e1c7f14f67ef167f3acbe8ba6eca98533da557bb0efddbbfc22a54"
+    },
+    {
+      "path": ".github/workflows/lint.yml",
+      "bytes": 329,
+      "sha256": "07aef7f2f43cd47af44a2160be31897c0a99c3d203b39e67c43c027451a6fe2a"
+    },
+    {
+      "path": ".github/workflows/www-esdoc.yml",
+      "bytes": 1278,
+      "sha256": "01070cb9135e3df31568b83724b9375d4c9cdb55961c5e05cbdfafa93efbf756"
+    },
+    {
+      "path": ".gitignore",
+      "bytes": 69,
+      "sha256": "7a9b3464ab96a49e6600d4eed2e555dfa78d465911d6b3bbc9a129d43c99f701"
+    },
+    {
+      "path": ".npmignore",
+      "bytes": 112,
+      "sha256": "b9d812a0c489ac86bd6312469918cabd21c90fce31d8ae350ebd14c25c26150f"
+    },
+    {
+      "path": "babel.config.js",
+      "bytes": 196,
+      "sha256": "e8e4fbfca05f6bb0bd03ee5c59110de15ec8fa2dcd11c16df03e97730761f436"
+    },
+    {
+      "path": "CHANGELOG.md",
+      "bytes": 4352,
+      "sha256": "04794f69d288cca6060dacf82164e15da75556afbe06b98eb41e5223475e953d"
+    },
+    {
+      "path": "index.js",
+      "bytes": 2153,
+      "sha256": "d895df3f39dca95fbda43b3be2b0633fae1d3bb3077c31d0a5134550b8abed5e"
+    },
+    {
+      "path": "index.scss",
+      "bytes": 1706,
+      "sha256": "857cd90a9b02ee47afa8e6f8976988a98481dca462031bf1fa8fc1c52dac6f98"
+    },
+    {
+      "path": "LICENSE",
+      "bytes": 1403,
+      "sha256": "fecdc0c2b4ce2826da8821395047b5f7ec1f872465b648a0b98aebcf85ffa8b5"
+    },
+    {
+      "path": "package.json",
+      "bytes": 2152,
+      "sha256": "684ef1b65d148a199ed4bb2861295596f674a97a1f8238f2b444eebbffd9893d"
+    },
+    {
+      "path": "README.md",
+      "bytes": 1621,
+      "sha256": "7b4d2c8168fbb149d5e8fd7cb1352e608e3212fffb6f5d453777b00fe72b5879"
+    },
+    {
+      "path": "src/dialog.js",
+      "bytes": 7270,
+      "sha256": "5323a465187b654b6d9fceeb5b894073434819fc449be1bf529d7bced821b556"
+    },
+    {
+      "path": "src/dialogs/alert.js",
+      "bytes": 3476,
+      "sha256": "d71dd6c3f829ff8a80316a9ee1c88e184c6d93089e6c5a142741e6a9873f0489"
+    },
+    {
+      "path": "src/dialogs/choice.js",
+      "bytes": 3339,
+      "sha256": "b67e9693c6f733d061a80fe5baece49ac73948e134a97c40cc2646620cac1465"
+    },
+    {
+      "path": "src/dialogs/color.js",
+      "bytes": 7332,
+      "sha256": "c46463e301b43d9292e552b42c4ce797cc1c759a30926ab12749d30fd2f80045"
+    },
+    {
+      "path": "src/dialogs/confirm.js",
+      "bytes": 2893,
+      "sha256": "ce2acadad91dad25e1865309822b042a529f9bead98e722b4b3b0a6fef3addc1"
+    },
+    {
+      "path": "src/dialogs/custom.js",
+      "bytes": 2452,
+      "sha256": "0e7fb954ec96212e19699faf404e8effeea044fbf1f235ba8bed3c584f596e44"
+    },
+    {
+      "path": "src/dialogs/default-application.js",
+      "bytes": 3699,
+      "sha256": "16542e024437271ee1a7c5b24aac22ddb61082d85c5eab31050048a7e149ee2b"
+    },
+    {
+      "path": "src/dialogs/file.js",
+      "bytes": 8815,
+      "sha256": "e51ce358451a9e5c2eeb1e89e6338c2e4ef8046593b89334d118afa34ff18efa"
+    },
+    {
+      "path": "src/dialogs/font.js",
+      "bytes": 5494,
+      "sha256": "6a786da8de100224b23f2d83706ef4d2af4aee9d510fd389f00a6d6be747f833"
+    },
+    {
+      "path": "src/dialogs/progress.js",
+      "bytes": 3548,
+      "sha256": "8ba4cd16e72d2e550b787e451513cf7e7cb9de89c7aa66bea66306af9333665b"
+    },
+    {
+      "path": "src/dialogs/prompt.js",
+      "bytes": 3236,
+      "sha256": "2f27ba02138a223cb17b67a226f4343c9310ec3e791437fc49b0a1d561eeb000"
+    },
+    {
+      "path": "src/provider.js",
+      "bytes": 3454,
+      "sha256": "78184a9cd73da2b5a7b43b19fa7f8c9c0c2f07792ce5b477f32122695f3aae7d"
+    },
+    {
+      "path": "webpack.config.js",
+      "bytes": 1418,
+      "sha256": "ddd53104d3b661afcefad780be30cd3e167d18ec6404fb3fa71139fa584d946d"
+    }
+  ]
+}

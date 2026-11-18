@@ -40,5 +40,7 @@ const root = path.resolve(__dirname, '../../');
 module.exports = {
   root,
   port: 8000,
+  // Development uses permissive legacy auth: never expose it off-machine.
+  hostname: '127.0.0.1',
   public: path.resolve(root, 'dist')
 };

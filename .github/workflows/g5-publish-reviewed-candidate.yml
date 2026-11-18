@@ -1,0 +1,72 @@
+name: G5 publish verified music dependency candidate
+
+on:
+  push:
+    branches:
+      - codex/rm-sec-001-g1-baseline
+    paths:
+      - '.github/workflows/g5-publish-reviewed-candidate.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  publish-candidate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - name: Check out exact security-branch source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+      - name: Set up pinned Node/npm
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - name: Generate and verify isolated candidate
+        env:
+          G5_EVIDENCE_DIR: ${{ runner.temp }}/g5-music-removal-trial
+        run: |
+          test "$(git rev-parse HEAD)" = "${{ github.sha }}"
+          node scripts/security/g5-music-removal-trial.cjs
+          node - <<'NODE'
+          const fs = require('fs');
+          const r = JSON.parse(fs.readFileSync(process.env.G5_EVIDENCE_DIR + '/summary.json'));
+          if (!r.candidateReadyForReview ||
+              r.steps['clean-install'].exitCode !== 0 ||
+              r.steps['root-test'].exitCode !== 0 ||
+              r.steps['browser-build'].exitCode !== 0 ||
+              r.after.musicPlayer || r.after.musicMetadata) process.exit(1);
+          console.log('Approved isolated removal checks passed; residual production audit remains a G5 blocker');
+          NODE
+      - name: Commit only generated manifest and lockfile to separate candidate branch
+        env:
+          G5_EVIDENCE_DIR: ${{ runner.temp }}/g5-music-removal-trial
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -eu
+          branch='g5/music-removal-candidate'
+          if git ls-remote --exit-code --heads origin "$branch" >/dev/null; then
+            echo "Candidate branch already exists; refusing overwrite" >&2
+            exit 1
+          fi
+          git switch -c "$branch"
+          cp "$G5_EVIDENCE_DIR/candidate-package.json" package.json
+          cp "$G5_EVIDENCE_DIR/candidate-package-lock.json" package-lock.json
+          git add -- package.json package-lock.json
+          git diff --cached --check
+          test "$(git diff --cached --name-only | wc -l)" -eq 2
+          git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'security(g5): remove unused music parser dependency and fix lint toolchain'
+          git -c http.https://github.com/.extraheader="AUTHORIZATION: basic $(printf 'x-access-token:%s' "$GH_TOKEN" | base64 -w0)" push origin HEAD:refs/heads/"$branch"
+      - name: Retain generated evidence
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: g5-promotion-evidence-${{ github.sha }}
+          path: |
+            ${{ runner.temp }}/g5-music-removal-trial/summary.json
+            ${{ runner.temp }}/g5-music-removal-trial/*.log
+          if-no-files-found: error
+          retention-days: 30

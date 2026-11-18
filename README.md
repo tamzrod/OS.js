@@ -38,6 +38,12 @@ There's also a [contribution guide](https://github.com/os-js/OS.js/blob/master/C
 
 ## Installation
 
+### Authentication persistence migration
+
+This fork removes browser-managed authentication credential persistence and the vulnerable `js-cookie` dependency. Deployments that previously enabled `auth.cookie` must remove that configuration and perform the documented one-time server-side legacy-cookie cleanup before rollout. Reload requires explicit login unless a separately reviewed server-session resume feature is added.
+
+See [the G2 authentication cookie migration guide](docs/g2-cookie-persistence-migration.md) for configuration, cleanup, and operational details.
+
 > OS.js runs on `http://localhost:8000` by default.
 
 ### Using a pre-made image
@@ -74,14 +80,15 @@ docker-compose up
 
 You can also install this directly onto your system by using the following set of commands.
 
-> **NOTE:** Requires Node v10 (or later. **[node 17 not currently supported without workaround](https://github.com/os-js/OS.js/issues/785)**).
+> **NOTE:** Development and CI require Node.js 26.13.0 and npm 11.20.0. Use
+> `.nvmrc` to select the supported Node version. Other versions are rejected by
+> the project manifest. The legacy Webpack build is not yet compatible with this
+> runtime; remediation is tracked by the security roadmap and must not use
+> the legacy OpenSSL provider override.
 
 ```bash
-# Install dependencies
-npm install
-
-# It's recommended that you update dependencies
-npm update
+# Install the exact locked dependencies
+npm ci
 
 # Optionally install extra packages:
 # For a list of packages, see https://manual.os-js.org/resource/official/

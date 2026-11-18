@@ -1,4 +1,4 @@
-name: Node tests
+name: Baseline build
 on:
   push:
     branches:
@@ -8,14 +8,16 @@ jobs:
   build:
     strategy:
       matrix:
-        version: [12, 13, 14, 15, 16]
         os: [ubuntu-latest, windows-latest]
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.version }}
+          node-version-file: .nvmrc
+          cache: npm
+      - name: Verify toolchain
+        run: node scripts/verify-toolchain.cjs
       - run: npm ci
       - run: npm run package:discover
       - run: npm run build
