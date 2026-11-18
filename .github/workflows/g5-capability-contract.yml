@@ -15,6 +15,7 @@ on:
       - 'vendor/osjs-server/src/auth.js'
       - 'vendor/osjs-server/src/providers/auth.js'
       - 'vendor/osjs-server/src/config.js'
+      - 'vendor/osjs-server/src/core.js'
       - '.github/workflows/g5-capability-contract.yml'
   workflow_dispatch:
 
