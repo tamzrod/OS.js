@@ -68,8 +68,44 @@ for (const [label, env] of [
   });
 }
 
-test('ordinary local development without production profile retains legacy behavior', () => {
-  assert.deepEqual(assertProductionStartup({NODE_ENV: 'development'}), {development: true});
+for (const [label, env] of [
+  ['unset environment', {}],
+  ['unset NODE_ENV with opt-in', {OSJS_UNSAFE_LOCAL_DEV: 'true'}],
+  ['development without opt-in', {NODE_ENV: 'development'}],
+  ['development with false opt-in', {NODE_ENV: 'development', OSJS_UNSAFE_LOCAL_DEV: 'false'}],
+  ['development with nonexact opt-in', {NODE_ENV: 'development', OSJS_UNSAFE_LOCAL_DEV: 'TRUE'}],
+  ['test environment with opt-in', {NODE_ENV: 'test', OSJS_UNSAFE_LOCAL_DEV: 'true'}],
+  ['development with enabled capability', {NODE_ENV: 'development', OSJS_UNSAFE_LOCAL_DEV: 'true', OSJS_CAPABILITIES: '{}'}]
+]) {
+  test(`unconfigured/development startup rejects ${label}`, () => {
+    assert.throws(() => assertProductionStartup(env), /requires NODE_ENV=development/);
+  });
+}
+
+test('explicit local development opt-in succeeds without a deployment profile', () => {
+  assert.deepEqual(assertProductionStartup({
+    NODE_ENV: 'development',
+    OSJS_UNSAFE_LOCAL_DEV: 'true'
+  }), {development: true});
+});
+
+test('legacy development entrypoint is restricted to 127.0.0.1 and listen honors hostname', () => {
+  const config = fs.readFileSync(path.join(__dirname, '../../src/server/config.js'), 'utf8');
+  const server = fs.readFileSync(path.join(__dirname, '../../vendor/osjs-server/src/core.js'), 'utf8');
+  assert.match(config, /hostname:\s*'127\\.0\\.0\\.1'/);
+  assert.match(server, /this\\.httpServer\\.listen\\(httpPort, this\\.config\\('hostname'\\),/);
+});
+
+test('unconfigured process exits before server dependencies are imported', () => {
+  const entry = path.join(__dirname, '../../src/server/index.js');
+  const result = spawnSync(process.execPath, [entry], {
+    env: {PATH: process.env.PATH || ''},
+    encoding: 'utf8',
+    timeout: 5000
+  });
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /development server requires/);
+  assert.doesNotMatch(result.stderr, /Cannot find module/);
 });
 
 test('production hook runs before importing @osjs/server or registering providers', () => {
