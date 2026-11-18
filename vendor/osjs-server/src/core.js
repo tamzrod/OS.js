@@ -218,7 +218,9 @@ class Core extends CoreBase {
       logger.warn('Missing files in "dist/" directory. Did you forget to run "npm run build" ?');
     }
 
-    this.httpServer.listen(httpPort, () => {
+    // Passing a hostname is required: listen(port) otherwise binds all
+    // interfaces even when configuration says 'localhost'.
+    this.httpServer.listen(httpPort, this.config('hostname'), () => {
       logger.success(`Using '${session}' sessions`);
       logger.success(`Serving '${dist}'`);
       logger.success(`WebSocket listening on ${proto('ws')}${host(wsPort)}`);
