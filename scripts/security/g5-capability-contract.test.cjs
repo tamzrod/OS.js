@@ -92,7 +92,7 @@ test('explicit local development opt-in succeeds without a deployment profile', 
 test('legacy development entrypoint is restricted to 127.0.0.1 and listen honors hostname', () => {
   const config = fs.readFileSync(path.join(__dirname, '../../src/server/config.js'), 'utf8');
   const server = fs.readFileSync(path.join(__dirname, '../../vendor/osjs-server/src/core.js'), 'utf8');
-  assert.match(config, /hostname:\s*'127\\.0\\.0\\.1'/);
+  assert.ok(config.includes("hostname: '127.0.0.1'"));
   assert.ok(server.includes("this.httpServer.listen(httpPort, this.config('hostname'),"));
 });
 
