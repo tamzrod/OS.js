@@ -1,0 +1,75 @@
+name: G5 publish verified CLI dev-only candidate
+
+on:
+  push:
+    branches:
+      - codex/rm-sec-001-g1-baseline
+    paths:
+      - '.github/workflows/g5-cli-devonly-publish.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  verify-and-publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Set up pinned Node/npm
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - name: Reproduce validated CLI development-only candidate
+        env:
+          G5_EVIDENCE_DIR: ${{ runner.temp }}/g5-cli-devonly-trial
+        run: |
+          node scripts/security/g5-cli-devonly-trial.cjs
+          node - <<'NODE'
+          const fs = require('node:fs');
+          const report = JSON.parse(fs.readFileSync(process.env.G5_EVIDENCE_DIR + '/summary.json'));
+          if (!report.candidateReadyForReview ||
+              report.after.cliProductionRoot ||
+              !report.after.cliDevelopmentRoot ||
+              !report.after.cliDevOnly ||
+              !report.after.cliInstalled ||
+              report.steps['regenerate-lock'].exitCode !== 0 ||
+              report.steps['clean-install'].exitCode !== 0 ||
+              report.steps['root-test'].exitCode !== 0 ||
+              report.steps['browser-build'].exitCode !== 0 ||
+              report.steps['cli-discover'].exitCode !== 0) process.exit(1);
+          console.log('Verified CLI dev-only migration; residual npm ls and security advisories remain separate blockers');
+          NODE
+      - name: Commit only npm manifest and generated lockfile to review branch
+        env:
+          G5_EVIDENCE_DIR: ${{ runner.temp }}/g5-cli-devonly-trial
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -eu
+          branch='g5/cli-devonly-candidate'
+          if git ls-remote --exit-code --heads origin "$branch" >/dev/null; then
+            echo "Refusing to overwrite existing candidate branch" >&2
+            exit 1
+          fi
+          git switch -c "$branch"
+          cp "$G5_EVIDENCE_DIR/candidate-package.json" package.json
+          cp "$G5_EVIDENCE_DIR/candidate-package-lock.json" package-lock.json
+          git add -- package.json package-lock.json
+          git diff --cached --check
+          test "$(git diff --cached --name-only | wc -l)" -eq 2
+          git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'security(g5): make OS.js CLI development-only'
+          git -c http.https://github.com/.extraheader="AUTHORIZATION: basic $(printf 'x-access-token:%s' "$GH_TOKEN" | base64 -w0)" push origin HEAD:refs/heads/"$branch"
+      - name: Retain audit and compatibility evidence
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: g5-cli-devonly-promotion-${{ github.sha }}
+          path: |
+            ${{ runner.temp }}/g5-cli-devonly-trial/summary.json
+            ${{ runner.temp }}/g5-cli-devonly-trial/*.log
+          if-no-files-found: error
+          retention-days: 30
