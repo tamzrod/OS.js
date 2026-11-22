@@ -30,7 +30,6 @@
 
 const fs = require('fs-extra');
 const path = require('path');
-const chokidar = require('chokidar');
 const {ServiceProvider} = require('@osjs/common');
 const Packages = require('../packages');
 const {closeWatches} = require('../utils/core');
@@ -86,7 +85,7 @@ class PackageServiceProvider extends ServiceProvider {
     const {manifestFile} = this.packages.options;
 
     if (fs.existsSync(manifestFile)) {
-      const watcher = chokidar.watch(manifestFile);
+      const watcher = require('chokidar').watch(manifestFile);
       watcher.on('change', () => {
         this.core.broadcast('osjs/packages:metadata:changed');
       });
