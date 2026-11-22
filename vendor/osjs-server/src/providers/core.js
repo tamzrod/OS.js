@@ -30,7 +30,6 @@
 
 const path = require('path');
 const express = require('express');
-const chokidar = require('chokidar');
 const bodyParser = require('body-parser');
 // Proxy implementation is loaded only for explicitly configured development routes.
 const nocache = require('nocache');
@@ -277,7 +276,7 @@ class CoreServiceProvider extends ServiceProvider {
   initDeveloperTools() {
     try {
       const watchdir = path.resolve(this.core.configuration.public);
-      const watcher = chokidar.watch(watchdir);
+      const watcher = require('chokidar').watch(watchdir);
 
       watcher.on('change', filename => {
         // NOTE: 'ignored' does not work as expected with callback
