@@ -1,0 +1,70 @@
+name: G5 publish verified critical remediation lockfile
+on:
+  push:
+    branches:
+      - codex/rm-sec-001-g1-baseline
+    paths:
+      - '.github/workflows/g5-critical-remediation-publish.yml'
+permissions:
+  contents: write
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+      - name: Setup pinned Node
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - name: Regenerate and independently verify candidate
+        env:
+          G5_EVIDENCE_DIR: ${{ runner.temp }}/g5-critical-remediation
+        run: |
+          node scripts/security/g5-critical-remediation-trial.cjs
+          node - <<'NODE'
+          const fs = require('node:fs');
+          const root = process.env.G5_EVIDENCE_DIR;
+          const s = JSON.parse(fs.readFileSync(root + '/summary.json'));
+          if (!s.acceptable || s.audit.critical !== 0 ||
+              s.criticalPackages.length !== 0 ||
+              s.after.rootMinimist !== '1.2.8' ||
+              s.after.rootProxyAddr !== '2.0.8' ||
+              ['lock-update', 'clean-install', 'root-test', 'package-discovery', 'browser-build']
+                .some(step => s.steps[step].exitCode !== 0)) process.exit(1);
+          console.log('Zero critical advisories verified in npm-generated candidate');
+          NODE
+      - name: Publish only generated lockfile to review branch
+        env:
+          G5_EVIDENCE_DIR: ${{ runner.temp }}/g5-critical-remediation
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -eu
+          branch='g5/critical-advisory-candidate'
+          if git ls-remote --exit-code --heads origin "$branch" >/dev/null; then
+            echo "Existing review branch: refusing overwrite" >&2
+            exit 1
+          fi
+          git switch -c "$branch"
+          cp "$G5_EVIDENCE_DIR/candidate-package-lock.json" package-lock.json
+          git add -- package-lock.json
+          git diff --cached --check
+          test "$(git diff --cached --name-only)" = 'package-lock.json'
+          git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'security(g5): patch minimist and proxy-addr critical advisories'
+          git -c http.https://github.com/.extraheader="AUTHORIZATION: basic $(printf 'x-access-token:%s' "$GH_TOKEN" | base64 -w0)" push origin HEAD:refs/heads/"$branch"
+      - name: Keep reproducibility evidence
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: g5-critical-promotion-${{ github.sha }}
+          path: |
+            ${{ runner.temp }}/g5-critical-remediation/summary.json
+            ${{ runner.temp }}/g5-critical-remediation/*.stderr.txt
+            ${{ runner.temp }}/g5-critical-remediation/production-audit.stdout.txt
+          retention-days: 30
+          if-no-files-found: error
