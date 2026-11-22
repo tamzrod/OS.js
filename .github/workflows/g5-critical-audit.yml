@@ -6,6 +6,7 @@ on:
     paths:
       - '.github/workflows/g5-critical-audit.yml'
       - 'scripts/security/g5-critical-audit.cjs'
+      - 'package-lock.json'
   workflow_dispatch:
 permissions:
   contents: read
