@@ -1,0 +1,43 @@
+name: G5 critical advisory remediation trial
+on:
+  push:
+    branches:
+      - codex/rm-sec-001-g1-baseline
+    paths:
+      - '.github/workflows/g5-critical-remediation-trial.yml'
+      - 'scripts/security/g5-critical-remediation-trial.cjs'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  critical-remediation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - name: Checkout exact branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Setup pinned Node
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - name: Generate isolated critical dependency candidate and verify
+        env:
+          G5_EVIDENCE_DIR: ${{ runner.temp }}/g5-critical-remediation
+        run: node scripts/security/g5-critical-remediation-trial.cjs
+      - name: Preserve generated candidate and test logs
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        env:
+          G5_EVIDENCE_DIR: ${{ runner.temp }}/g5-critical-remediation
+        with:
+          name: g5-critical-remediation-${{ github.sha }}
+          path: |
+            ${{ env.G5_EVIDENCE_DIR }}/summary.json
+            ${{ env.G5_EVIDENCE_DIR }}/*.stdout.txt
+            ${{ env.G5_EVIDENCE_DIR }}/*.stderr.txt
+            ${{ env.G5_EVIDENCE_DIR }}/candidate-package-lock.json
+          retention-days: 30
+          if-no-files-found: error
