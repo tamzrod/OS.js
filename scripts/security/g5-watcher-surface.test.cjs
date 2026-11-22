@@ -34,7 +34,7 @@ try {
   Module._load = function(request, parent, isMain) {
     if (parent && (parent.filename === corePath || parent.filename === packagesPath)) {
       if (request === '@osjs/common') return {ServiceProvider};
-      if (request === '../utils/core.js') return {closeWatches: async () => {}, isAuthenticated: () => {}};
+      if (request === '../utils/core.js' || request === '../utils/core') return {closeWatches: async () => {}, isAuthenticated: () => {}};
       if (request === 'express') return {Router: () => ({use() {}})};
       if (request === 'body-parser') return {};
       if (request === 'nocache') return () => {};
