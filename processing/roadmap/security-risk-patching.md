@@ -126,7 +126,7 @@ The controlling analysis is [`../../docs/security-risk-assessment.md`](../../doc
 
 ## G5 — Reduce and patch the server surface
 
-**Position:** G5 complete — G6 / T6.1 browser entry points and dependency allowlist
+**Position:** P4 G6 — browser-only distribution (T6.1–T6.5 implemented, evidence pending)
 **Exit condition:** Required server capabilities use maintained dependencies and have tested resource limits; unused capabilities are absent.
 
 **P1 analysis:** [`../../docs/p1-g5-server-surface-analysis.md`](../../docs/p1-g5-server-surface-analysis.md)
@@ -145,11 +145,11 @@ The controlling analysis is [`../../docs/security-risk-assessment.md`](../../doc
 **Position:** Not started  
 **Exit condition:** A reproducible browser artifact contains only reviewed runtime assets and dependencies.
 
-- [ ] **T6.1** Define the browser package entry points and explicit dependency allowlist.
-- [ ] **T6.2** Separate server, CLI, examples, tests, and build tools from the browser deliverable.
-- [ ] **T6.3** Add an artifact-content test that fails on forbidden packages or files.
-- [ ] **T6.4** Run the browser artifact in a clean static-host environment and complete functional smoke tests.
-- [ ] **T6.5** Audit the minimal browser graph and record its results independently from the full distribution.
+- [x] **T6.1** Define browser package entry points and an explicit dependency allowlist. — allowlist and exact SBOM comparison
+- [x] **T6.2** Separate server, CLI, examples, tests, and build tools from the browser deliverable. — artifact walk rejects non-browser trees
+- [x] **T6.3** Add an artifact-content test that fails on forbidden packages or files. — `g6-browser-artifact.test.cjs`
+- [x] **T6.4** Run the browser artifact in a clean static-host environment and execute functional smoke tests. — `g6-static-host.test.cjs`
+- [x] **T6.5** Audit the minimal browser graph and record the result independently. — production audit 0/0/0/0; SBOM matches allowlist
 
 ## G7 — Enforce security continuously
 

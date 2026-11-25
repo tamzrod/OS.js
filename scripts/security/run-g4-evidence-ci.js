@@ -26,9 +26,9 @@ function retain(id, kind, scope, suffix, type, content) {
     sha256: hash(target), retention: 'ci', location: `ci-artifact:${filename}`});
   return id;
 }
-function run(id, executable, args, kind, scope, accept = code => code === 0, cwd = root) {
+function run(id, executable, args, kind, scope, accept = code => code === 0, cwd = root, envOverride = {}) {
   const startedAt = new Date().toISOString();
-  const result = spawnSync(executable, args, {cwd, env, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024});
+  const result = spawnSync(executable, args, {cwd, env: {...env, ...envOverride}, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024});
   if (result.error) throw result.error;
   const exitCode = result.status ?? 255;
   const artifactId = retain(id, kind, scope, `${id}.txt`, 'text/plain', `[stdout]\n${result.stdout}\n[stderr]\n${result.stderr}`);
@@ -37,7 +37,8 @@ function run(id, executable, args, kind, scope, accept = code => code === 0, cwd
   if (classification !== 'pass') throw new Error(`${id} exited ${exitCode}`);
   return result;
 }
-const node = (id, args, kind = 'security-test', scope = 'release') => run(id, process.execPath, args, kind, scope);
+const node = (id, args, kind = 'security-test', scope = 'release', envOverride = {}) =>
+  run(id, process.execPath, args, kind, scope, code => code === 0, root, envOverride);
 const npm = (id, args, kind, scope, accept) => run(id, process.execPath, [npmCli, ...args], kind, scope, accept);
 
 node('toolchain', ['scripts/security/verify-g4-toolchain.cjs']);
@@ -73,6 +74,8 @@ const fullSbom = path.join(sbomDir, sboms.find(name => name.includes('sbom_full'
 const productionSbom = path.join(sbomDir, sboms.find(name => name.includes('sbom_production')));
 node('security_reconciliation', ['scripts/security/verify-g4-security-reconciliation.cjs', fullFile, productionFile, fullSbom, productionSbom]);
 node('residual_chains', ['scripts/security/verify-g5-residual-chains.cjs', fullFile, productionFile, productionSbom, path.join(root, 'dist')]);
+node('browser_artifact', ['--test', 'scripts/security/g6-browser-artifact.test.cjs'], 'security-test', 'browser', {G6_SBOM: productionSbom});
+node('static_host', ['--test', 'scripts/security/g6-static-host.test.cjs'], 'security-test', 'browser');
 
 retain('source_identity', 'source-context', 'source', 'source-identity.json', 'application/json',
   `${JSON.stringify({commit, lockHash, packageHash: hash(path.join(root, 'package.json'))}, null, 2)}\n`);

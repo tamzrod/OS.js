@@ -16,6 +16,9 @@ on:
       - 'scripts/security/g5-shipping-boundary.test.cjs'
       - 'scripts/security/g5-hostile-input.test.cjs'
       - 'scripts/security/g5-dos-boundaries.test.cjs'
+      - 'scripts/security/g6-browser-artifact.test.cjs'
+      - 'scripts/security/g6-static-host.test.cjs'
+      - 'scripts/security/browser-runtime-allowlist.json'
       - 'docs/g5-static-host-limits.md'
       - 'package.json'
       - 'package-lock.json'
@@ -49,5 +52,5 @@ jobs:
         run: npm ci --ignore-scripts
       - name: Build browser artifact
         run: npm run build
-      - name: Execute startup and shipping-boundary security tests
-        run: node --test scripts/security/g5-capability-contract.test.cjs scripts/security/g5-registration-routes.test.cjs scripts/security/g5-auth-adapter.test.cjs scripts/security/g5-proxy-surface.test.cjs scripts/security/g5-watcher-surface.test.cjs scripts/security/g5-production-graph.test.cjs scripts/security/g5-shipping-boundary.test.cjs scripts/security/g5-hostile-input.test.cjs scripts/security/g5-dos-boundaries.test.cjs
+      - name: Execute startup, boundary and browser-artifact security tests
+        run: node --test scripts/security/g5-capability-contract.test.cjs scripts/security/g5-registration-routes.test.cjs scripts/security/g5-auth-adapter.test.cjs scripts/security/g5-proxy-surface.test.cjs scripts/security/g5-watcher-surface.test.cjs scripts/security/g5-production-graph.test.cjs scripts/security/g5-shipping-boundary.test.cjs scripts/security/g5-hostile-input.test.cjs scripts/security/g5-dos-boundaries.test.cjs scripts/security/g6-browser-artifact.test.cjs scripts/security/g6-static-host.test.cjs
