@@ -36,8 +36,28 @@ const inspect = lock => ({
   entries: Object.keys(lock.packages || {}).length
 });
 
+const atLeast = (version, minimum) => {
+  const left = version.split('.').map(Number);
+  const right = minimum.split('.').map(Number);
+  for (let index = 0; index < 3; index++) {
+    if (left[index] !== right[index]) return left[index] > right[index];
+  }
+  return true;
+};
+
 try {
   fs.mkdirSync(out, {recursive: true});
+  const current = inspect(JSON.parse(fs.readFileSync(path.join(root, 'package-lock.json'))));
+  if ((!current.rootMinimist || atLeast(current.rootMinimist, '1.2.6')) &&
+      (!current.rootProxyAddr || atLeast(current.rootProxyAddr, '2.0.7'))) {
+    report.before = current;
+    report.alreadyApplied = true;
+    report.acceptable = true;
+    fs.writeFileSync(path.join(out, 'summary.json'), JSON.stringify(report, null, 2));
+    console.log('G5 CRITICAL REMEDIATION TRIAL SUMMARY');
+    console.log(JSON.stringify(report, null, 2));
+    process.exit(0);
+  }
   if (fs.existsSync(candidate)) throw Error('Refusing existing candidate checkout');
   fs.mkdirSync(candidate);
   report.sourceCommit = cp.execFileSync('git', ['rev-parse', 'HEAD'], {cwd: root, encoding: 'utf8'}).trim();

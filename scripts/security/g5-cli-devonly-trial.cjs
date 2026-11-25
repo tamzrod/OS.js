@@ -61,9 +61,17 @@ try {
   const initialLock = JSON.parse(fs.readFileSync(lockPath));
   report.before = lockOverview(initialLock);
   if (!manifest.dependencies ||
-      !Object.prototype.hasOwnProperty.call(manifest.dependencies, '@osjs/cli') ||
-      Object.prototype.hasOwnProperty.call(manifest.devDependencies, '@osjs/cli')) {
+      !Object.prototype.hasOwnProperty.call(manifest.dependencies, '@osjs/cli')) {
+    if (manifest.devDependencies && manifest.devDependencies['@osjs/cli'] &&
+        report.before.cliDevOnly) {
+      report.alreadyApplied = true;
+      report.candidateReadyForReview = true;
+      return;
+    }
     throw Error('Expected production-only CLI root is missing or already migrated');
+  }
+  if (Object.prototype.hasOwnProperty.call(manifest.devDependencies, '@osjs/cli')) {
+    throw Error('CLI is already in both dependency groups');
   }
   manifest.devDependencies['@osjs/cli'] = manifest.dependencies['@osjs/cli'];
   delete manifest.dependencies['@osjs/cli'];

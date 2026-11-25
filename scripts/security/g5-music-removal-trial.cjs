@@ -58,6 +58,11 @@ try {
   report.before = lockOverview(initialLock);
   if (!manifest.dependencies ||
       !Object.prototype.hasOwnProperty.call(manifest.dependencies, '@osjs/musicplayer-application')) {
+    if (!report.before.musicPlayer && !report.before.musicMetadata && !report.before.rootMusicPlayer) {
+      report.alreadyApplied = true;
+      report.candidateReadyForReview = true;
+      return;
+    }
     throw Error('Expected direct music player dependency is missing: stop rather than guess');
   }
   delete manifest.dependencies['@osjs/musicplayer-application'];
