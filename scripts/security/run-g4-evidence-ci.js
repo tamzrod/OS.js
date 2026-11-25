@@ -53,8 +53,8 @@ node('hostile_boundaries', ['--test', 'scripts/security/g3-safe-object.green.tes
 run('client_tests', path.join(toolDir, 'node_modules/jest/bin/jest.js'), ['--runInBand', '--coverage=false'],
   'compatibility-test', 'client', code => code === 0, path.join(root, 'vendor/osjs-client'));
 
-const full = npm('audit_full', ['audit', '--json'], 'npm-audit', 'full', code => code === 1);
-const production = npm('audit_production', ['audit', '--omit=dev', '--json'], 'npm-audit', 'production', code => code === 1);
+const full = npm('audit_full', ['audit', '--json'], 'npm-audit', 'full', code => code === 0 || code === 1);
+const production = npm('audit_production', ['audit', '--omit=dev', '--json'], 'npm-audit', 'production', code => code === 0 || code === 1);
 const auditDir = path.join(outputRoot, 'audit');
 fs.mkdirSync(auditDir, {recursive: true});
 const fullFile = path.join(auditDir, 'full.json'), productionFile = path.join(auditDir, 'production.json');

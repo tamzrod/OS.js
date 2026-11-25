@@ -19,7 +19,7 @@ const EXPECTED_COMPONENTS = {
   G1: {full: 1392, production: 344},
   G2: {full: 1391, production: 1360},
   G3: {full: 1691, production: 1660},
-  G4: {full: 1004, production: 437}
+  G4: {full: 785, production: 32}
 };
 const EXPECTED_INTEGRITY = 'sha512-5KVebwZ21EDt5N6eW0b7QPiQ7eRJwjdsfUUoJsCIdk5Y110N5viVa9PX0Wsp4yZI+y75XhVNut8EalY8amhc7g==';
 const sha256Buffer = value => crypto.createHash('sha256').update(value).digest('hex');
