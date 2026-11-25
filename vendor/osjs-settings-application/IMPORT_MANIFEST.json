@@ -1,0 +1,58 @@
+{
+  "upstreamRepository": "https://github.com/os-js/osjs-settings-application.git",
+  "upstreamTag": "1.1.8",
+  "upstreamCommit": "08f5947552fd7e0e97e7cfc848e43be64d75d5de",
+  "npmName": "@osjs/settings-application",
+  "npmVersion": "1.1.8",
+  "npmIntegrity": "sha512-66nu5IM/ha04oJGLqZnq8YjklniXSB3Y8M6zrtv7YCw/d5t/Q8EsNn798IQuX4SbcKcTDGTC1f5c97Rv13bxEw==",
+  "rootPackageSha256": "3974b429adbfaa914a2e4ab95f40581a94b0bf667bd5f42cab83311df7a9a60d",
+  "rootLockfileSha256": "45f6faa2f08d04ff4271bf658236140e2e492552958aa5777c2e9dffd4b44d96",
+  "generatedAt": "2026-11-12",
+  "files": [
+    {
+      "path": ".github/FUNDING.yml",
+      "bytes": 171,
+      "sha256": "354c849334e1c7f14f67ef167f3acbe8ba6eca98533da557bb0efddbbfc22a54"
+    },
+    {
+      "path": ".github/workflows/lint.yml",
+      "bytes": 298,
+      "sha256": "65f0ea27e23249f539661e42ee3c420daab9e33831838c972868a3f2422cf4be"
+    },
+    {
+      "path": "index.js",
+      "bytes": 10700,
+      "sha256": "617ad43d58a34f735007e8a204202f0f776ba1b0f9f0848b164600b3beadcc7b"
+    },
+    {
+      "path": "index.scss",
+      "bytes": 1678,
+      "sha256": "9ac12c8dd172110392c6a0e57d895b1c52e8f86cb7e52bdf34d141458c00ca6b"
+    },
+    {
+      "path": "LICENSE",
+      "bytes": 1403,
+      "sha256": "fecdc0c2b4ce2826da8821395047b5f7ec1f872465b648a0b98aebcf85ffa8b5"
+    },
+    {
+      "path": "metadata.json",
+      "bytes": 577,
+      "sha256": "e8101da9ce0519eade5f2162696d5380adb6349b80133c7d84d54bfd7383749e"
+    },
+    {
+      "path": "package.json",
+      "bytes": 1506,
+      "sha256": "d787e38477ca7bc45a1e264050c4b855e338446fdb229c94082ed163f7fdb936"
+    },
+    {
+      "path": "README.md",
+      "bytes": 1928,
+      "sha256": "18e8c7bbfeb2afbf78751466c0b40adfc7432b6f7b02e20ab191535c20072052"
+    },
+    {
+      "path": "webpack.config.js",
+      "bytes": 1295,
+      "sha256": "d1b4ec60632ad882de7327a14ae7db66d4d1dca7303711593919c8c13cb05eb9"
+    }
+  ]
+}

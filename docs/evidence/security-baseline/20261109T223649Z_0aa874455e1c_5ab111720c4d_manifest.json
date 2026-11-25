@@ -1,0 +1,129 @@
+{
+  "schemaVersion": 1,
+  "evidenceId": "20261109T223649Z_0aa874455e1c_5ab111720c4d",
+  "roadmapId": "RM-SEC-001",
+  "goalId": "G1",
+  "generatedAt": "2026-11-09T22:37:23.738Z",
+  "source": {
+    "commit": "0aa874455e1ca5a31e7be193b3be14080300c2c1",
+    "dirty": true,
+    "statusSha256": "6a5025f62a2d14f4f2dfabc7e5da6a7b01e395732da55cec19d94f1aefac1431",
+    "lockfilePath": "package-lock.json",
+    "lockfileSha256": "5ab111720c4d3159aece1462feae3ff45bd470b73af19ea0683f0c4ee828a10d"
+  },
+  "environment": {
+    "os": "linux",
+    "arch": "x64",
+    "nodeVersion": "v26.13.0",
+    "npmVersion": "11.20.0",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "commands": [
+    {
+      "id": "install_scripts_disabled",
+      "argv": [
+        "npm",
+        "ci",
+        "--ignore-scripts"
+      ],
+      "startedAt": "2026-11-09T22:36:56.670Z",
+      "finishedAt": "2026-11-09T22:37:18.281Z",
+      "exitCode": 0,
+      "classification": "pass",
+      "artifactIds": [
+        "install_scripts_disabled"
+      ]
+    },
+    {
+      "id": "install_scripts_enabled",
+      "argv": [
+        "npm",
+        "ci"
+      ],
+      "startedAt": "2026-11-09T22:37:18.281Z",
+      "finishedAt": "2026-11-09T22:37:21.441Z",
+      "exitCode": 0,
+      "classification": "pass",
+      "artifactIds": [
+        "install_scripts_enabled"
+      ]
+    },
+    {
+      "id": "audit_full",
+      "argv": [
+        "npm",
+        "audit",
+        "--json"
+      ],
+      "startedAt": "2026-11-09T22:37:21.441Z",
+      "finishedAt": "2026-11-09T22:37:22.843Z",
+      "exitCode": 1,
+      "classification": "findings",
+      "artifactIds": [
+        "audit_full"
+      ]
+    },
+    {
+      "id": "audit_production",
+      "argv": [
+        "npm",
+        "audit",
+        "--omit=dev",
+        "--json"
+      ],
+      "startedAt": "2026-11-09T22:37:22.845Z",
+      "finishedAt": "2026-11-09T22:37:23.736Z",
+      "exitCode": 1,
+      "classification": "findings",
+      "artifactIds": [
+        "audit_production"
+      ]
+    }
+  ],
+  "artifacts": [
+    {
+      "id": "install_scripts_disabled",
+      "kind": "install-log",
+      "scope": "scripts-disabled",
+      "filename": "20261109T223649Z_0aa874455e1c_5ab111720c4d_install-log_scripts-disabled.txt",
+      "mediaType": "text/plain",
+      "bytes": 9897,
+      "sha256": "a5e9493ba237a951fa090a2e3292a3e05d7e5f2b834907abb730cae7b65799f4",
+      "retention": "ci",
+      "location": "ci-artifact:20261109T223649Z_0aa874455e1c_5ab111720c4d_install-log_scripts-disabled.txt"
+    },
+    {
+      "id": "install_scripts_enabled",
+      "kind": "install-log",
+      "scope": "scripts-enabled",
+      "filename": "20261109T223649Z_0aa874455e1c_5ab111720c4d_install-log_scripts-enabled.txt",
+      "mediaType": "text/plain",
+      "bytes": 9896,
+      "sha256": "60fc010074172d5d1ce8d9a6bd7e071598d7e43b50925ce31b467dfa51d56b11",
+      "retention": "ci",
+      "location": "ci-artifact:20261109T223649Z_0aa874455e1c_5ab111720c4d_install-log_scripts-enabled.txt"
+    },
+    {
+      "id": "audit_full",
+      "kind": "npm-audit",
+      "scope": "full",
+      "filename": "20261109T223649Z_0aa874455e1c_5ab111720c4d_npm-audit_full.json",
+      "mediaType": "application/json",
+      "bytes": 134444,
+      "sha256": "f3414fd22338d42460671787c2dc9b034092ff1f520d95b57a8b3450a47c3822",
+      "retention": "ci",
+      "location": "ci-artifact:20261109T223649Z_0aa874455e1c_5ab111720c4d_npm-audit_full.json"
+    },
+    {
+      "id": "audit_production",
+      "kind": "npm-audit",
+      "scope": "production",
+      "filename": "20261109T223649Z_0aa874455e1c_5ab111720c4d_npm-audit_production.json",
+      "mediaType": "application/json",
+      "bytes": 47643,
+      "sha256": "3a9c1a7d2b4880eba4cfe9a774789ab9ece3089564b96531ea29f23d2199fccb",
+      "retention": "ci",
+      "location": "ci-artifact:20261109T223649Z_0aa874455e1c_5ab111720c4d_npm-audit_production.json"
+    }
+  ]
+}

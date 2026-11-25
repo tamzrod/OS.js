@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 1,
+  "evidenceId": "20261110T084831Z_0aa874455e1c_5ab111720c4d",
+  "roadmapId": "RM-SEC-001",
+  "goalId": "G1",
+  "generatedAt": "2026-11-10T08:48:53Z",
+  "source": {
+    "commit": "0aa874455e1ca5a31e7be193b3be14080300c2c1",
+    "dirty": true,
+    "statusSha256": "6a5025f62a2d14f4f2dfabc7e5da6a7b01e395732da55cec19d94f1aefac1431",
+    "lockfilePath": "package-lock.json",
+    "lockfileSha256": "5ab111720c4d3159aece1462feae3ff45bd470b73af19ea0683f0c4ee828a10d"
+  },
+  "environment": {
+    "os": "linux",
+    "arch": "x64",
+    "nodeVersion": "v26.13.0",
+    "npmVersion": "11.20.0",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "commands": [
+    {
+      "id": "dependency_classification",
+      "argv": ["node", "scripts/security/classify-dependency-boundaries.js", "package-lock.json", "dependency-classification.json"],
+      "startedAt": "2026-11-10T08:47:04Z",
+      "finishedAt": "2026-11-10T08:47:04Z",
+      "exitCode": 0,
+      "classification": "pass",
+      "artifactIds": ["dependency_classification"]
+    },
+    {
+      "id": "package_discovery",
+      "argv": ["npm", "run", "package:discover"],
+      "startedAt": "2026-11-10T08:48:37.694Z",
+      "finishedAt": "2026-11-10T08:48:37.935Z",
+      "exitCode": 0,
+      "classification": "pass",
+      "artifactIds": ["package_discovery"]
+    },
+    {
+      "id": "build",
+      "argv": ["npm", "run", "build"],
+      "startedAt": "2026-11-10T08:48:37.936Z",
+      "finishedAt": "2026-11-10T08:48:38.558Z",
+      "exitCode": 1,
+      "classification": "expected-failure",
+      "artifactIds": ["build"]
+    }
+  ],
+  "artifacts": [
+    {
+      "id": "dependency_classification",
+      "kind": "dependency-classification",
+      "scope": "full",
+      "filename": "20261110T084831Z_0aa874455e1c_5ab111720c4d_dependency-classification_full.json",
+      "mediaType": "application/json",
+      "bytes": 402382,
+      "sha256": "0fd22769b0ab9278330df63e99da41716d9f5957e4ef4b36f86302dee76bbbac",
+      "retention": "ci",
+      "location": "ci-artifact:20261110T084831Z_0aa874455e1c_5ab111720c4d_dependency-classification_full.json"
+    },
+    {
+      "id": "package_discovery",
+      "kind": "package-discovery-log",
+      "scope": "full",
+      "filename": "20261110T084831Z_0aa874455e1c_5ab111720c4d_package-discovery-log_full.txt",
+      "mediaType": "text/plain",
+      "bytes": 1606,
+      "sha256": "796df63bad41f0361569ef6be6dfda5791b2b1907e688d9270fcd4e583aa4e15",
+      "retention": "ci",
+      "location": "ci-artifact:20261110T084831Z_0aa874455e1c_5ab111720c4d_package-discovery-log_full.txt"
+    },
+    {
+      "id": "build",
+      "kind": "build-log",
+      "scope": "full",
+      "filename": "20261110T084831Z_0aa874455e1c_5ab111720c4d_build-log_full.txt",
+      "mediaType": "text/plain",
+      "bytes": 3352,
+      "sha256": "38b61e07dc475de98218650b12e6f3d16d7377f8d12de9dc8b549d2ad6ac171b",
+      "retention": "ci",
+      "location": "ci-artifact:20261110T084831Z_0aa874455e1c_5ab111720c4d_build-log_full.txt"
+    }
+  ]
+}

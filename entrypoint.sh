@@ -31,7 +31,8 @@
 
 # THIS IS ONLY INTENDED FOR DEVELOPMENT USAGE
 
-npm install
+npm ci
+npm ci --prefix vendor/osjs-server --omit=dev
 npm run build
 npm run package:discover
 npx nodemon --watch package-lock.json --watch src/server --watch package.json --watch src/packages src/server/index.js

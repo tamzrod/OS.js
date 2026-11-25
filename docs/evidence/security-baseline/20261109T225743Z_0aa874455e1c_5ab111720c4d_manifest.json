@@ -1,0 +1,120 @@
+{
+  "schemaVersion": 1,
+  "evidenceId": "20261109T225743Z_0aa874455e1c_5ab111720c4d",
+  "roadmapId": "RM-SEC-001",
+  "goalId": "G1",
+  "generatedAt": "2026-11-09T22:59:14.195Z",
+  "source": {
+    "commit": "0aa874455e1ca5a31e7be193b3be14080300c2c1",
+    "dirty": true,
+    "statusSha256": "6a5025f62a2d14f4f2dfabc7e5da6a7b01e395732da55cec19d94f1aefac1431",
+    "lockfilePath": "package-lock.json",
+    "lockfileSha256": "5ab111720c4d3159aece1462feae3ff45bd470b73af19ea0683f0c4ee828a10d"
+  },
+  "environment": {
+    "os": "linux",
+    "arch": "x64",
+    "nodeVersion": "v26.13.0",
+    "npmVersion": "11.20.0",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "commands": [
+    {
+      "id": "sbom_full",
+      "argv": [
+        "cyclonedx-npm",
+        "--ignore-npm-errors",
+        "--package-lock-only",
+        "--output-reproducible",
+        "--no-validate",
+        "--spec-version",
+        "1.6",
+        "--output-format",
+        "JSON",
+        "--output-file",
+        "-",
+        "/home/sysadmin/apps/os.js/package.json"
+      ],
+      "startedAt": "2026-11-09T22:59:08.229Z",
+      "finishedAt": "2026-11-09T22:59:10.303Z",
+      "exitCode": 0,
+      "classification": "pass",
+      "artifactIds": [
+        "sbom_full",
+        "sbom_full_diagnostic"
+      ]
+    },
+    {
+      "id": "sbom_production",
+      "argv": [
+        "cyclonedx-npm",
+        "--ignore-npm-errors",
+        "--package-lock-only",
+        "--output-reproducible",
+        "--no-validate",
+        "--spec-version",
+        "1.6",
+        "--output-format",
+        "JSON",
+        "--output-file",
+        "-",
+        "--omit=dev",
+        "/home/sysadmin/apps/os.js/package.json"
+      ],
+      "startedAt": "2026-11-09T22:59:10.326Z",
+      "finishedAt": "2026-11-09T22:59:11.055Z",
+      "exitCode": 0,
+      "classification": "pass",
+      "artifactIds": [
+        "sbom_production",
+        "sbom_production_diagnostic"
+      ]
+    }
+  ],
+  "artifacts": [
+    {
+      "id": "sbom_full",
+      "kind": "sbom",
+      "scope": "full",
+      "filename": "20261109T225743Z_0aa874455e1c_5ab111720c4d_sbom_full.cdx.json",
+      "mediaType": "application/vnd.cyclonedx+json",
+      "bytes": 1652986,
+      "sha256": "856cad0782d18907661167a7b2230d7e0349a8b863d0747fbd987a18b6d52463",
+      "retention": "ci",
+      "location": "ci-artifact:20261109T225743Z_0aa874455e1c_5ab111720c4d_sbom_full.cdx.json"
+    },
+    {
+      "id": "sbom_full_diagnostic",
+      "kind": "source-context",
+      "scope": "sbom-full",
+      "filename": "20261109T225743Z_0aa874455e1c_5ab111720c4d_sbom-diagnostic_full.txt",
+      "mediaType": "text/plain",
+      "bytes": 635,
+      "sha256": "e5a3042d5fa299b8d681269ca74770edfbc7dc28ae9b45e71669409a0f53dbb8",
+      "retention": "ci",
+      "location": "ci-artifact:20261109T225743Z_0aa874455e1c_5ab111720c4d_sbom-diagnostic_full.txt"
+    },
+    {
+      "id": "sbom_production",
+      "kind": "sbom",
+      "scope": "production",
+      "filename": "20261109T225743Z_0aa874455e1c_5ab111720c4d_sbom_production.cdx.json",
+      "mediaType": "application/vnd.cyclonedx+json",
+      "bytes": 357518,
+      "sha256": "d4832bcc00b665685635b2dcc65cf2db3b9dcb9fa3fb7204c016fa458362e1b4",
+      "retention": "ci",
+      "location": "ci-artifact:20261109T225743Z_0aa874455e1c_5ab111720c4d_sbom_production.cdx.json"
+    },
+    {
+      "id": "sbom_production_diagnostic",
+      "kind": "source-context",
+      "scope": "sbom-production",
+      "filename": "20261109T225743Z_0aa874455e1c_5ab111720c4d_sbom-diagnostic_production.txt",
+      "mediaType": "text/plain",
+      "bytes": 646,
+      "sha256": "ce2825d42dae116999d19d22b4f46149ad9cc4ec2b85daa9a56081de33f3f884",
+      "retention": "ci",
+      "location": "ci-artifact:20261109T225743Z_0aa874455e1c_5ab111720c4d_sbom-diagnostic_production.txt"
+    }
+  ]
+}

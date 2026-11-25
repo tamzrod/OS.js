@@ -1,0 +1,56 @@
+name: G5 fail-closed server startup regression
+
+on:
+  push:
+    branches:
+      - codex/rm-sec-001-g1-baseline
+  pull_request:
+    paths:
+      - 'src/server/**'
+      - 'scripts/security/g5-capability-contract.test.cjs'
+      - 'scripts/security/g5-registration-routes.test.cjs'
+      - 'scripts/security/g5-auth-adapter.test.cjs'
+      - 'scripts/security/g5-proxy-surface.test.cjs'
+      - 'scripts/security/g5-watcher-surface.test.cjs'
+      - 'scripts/security/g5-production-graph.test.cjs'
+      - 'scripts/security/g5-shipping-boundary.test.cjs'
+      - 'scripts/security/g5-hostile-input.test.cjs'
+      - 'scripts/security/g5-dos-boundaries.test.cjs'
+      - 'scripts/security/g6-browser-artifact.test.cjs'
+      - 'scripts/security/g6-static-host.test.cjs'
+      - 'scripts/security/browser-runtime-allowlist.json'
+      - 'docs/g5-static-host-limits.md'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'vendor/osjs-server/package.json'
+      - 'vendor/osjs-server/src/providers/core.js'
+      - 'vendor/osjs-server/src/providers/packages.js'
+      - 'vendor/osjs-server/src/auth.js'
+      - 'vendor/osjs-server/src/providers/auth.js'
+      - 'vendor/osjs-server/src/config.js'
+      - 'vendor/osjs-server/src/core.js'
+      - '.github/workflows/g5-capability-contract.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  startup-gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout exact source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Set up pinned Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with:
+          node-version-file: .nvmrc
+      - name: Install exact graph
+        run: npm ci --ignore-scripts
+      - name: Build browser artifact
+        run: npm run package:discover && npm run build
+      - name: Execute startup, boundary and browser-artifact security tests
+        run: node --test scripts/security/g5-capability-contract.test.cjs scripts/security/g5-registration-routes.test.cjs scripts/security/g5-auth-adapter.test.cjs scripts/security/g5-proxy-surface.test.cjs scripts/security/g5-watcher-surface.test.cjs scripts/security/g5-production-graph.test.cjs scripts/security/g5-shipping-boundary.test.cjs scripts/security/g5-hostile-input.test.cjs scripts/security/g5-dos-boundaries.test.cjs scripts/security/g6-browser-artifact.test.cjs scripts/security/g6-static-host.test.cjs

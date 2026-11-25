@@ -1,0 +1,46 @@
+name: G5 isolated CLI development-only trial
+
+on:
+  push:
+    branches:
+      - codex/rm-sec-001-g1-baseline
+    paths:
+      - 'scripts/security/g5-cli-devonly-trial.cjs'
+      - '.github/workflows/g5-cli-devonly-trial.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  cli-devonly:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - name: Check out exact source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Set up pinned Node/npm
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - name: Generate, install, test, discover and audit candidate
+        env:
+          G5_EVIDENCE_DIR: ${{ runner.temp }}/g5-cli-devonly-trial
+        run: node scripts/security/g5-cli-devonly-trial.cjs
+      - name: Retain generated lock, manifest and trial logs
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        env:
+          G5_EVIDENCE_DIR: ${{ runner.temp }}/g5-cli-devonly-trial
+        with:
+          name: g5-cli-devonly-trial-${{ github.sha }}
+          path: |
+            ${{ env.G5_EVIDENCE_DIR }}/summary.json
+            ${{ env.G5_EVIDENCE_DIR }}/*.log
+            ${{ env.G5_EVIDENCE_DIR }}/candidate-package.json
+            ${{ env.G5_EVIDENCE_DIR }}/candidate-package-lock.json
+          if-no-files-found: error
+          retention-days: 30

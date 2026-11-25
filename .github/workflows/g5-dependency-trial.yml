@@ -1,0 +1,51 @@
+name: G5 isolated music dependency removal trial
+
+on:
+  push:
+    branches:
+      - codex/rm-sec-001-g1-baseline
+    paths:
+      - 'scripts/security/g5-music-removal-trial.cjs'
+      - 'src/server/security-profile.js'
+      - '.github/workflows/g5-dependency-trial.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  music-removal-trial:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - name: Check out security branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Set up pinned Node/npm
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - name: Validate pinned runtime and clean source
+        run: |
+          node -e "const cp=require('node:child_process');if(process.version!=='v26.13.0'||cp.execFileSync('npm',['--version'],{encoding:'utf8'}).trim()!=='11.20.0')process.exit(1)"
+          test -z "$(git status --porcelain=v1 --untracked-files=all)"
+      - name: Generate candidate lockfile, test and audit in isolated checkout
+        env:
+          G5_EVIDENCE_DIR: ${{ runner.temp }}/g5-music-removal-trial
+        run: node scripts/security/g5-music-removal-trial.cjs
+      - name: Preserve candidate and verification logs
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        env:
+          G5_EVIDENCE_DIR: ${{ runner.temp }}/g5-music-removal-trial
+        with:
+          name: g5-music-removal-trial-${{ github.sha }}
+          path: |
+            ${{ env.G5_EVIDENCE_DIR }}/summary.json
+            ${{ env.G5_EVIDENCE_DIR }}/*.log
+            ${{ env.G5_EVIDENCE_DIR }}/candidate-package.json
+            ${{ env.G5_EVIDENCE_DIR }}/candidate-package-lock.json
+          if-no-files-found: error
+          retention-days: 30
