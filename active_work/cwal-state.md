@@ -5,7 +5,7 @@
 **Mission:** `active_work/operation-cwal.md`  
 **Trigger in OpenCode:** `operation cwal`  
 **Authorized branch:** `codex/rm-sec-001-g1-baseline`  
-**Current technical location:** T8.5 approval package prepared; newly identified unresolved High CodeQL finding requires bounded OSJS-SEC-FIX-001 remediation. **READY_TO_RUN** for this technical fix only; T8.5 remains **AWAITING_HUMAN_APPROVAL**, MI-P6 BLOCKED, no autonomous release action permitted.  
+**Current technical location:** OSJS-SEC-FIX-001 complete at `d16f480`; CodeQL check run `139075875714` succeeds with zero annotations. T8.5 approval package reconciled to the new candidate. **AWAITING_HUMAN_APPROVAL**; MI-P6 BLOCKED, no autonomous release action permitted.  
 **Human release gate:** G8 T8.5 not delegated.  
 **Expected PR:** #1 open, draft, unmerged (re-verify when execution begins).  
 **Baseline source:** branch HEAD must be read at execution start; do not treat the creation SHA below as a guaranteed current HEAD.
@@ -59,7 +59,7 @@ No automated merge, no release, no deployment.
 - Approved scope is documentation and PR-description maintenance only. Confirm PR #1 remains **open, draft, unmerged**; production server remains fail-closed; MI-P6 is blocked. Do not mark status COMPLETE or fill any human decision box.
 - Final documentation-commit SHA and verification checks should be read from GitHub after this checkpoint; older candidate CI results are not represented as tests on a new runtime change.
 
-**Next and only authorized T8.5 decision:** a named human security owner reviews exact evidence and signs `docs/g8-security-signoff.md`, accepting/rejecting risks individually and expressly deciding MI-P6 status. Any required deployment/release approval remains a separate gate.
+**Next and only authorized T8.5 decision:** a named human security owner reviews candidate `d16f480` and signs `docs/g8-security-signoff.md`, accepting/rejecting risks individually and expressly deciding MI-P6 status. Any required deployment/release approval remains a separate gate. OSJS-SEC-FIX-001 is complete; no further autonomous technical task is authorized without a new documented finding.
 
 
 ## Current next action — OSJS-SEC-FIX-001
@@ -69,3 +69,4 @@ No automated merge, no release, no deployment.
 **Trigger:** GitHub Advanced Security High TOCTOU review comment [4689024229](https://github.com/tamzrod/OS.js/pull/1#discussion_r4689024229), affecting `scripts/security/verify-client-import.js`. At initial handoff: nine review threads, one unresolved; branch baseline `72e254c9e8978b81657ab919c4ccb2e3af38ac43`. The old G8 code candidate `146f800` is **not** sufficient evidence for changed source after remediation.
 
 **Next sequence:** re-read current refs and alerts → focused exclusive-create fix and race/symlink regressions → independent code review and exact-SHA CI → evidence/PR reconciliation → STOP at `AWAITING_HUMAN_APPROVAL` on verified PASS, or `BLOCKED` with evidence. Do not fill human T8.5 verdicts, unblock MI-P6, or merge/release/deploy. This instruction does not itself assert the vulnerability is fixed.
+| 8 | OSJS-SEC-FIX-001 TOCTOU remediation | `d16f480`; exclusive manifest creation; G2 [45576456286](https://github.com/tamzrod/OS.js/actions/runs/45576456286), G3 [45576459854](https://github.com/tamzrod/OS.js/actions/runs/45576459854), G4 [45576463959](https://github.com/tamzrod/OS.js/actions/runs/45576463959) 23/23, continuous [45576440981](https://github.com/tamzrod/OS.js/actions/runs/45576440981) / [45576449365](https://github.com/tamzrod/OS.js/actions/runs/45576449365), CodeQL zero annotations; 95 tests | P5 PASS; T8.5 AWAITING_HUMAN_APPROVAL | Security owner |

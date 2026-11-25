@@ -21,7 +21,7 @@ trigger in `docs/g8-security-signoff.md`.
 - High production advisories: none.
 - Moderate or low production advisories: none.
 - Full-tree high: one, `postcss`, development-only, **technically conditionally allowed by CI** as `EX-001`; final human acceptance pending.
-- CodeQL: workflow green and initial findings reported addressed. Current open alert inventory must be independently checked by the human owner; green workflow alone does not prove there are no remaining alerts.
+- CodeQL: all first-run findings are resolved. OSJS-SEC-FIX-001 replaced the import-manifest check-then-write with exclusive creation; candidate `d16f480` check run `139075875714` reports zero annotations and all ten visible PR review threads are resolved. The alert-inventory API remains inaccessible (`403`), so the human reviewer must inspect the Security tab.
 
 ## Human decision routing
 

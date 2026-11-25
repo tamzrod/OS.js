@@ -3,8 +3,8 @@
 **Status:** AWAITING_HUMAN_APPROVAL — NO DECISION RECORDED  
 **Prepared:** 2026-11-25 (documentation-only; not human sign-off)  
 **Repository:** `tamzrod/OS.js`; **draft PR:** [#1](https://github.com/tamzrod/OS.js/pull/1)  
-**Reviewed technical release candidate:** `146f8002e4991e9e4eb159909ff4930970e7c406`  
-**Technical records baseline:** `28697f4d86f8ab00f2006404b13a4cff20a5ff5c`  
+**Reviewed technical release candidate:** `d16f480ff52849565ff12031c46642814a8d340a`  
+**Technical records baseline:** `d16f480ff52849565ff12031c46642814a8d340a` (this document is a later documentation-only commit)  
 **Shipping boundary:** static browser-only artifact. The legacy OS.js Node production server remains blocked.
 
 This file is a **form for a named human security owner**. It does **not** approve an exception, PR merge, release, deployment or MI-P6 resumption. Agents may prepare evidence but must never fill the human identity, decision, date, attestation or signature fields.
@@ -13,21 +13,35 @@ This file is a **form for a named human security owner**. It does **not** approv
 
 | Verification | Exact reference | Recorded result |
 | --- | --- | --- |
-| G2 clean cookie-security evidence | [45530642530](https://github.com/tamzrod/OS.js/actions/runs/45530642530) | Successful; artifact `14984811490` |
-| G3 clean safe-object evidence | [45530645226](https://github.com/tamzrod/OS.js/actions/runs/45530645226) | Successful; artifact `14984826071` |
-| G4 clean build/security evidence | [45530648214](https://github.com/tamzrod/OS.js/actions/runs/45530648214) | Successful G4 steps, 23/23 commands per retained evidence; artifact `14985205505` |
-| Continuous security, push | [45530630907](https://github.com/tamzrod/OS.js/actions/runs/45530630907) | Successful; audit/SBOM/security tests; artifact `14985065743` |
-| Continuous security, PR | [45530638237](https://github.com/tamzrod/OS.js/actions/runs/45530638237) | Successful; PR artifact is separately named for GitHub's PR merge ref |
-| CodeQL, push / PR | [45530631039](https://github.com/tamzrod/OS.js/actions/runs/45530631039) / [45530638261](https://github.com/tamzrod/OS.js/actions/runs/45530638261) | Successful checks; current alert inventory requires human inspection if not accessible |
-| G5 startup/boundary, push / PR | [45530630972](https://github.com/tamzrod/OS.js/actions/runs/45530630972) / [45530638246](https://github.com/tamzrod/OS.js/actions/runs/45530638246) | Successful |
-| Candidate Ubuntu/Windows build | [45530638257](https://github.com/tamzrod/OS.js/actions/runs/45530638257) | Successful |
-| Final records continuous security / CodeQL / G5 / lint / matrix | [45531594857](https://github.com/tamzrod/OS.js/actions/runs/45531594857), [45531594088](https://github.com/tamzrod/OS.js/actions/runs/45531594088), [45531594495](https://github.com/tamzrod/OS.js/actions/runs/45531594495), [45531594353](https://github.com/tamzrod/OS.js/actions/runs/45531594353), [45531594742](https://github.com/tamzrod/OS.js/actions/runs/45531594742) | Successful at records commit `28697f4` |
+| G2 clean cookie-security evidence | [45576456286](https://github.com/tamzrod/OS.js/actions/runs/45576456286) | Successful; artifact `15004127936`, sha256 `f7e86e66…b405a1` |
+| G3 clean safe-object evidence | [45576459854](https://github.com/tamzrod/OS.js/actions/runs/45576459854) | Successful; artifact `15004133171`, sha256 `84effc97…6dd225e` |
+| G4 clean build/security evidence | [45576463959](https://github.com/tamzrod/OS.js/actions/runs/45576463959) | Successful; 23/23 commands pass; artifact `15004646816`, sha256 `ef7b7194…99622a1` |
+| Continuous security, push | [45576440981](https://github.com/tamzrod/OS.js/actions/runs/45576440981) | Successful; audit/SBOM/95 security tests; artifact `15004661838`, sha256 `57de0312…a021c` |
+| Continuous security, PR | [45576449365](https://github.com/tamzrod/OS.js/actions/runs/45576449365) | Successful; PR merge-ref artifact `15004532023`, sha256 `c22dd940…17d099` |
+| CodeQL, push / PR | [45576440988](https://github.com/tamzrod/OS.js/actions/runs/45576440988) / [45576449327](https://github.com/tamzrod/OS.js/actions/runs/45576449327) | Successful; check run `139075875714` has **zero annotations** |
+| G5 startup/boundary, push / PR | [45576440870](https://github.com/tamzrod/OS.js/actions/runs/45576440870) / [45576449433](https://github.com/tamzrod/OS.js/actions/runs/45576449433) | Successful |
+| Candidate Ubuntu/Windows build | [45576449346](https://github.com/tamzrod/OS.js/actions/runs/45576449346) | Successful on both runners |
+| Lint tests | [45576449236](https://github.com/tamzrod/OS.js/actions/runs/45576449236) | Successful |
 
-**Candidate results:** `npm audit --omit=dev`: **0 critical / 0 high / 0 moderate / 0 low**. Full npm audit: **0 critical / 1 high / 9 moderate** (development-only findings requiring explicit acceptance). Production SBOM: **32 components / 33 dependency entries / 0 unresolved references**. Build, static-host, artifact and security tests have retained CI evidence.
+### CodeQL alert 5 / PR thread disposition
 
-Note: the workflow titled *G3 clean safe-object evidence* also implements a separately dispatched **G4** path. Run `45530648214` executed the G4 steps and uploaded a G4-named artifact; the workflow name alone is not its test scope. The PR-triggered continuous artifact is named using GitHub's PR merge SHA; do not mistake that for source-commit proof. Validate run `head_sha`, jobs and artifacts when reviewing.
+- Original nine review threads: eight resolved earlier; the TOCTOU thread
+  [4689024229](https://github.com/tamzrod/OS.js/pull/1#discussion_r4689024229)
+  is now resolved and outdated.
+- A follow-up thread `4692176965` was raised on the first version of the new
+  regression test. It was corrected by reading mode and bytes through one file
+  descriptor; that thread is also resolved and outdated.
+- The exact candidate check run has **zero CodeQL annotations**. This is
+  stronger than a green workflow: the annotation API was inspected directly.
+- The alert inventory API still returns `403 Resource not accessible by
+  integration`; a human reviewer must still inspect the GitHub Security tab.
+  Do not claim the inventory API was queried successfully.
 
-The exact release candidate `146f800` is the code/security basis. Documentation-only commits after it are not substitutes for technical CI, and any substantive source, dependency or build change must trigger a new candidate with full evidence before approval.
+**Candidate results:** `npm audit --omit=dev`: **0 critical / 0 high / 0 moderate / 0 low**. Full npm audit: **0 critical / 1 high / 9 moderate** (development-only findings requiring explicit acceptance). Production SBOM: **32 components / 33 dependency entries / 0 unresolved references**. Build, static-host, artifact and 95 security tests have retained CI evidence, including the five exclusive-manifest regression cases.
+
+Note: the workflow titled *G3 clean safe-object evidence* also implements a separately dispatched **G4** path. Run `45576463959` executed the G4 steps and uploaded a G4-named artifact; the workflow name alone is not its test scope. The PR-triggered continuous artifact is named using GitHub's PR merge SHA; do not mistake that for source-commit proof. Validate run `head_sha`, jobs and artifacts when reviewing.
+
+The exact release candidate `d16f480` is the code/security basis. Documentation-only commits after it are not substitutes for technical CI, and any substantive source, dependency or build change must trigger a new candidate with full evidence before approval.
 
 ## 2. Exception and residual-risk decisions — all HUMAN PENDING
 
@@ -46,7 +60,7 @@ Sources: [exception definitions](security-exceptions.md), [residual-risk registe
 
 ## 3. Human review checklist
 
-- [ ] Verified both the candidate `146f800` and latest records commit and confirmed no unreviewed code/lock changes.
+- [ ] Verified candidate `d16f480` and the latest records commit and confirmed no unreviewed code/lock changes.
 - [ ] Independently inspected CI logs, artifact digests, SBOM, shipped artifact and audit JSON; confirmed all objective security controls and appropriate threat model.
 - [ ] Inspected CodeQL security alerts/reviews and resolved-or-dispositioned any remaining findings (CI success alone is not equivalent to manually inspecting open alerts).
 - [ ] Reconciled every technical item in [release checklist](release-checklist.md) with its evidence reference.

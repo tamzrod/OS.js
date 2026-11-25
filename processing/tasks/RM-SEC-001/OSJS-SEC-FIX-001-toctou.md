@@ -41,3 +41,20 @@ CodeQL check-run annotations at the pre-fix head contained exactly this one
 failure. The post-fix check must report success with no annotations before the
 task is marked PASS. A green workflow without checking annotations is not
 accepted as proof.
+
+## PASS evidence
+
+- Candidate: `d16f480ff52849565ff12031c46642814a8d340a`.
+- Red: before the fix, the mode assertion and simulated check race failed.
+- Green: five cases pass, repeated three times; continuous CI runs 95 security
+  tests.
+- G2 [45576456286](https://github.com/tamzrod/OS.js/actions/runs/45576456286),
+  G3 [45576459854](https://github.com/tamzrod/OS.js/actions/runs/45576459854),
+  G4 [45576463959](https://github.com/tamzrod/OS.js/actions/runs/45576463959)
+  (23/23 commands), continuous push
+  [45576440981](https://github.com/tamzrod/OS.js/actions/runs/45576440981) / PR
+  [45576449365](https://github.com/tamzrod/OS.js/actions/runs/45576449365).
+- CodeQL check run `139075875714`: success, **zero annotations**. The original
+  TOCTOU thread and the follow-up test thread are resolved and outdated.
+- Alert-inventory API remains `403`; manual Security-tab review stays a human
+  obligation.

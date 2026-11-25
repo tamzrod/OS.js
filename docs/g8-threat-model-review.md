@@ -27,6 +27,7 @@ security-owner approval.
 | Unreviewed runtime package enters the bundle | Blocked | Production SBOM equals allowlist; lockfile review. |
 | Secret in the repository or artifact | Blocked by scan | `scan-secrets.cjs` in continuous CI. |
 | Cross-origin `postMessage` spoofs an iframe event | Blocked by origin check | CodeQL finding resolved in `vendor/osjs-client/src/core.js`. |
+| Import manifest is overwritten by a racing writer or planted symlink | Blocked by exclusive creation | OSJS-SEC-FIX-001; `O_EXCL` plus five regression cases. |
 | Static host serves source, manifests or traversal paths | Blocked by host contract | G6 static-host test returns 404/405. |
 
 ## Reverse proxy and browser headers
