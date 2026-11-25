@@ -5,7 +5,7 @@ const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
 
-const root = path.resolve(__dirname, '../..');
+const root = path.resolve(process.env.OSJS_IMPORT_ROOT || path.join(__dirname, '../..'));
 const vendor = path.join(root, 'vendor/osjs-client');
 const manifestPath = path.join(vendor, 'IMPORT_MANIFEST.json');
 const expected = {
@@ -47,9 +47,13 @@ const inventory = directory => {
 if (!fs.existsSync(vendor)) throw new Error(`Missing client import: ${vendor}`);
 
 if (process.argv.includes('--write')) {
-  if (fs.existsSync(manifestPath)) throw new Error('Refusing to overwrite existing import manifest');
   const value = {...expected, generatedAt: '2026-11-11', files: inventory(vendor)};
-  fs.writeFileSync(manifestPath, `${JSON.stringify(value, null, 2)}\n`);
+  try {
+    fs.writeFileSync(manifestPath, `${JSON.stringify(value, null, 2)}\n`, {flag: 'wx', mode: 0o600});
+  } catch (error) {
+    if (error.code === 'EEXIST') throw new Error('Refusing to overwrite existing import manifest');
+    throw error;
+  }
   console.log(`${manifestPath}: created (${value.files.length} files)`);
   process.exit(0);
 }

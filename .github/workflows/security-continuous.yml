@@ -46,7 +46,7 @@ jobs:
       - name: Scan tracked files for secrets
         run: node scripts/security/scan-secrets.cjs | tee security-output/secret-scan.json
       - name: Run security regression suites
-        run: node --test scripts/security/g3-*.green.test.cjs scripts/security/g5-*.test.cjs scripts/security/g6-*.test.cjs > security-output/security-tests.log 2>&1
+        run: node --test scripts/security/g3-*.green.test.cjs scripts/security/g5-*.test.cjs scripts/security/g6-*.test.cjs scripts/security/verify-client-import.test.cjs > security-output/security-tests.log 2>&1
       - name: Generate SBOMs
         env:
           SBOM_TOOL_DIR: ${{ runner.temp }}/osjs-sbom-tool
