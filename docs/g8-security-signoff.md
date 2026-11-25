@@ -4,7 +4,7 @@
 **Prepared:** 2026-11-25 (documentation-only; not human sign-off)  
 **Repository:** `tamzrod/OS.js`; **draft PR:** [#1](https://github.com/tamzrod/OS.js/pull/1)  
 **Reviewed technical release candidate:** `d16f480ff52849565ff12031c46642814a8d340a`  
-**Technical records baseline:** `d16f480ff52849565ff12031c46642814a8d340a` (this document is a later documentation-only commit)  
+**Technical records baseline:** `d8e946bb828c17408316943dac73985a674181de` (documentation-only; later records commits may follow)  
 **Shipping boundary:** static browser-only artifact. The legacy OS.js Node production server remains blocked.
 
 This file is a **form for a named human security owner**. It does **not** approve an exception, PR merge, release, deployment or MI-P6 resumption. Agents may prepare evidence but must never fill the human identity, decision, date, attestation or signature fields.

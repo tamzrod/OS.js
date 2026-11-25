@@ -5,7 +5,7 @@
 **Mission:** `active_work/operation-cwal.md`  
 **Trigger in OpenCode:** `operation cwal`  
 **Authorized branch:** `codex/rm-sec-001-g1-baseline`  
-**Current technical location:** OSJS-SEC-FIX-001 complete at `d16f480`; CodeQL check run `139075875714` succeeds with zero annotations. T8.5 approval package reconciled to the new candidate. **AWAITING_HUMAN_APPROVAL**; MI-P6 BLOCKED, no autonomous release action permitted.  
+**Current technical location:** OSJS-SEC-FIX-001 complete at `d16f480`; records commit `d8e946b` CI green with zero CodeQL annotations; agent review found no material findings. T8.5 approval package reconciled to the new candidate. **AWAITING_HUMAN_APPROVAL**; MI-P6 BLOCKED, no autonomous release action permitted.  
 **Human release gate:** G8 T8.5 not delegated.  
 **Expected PR:** #1 open, draft, unmerged (re-verify when execution begins).  
 **Baseline source:** branch HEAD must be read at execution start; do not treat the creation SHA below as a guaranteed current HEAD.
@@ -70,3 +70,4 @@ No automated merge, no release, no deployment.
 
 **Next sequence:** re-read current refs and alerts → focused exclusive-create fix and race/symlink regressions → independent code review and exact-SHA CI → evidence/PR reconciliation → STOP at `AWAITING_HUMAN_APPROVAL` on verified PASS, or `BLOCKED` with evidence. Do not fill human T8.5 verdicts, unblock MI-P6, or merge/release/deploy. This instruction does not itself assert the vulnerability is fixed.
 | 8 | OSJS-SEC-FIX-001 TOCTOU remediation | `d16f480`; exclusive manifest creation; G2 [45576456286](https://github.com/tamzrod/OS.js/actions/runs/45576456286), G3 [45576459854](https://github.com/tamzrod/OS.js/actions/runs/45576459854), G4 [45576463959](https://github.com/tamzrod/OS.js/actions/runs/45576463959) 23/23, continuous [45576440981](https://github.com/tamzrod/OS.js/actions/runs/45576440981) / [45576449365](https://github.com/tamzrod/OS.js/actions/runs/45576449365), CodeQL zero annotations; 95 tests | P5 PASS; T8.5 AWAITING_HUMAN_APPROVAL | Security owner |
+| 9 | Records and review | `d8e946b`; continuous/CodeQL/G5/lint/Ubuntu+Windows green, CodeQL zero annotations; `OSJS-SEC-FIX-001-review.md` no material findings; all ten review threads resolved | T8.5 AWAITING_HUMAN_APPROVAL | Security owner |
