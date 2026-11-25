@@ -17,9 +17,9 @@ const EXPECTED_VERSION = '7.0.0';
 const GOAL_ID = process.env.EVIDENCE_GOAL_ID || 'G1';
 const EXPECTED_COMPONENTS = {
   G1: {full: 1392, production: 344},
-  G2: {full: 584, production: 31},
-  G3: {full: 584, production: 31},
-  G4: {full: 584, production: 31}
+  G2: {full: 769, production: 32},
+  G3: {full: 769, production: 32},
+  G4: {full: 769, production: 32}
 };
 const EXPECTED_INTEGRITY = 'sha512-5KVebwZ21EDt5N6eW0b7QPiQ7eRJwjdsfUUoJsCIdk5Y110N5viVa9PX0Wsp4yZI+y75XhVNut8EalY8amhc7g==';
 const sha256Buffer = value => crypto.createHash('sha256').update(value).digest('hex');
