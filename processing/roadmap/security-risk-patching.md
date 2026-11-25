@@ -126,7 +126,7 @@ The controlling analysis is [`../../docs/security-risk-assessment.md`](../../doc
 
 ## G5 — Reduce and patch the server surface
 
-**Position:** P4 G5 / T5.3 — classify and reduce residual development-chain findings
+**Position:** P4 G5 / T5.4 — record shipping-boundary resource limits
 **Exit condition:** Required server capabilities use maintained dependencies and have tested resource limits; unused capabilities are absent.
 
 **P1 analysis:** [`../../docs/p1-g5-server-surface-analysis.md`](../../docs/p1-g5-server-surface-analysis.md)
@@ -135,7 +135,7 @@ The controlling analysis is [`../../docs/security-risk-assessment.md`](../../doc
 
 - [x] **T5.1** [Define and test the production server capability contract and fail-closed startup boundary.](../tasks/RM-SEC-001/T5.1-capability-contract.md) — P5 accepted; production Node remains blocked
 - [x] **T5.2** Remove unused server providers, upload/archive handlers, CLI features, and applications from the production graph. — P5 accepted at `fa0b3b5` with clean G2/G3/G4 evidence
-- [ ] **T5.3** Upgrade or replace HTTP parsing, query parsing, WebSocket, glob, UUID, archive, and metadata-processing chains.
+- [x] **T5.3** Upgrade or replace HTTP parsing, query parsing, WebSocket, glob, UUID, archive, and metadata-processing chains. — P5 accepted at `d467f37`; chains absent, development graph patched
 - [ ] **T5.4** Add explicit request body, header, timeout, connection, upload, and decompression limits.
 - [ ] **T5.5** Add regression tests for malformed requests, oversized inputs, fragment/header exhaustion, and relevant upload/archive cases.
 - [ ] **T5.6** Verify that denial-of-service tests fail safely without crashing or exhausting the service.
@@ -306,3 +306,4 @@ Additional evidence required before completion:
 | 2026-11-14 | Completed `P4 G3 / T3.8`. Linked all five reviewed fork packages, regenerated the 1,697-entry root lock under Node 26.13.0/npm 11.20.0, and reproduced its hash across two clean installs. Discovery, lint/style, graph-drift classification, hostile-input verification, and release-lock/manifest/bundle absence scans pass; the root build retains the expected G4 OpenSSL blocker without using the unsafe workaround. Advance to P5 review. |
 | 2026-11-14 | Completed `P5 G3 / T3.8`. A clean clone of commit `783be099` reproduced the exact install and lock hash, all five local links, 11-package discovery, zero-error lint/style, hostile-input checks, and release-lock/manifest/bundle absence scans. Accept T3.8 and continue to `P4 G3 / T3.9`. |
 | 2026-11-25 | Completed `P5 G5 / T5.2`. Independent review of the clean evidence at `fa0b3b5` accepted: G2 run 45520750362, G3 run 45520752555 and G4 run 45520754924 all passed with retained artifacts; lint, baseline build and G5 fail-closed startup passed at the same SHA. The review found that the T5.2 dependency removal had invalidated downstream verifiers; those were repaired by requiring four browser links and server absence, moving client tests to pinned Jest 30, moving server tests to the pinned `jest29` alias, replacing stale audit counters with the zero-high/zero-critical production gate, refreshing SBOM pins to 785/32 components, and fixing the stale vendored server test mock. No security gate was weakened. Decision: close T5.2 and continue to `P4 G5 / T5.3`.
+| 2026-11-25 | Completed `P5 G5 / T5.3`. The named chains are server-only and became unreachable when T5.2 removed the server from the production graph; the production SBOM contains 32 recursively listed browser components and no parsing, WebSocket, glob, UUID, archive or metadata chain. A non-force audit fix plus a `tmp@0.2.7` override reduced the full development tree from 10 high to 1 high; the remaining PostCSS 7 high is stylelint-only and recorded with owner, compensating control and expiry for G8. A new verifier enforces production-audit zero, SBOM absence, development-only proof for residual highs, and distribution marker absence, and runs inside G4 evidence. Clean evidence: G2 45522644919, G3 45522647922, G4 45522650748, all successful at `d467f37`. Decision: close T5.3 and continue to `P4 G5 / T5.4`.

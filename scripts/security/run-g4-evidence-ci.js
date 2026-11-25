@@ -50,6 +50,9 @@ node('root_contract', ['scripts/security/verify-g4-root-build.cjs']);
 node('browser_policy', ['scripts/security/verify-g4-browser-policy.cjs']);
 node('g3_integration', ['scripts/security/verify-g3-integration.cjs']);
 node('hostile_boundaries', ['--test', 'scripts/security/g3-safe-object.green.test.cjs']);
+node('shipping_boundary', ['--test', 'scripts/security/g5-shipping-boundary.test.cjs']);
+node('hostile_input', ['--test', 'scripts/security/g5-hostile-input.test.cjs']);
+node('dos_boundaries', ['--test', 'scripts/security/g5-dos-boundaries.test.cjs']);
 run('client_tests', path.join(toolDir, 'node_modules/jest/bin/jest.js'), ['--runInBand', '--coverage=false'],
   'compatibility-test', 'client', code => code === 0, path.join(root, 'vendor/osjs-client'));
 
