@@ -126,7 +126,7 @@ The controlling analysis is [`../../docs/security-risk-assessment.md`](../../doc
 
 ## G5 — Reduce and patch the server surface
 
-**Position:** P4/P5 G5 / T5.2 — Node server removed from the production graph; awaiting clean CI review
+**Position:** P4 G5 / T5.3 — classify and reduce residual development-chain findings
 **Exit condition:** Required server capabilities use maintained dependencies and have tested resource limits; unused capabilities are absent.
 
 **P1 analysis:** [`../../docs/p1-g5-server-surface-analysis.md`](../../docs/p1-g5-server-surface-analysis.md)
@@ -134,7 +134,7 @@ The controlling analysis is [`../../docs/security-risk-assessment.md`](../../doc
 **P2 plan:** [`../../docs/p2-g5-minimal-server-security-plan.md`](../../docs/p2-g5-minimal-server-security-plan.md)
 
 - [x] **T5.1** [Define and test the production server capability contract and fail-closed startup boundary.](../tasks/RM-SEC-001/T5.1-capability-contract.md) — P5 accepted; production Node remains blocked
-- [ ] **T5.2** Remove unused server providers, upload/archive handlers, CLI features, and applications from the production graph.
+- [x] **T5.2** Remove unused server providers, upload/archive handlers, CLI features, and applications from the production graph. — P5 accepted at `fa0b3b5` with clean G2/G3/G4 evidence
 - [ ] **T5.3** Upgrade or replace HTTP parsing, query parsing, WebSocket, glob, UUID, archive, and metadata-processing chains.
 - [ ] **T5.4** Add explicit request body, header, timeout, connection, upload, and decompression limits.
 - [ ] **T5.5** Add regression tests for malformed requests, oversized inputs, fragment/header exhaustion, and relevant upload/archive cases.
@@ -305,3 +305,4 @@ Additional evidence required before completion:
 | 2026-11-13 | Completed `P5 G3 / T3.7`. A clean clone installed both exact locks, rebuilt dialogs and settings application, reproduced all six retained hashes, and passed source/bundle/source-map absence scans. Accept T3.7 and continue to `P4 G3 / T3.8`. |
 | 2026-11-14 | Completed `P4 G3 / T3.8`. Linked all five reviewed fork packages, regenerated the 1,697-entry root lock under Node 26.13.0/npm 11.20.0, and reproduced its hash across two clean installs. Discovery, lint/style, graph-drift classification, hostile-input verification, and release-lock/manifest/bundle absence scans pass; the root build retains the expected G4 OpenSSL blocker without using the unsafe workaround. Advance to P5 review. |
 | 2026-11-14 | Completed `P5 G3 / T3.8`. A clean clone of commit `783be099` reproduced the exact install and lock hash, all five local links, 11-package discovery, zero-error lint/style, hostile-input checks, and release-lock/manifest/bundle absence scans. Accept T3.8 and continue to `P4 G3 / T3.9`. |
+| 2026-11-25 | Completed `P5 G5 / T5.2`. Independent review of the clean evidence at `fa0b3b5` accepted: G2 run 45520750362, G3 run 45520752555 and G4 run 45520754924 all passed with retained artifacts; lint, baseline build and G5 fail-closed startup passed at the same SHA. The review found that the T5.2 dependency removal had invalidated downstream verifiers; those were repaired by requiring four browser links and server absence, moving client tests to pinned Jest 30, moving server tests to the pinned `jest29` alias, replacing stale audit counters with the zero-high/zero-critical production gate, refreshing SBOM pins to 785/32 components, and fixing the stale vendored server test mock. No security gate was weakened. Decision: close T5.2 and continue to `P4 G5 / T5.3`.
