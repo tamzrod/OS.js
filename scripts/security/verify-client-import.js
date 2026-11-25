@@ -30,7 +30,14 @@ const inventory = directory => {
       const relative = path.relative(directory, absolute).split(path.sep).join('/');
       if (relative === 'IMPORT_MANIFEST.json') return;
       if (entry.isDirectory()) visit(absolute);
-      else if (entry.isFile()) result.push({path: relative, bytes: fs.statSync(absolute).size, sha256: sha256(absolute)});
+      else if (entry.isFile()) {
+        const content = fs.readFileSync(absolute);
+        result.push({
+          path: relative,
+          bytes: content.length,
+          sha256: crypto.createHash('sha256').update(content).digest('hex')
+        });
+      }
       else throw new Error(`Unsupported import entry: ${relative}`);
     });
   visit(directory);

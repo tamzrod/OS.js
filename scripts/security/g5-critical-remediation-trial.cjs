@@ -41,9 +41,8 @@ try {
   if (fs.existsSync(candidate)) throw Error('Refusing existing candidate checkout');
   fs.mkdirSync(candidate);
   report.sourceCommit = cp.execFileSync('git', ['rev-parse', 'HEAD'], {cwd: root, encoding: 'utf8'}).trim();
-  const exportResult = cp.spawnSync('bash', ['-c', 'git archive HEAD | tar -xf - -C "$1"', '_', candidate], {
-    cwd: root, encoding: 'utf8'
-  });
+  const archive = cp.execFileSync('git', ['archive', 'HEAD'], {cwd: root, maxBuffer: 256 * 1024 * 1024});
+  const exportResult = cp.spawnSync('tar', ['-x', '-C', candidate], {input: archive});
   if (exportResult.status !== 0) throw Error('Could not create pristine candidate: ' + exportResult.stderr);
 
   const beforePackage = fs.readFileSync(path.join(candidate, 'package.json'));

@@ -47,9 +47,9 @@ try {
   if (fs.existsSync(workspace)) throw new Error('Refusing to reuse existing candidate worktree');
   fs.mkdirSync(workspace);
   // Exclude CI output and tracked/untracked working-directory state.
-  const archive = spawnSync('bash', ['-c',
-    'git archive HEAD | tar -x -C "$1"', '_', workspace], {cwd: root, encoding: 'utf8'});
-  if (archive.status !== 0) throw Error('Cannot populate isolated candidate: ' + archive.stderr);
+  const archive = execFileSync('git', ['archive', 'HEAD'], {cwd: root, maxBuffer: 256 * 1024 * 1024});
+  const extract = spawnSync('tar', ['-x', '-C', workspace], {input: archive});
+  if (extract.status !== 0) throw Error('Cannot populate isolated candidate: ' + extract.stderr);
 
   const manifestPath = path.join(workspace, 'package.json');
   const lockPath = path.join(workspace, 'package-lock.json');

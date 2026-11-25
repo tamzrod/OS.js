@@ -55,7 +55,13 @@ module.exports.createSession = (app, configuration) => {
 
   return express_session({
     store,
-    ...configuration.session.options
+    ...configuration.session.options,
+    cookie: {
+      ...configuration.session.options.cookie,
+      httpOnly: true,
+      sameSite: 'lax',
+      secure: true
+    }
   });
 };
 

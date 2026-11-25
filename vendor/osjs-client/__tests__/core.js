@@ -206,6 +206,7 @@ describe('Core', () => {
         win.on('iframe:get', fn);
 
         const event = new MessageEvent('message', {
+          origin: window.location.origin,
           data: {
             name: 'osjs/iframe:message',
             params: [{
