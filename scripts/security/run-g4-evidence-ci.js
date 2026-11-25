@@ -45,6 +45,7 @@ node('toolchain', ['scripts/security/verify-g4-toolchain.cjs']);
 for (const name of ['common', 'client', 'dialogs', 'settings-application']) {
   npm(`build_${name}`, ['run', '--prefix', `vendor/osjs-${name}`, 'build'], 'build-log', name);
 }
+npm('root_tests', ['test'], 'compatibility-test', 'root');
 npm('package_discover', ['run', 'package:discover'], 'build-log', 'browser');
 npm('build_root', ['run', 'build'], 'build-log', 'browser');
 node('library_contract', ['scripts/security/verify-g4-library-builds.cjs']);
