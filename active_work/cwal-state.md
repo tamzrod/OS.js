@@ -1,6 +1,6 @@
 # CWAL resume register — OSJS-CWAL-SEC-001
 
-**State:** RUNNING  
+**State:** AWAITING_HUMAN_APPROVAL  
 **Updated:** 2026-11-25  
 **Mission:** `active_work/operation-cwal.md`  
 **Trigger in OpenCode:** `operation cwal`  
