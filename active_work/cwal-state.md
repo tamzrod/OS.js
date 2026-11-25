@@ -5,7 +5,7 @@
 **Mission:** `active_work/operation-cwal.md`  
 **Trigger in OpenCode:** `operation cwal`  
 **Authorized branch:** `codex/rm-sec-001-g1-baseline`  
-**Current technical location:** P4 G7 — continuous security workflows implemented; CI evidence pending. G8 remains.  
+**Current technical location:** G8 technical work complete at `146f800`; T8.5 **AWAITING_HUMAN_APPROVAL**. No further autonomous release action is permitted.  
 **Human release gate:** G8 T8.5 not delegated.  
 **Expected PR:** #1 open, draft, unmerged (re-verify when execution begins).  
 **Baseline source:** branch HEAD must be read at execution start; do not treat the creation SHA below as a guaranteed current HEAD.
@@ -19,7 +19,7 @@
 - Last verified production audit after T5.2: **0 critical / 0 high / 0 moderate / 0 low**; full development tree: **0 critical / 10 high / 14 moderate / 3 low**. Historical audit: **0 critical / 14 high / 3 moderate / 5 low**; exact source for post-promotion audit `e37e713d0a00ccf74d6a1737f021737c84180d48`. These are *historical values*: every CWAL execution must obtain a fresh baseline on the current branch and distinguish installed development graph from shipped graph.
 - Last verified build/security results at evidence commit `6acef72c6ecef5b4abec4df870911b5dc44cbfd2`: [Windows+Ubuntu build 44999216879](https://github.com/tamzrod/OS.js/actions/runs/44999216879), [startup regressions 44999216847](https://github.com/tamzrod/OS.js/actions/runs/44999216847), [lint 44999216901](https://github.com/tamzrod/OS.js/actions/runs/44999216901), all successful at the time. New governance-only commits are not a substitute for a new clean source check.
 
-## Next task — verify continuous security and CodeQL workflows
+## Next task — human security-owner review of the G8 evidence package
 
 1. Verify remote branch, PR, working tree, selected Node/npm, current CI and full current audits.
 2. Map all provider registrations, imports, side effects, reverse-proxy/WS/session/VFS/upload consumer paths and production lockfile roots; explicitly distinguish static-only product requirements from generic OS.js demo defaults.
@@ -37,7 +37,7 @@
 ## Objective completion
 
 - `READY_TO_RUN`: governance installed; no autonomous OpenCode execution yet.
-- `RUNNING`: agent has verified branch and is executing tasks.
+- `AWAITING_HUMAN_APPROVAL`: all technical tasks are evidenced; a named security owner must sign T8.5.
 - `BLOCKED`: named blocker, failed evidence and safe follow-up.
 - `AWAITING_HUMAN_APPROVAL`: G5/G6/G7 and G8 T8.1–T8.4 technical evidence complete, all objective gates green, only named-human T8.5 remains.
 - `COMPLETE`: only after the named human actually records T8.5 sign-off; never agent self-signoff.
@@ -47,3 +47,5 @@ No automated merge, no release, no deployment.
 | 3 | G5 T5.4–T5.6 shipping-boundary limits, hostile inputs, DoS bounds | `cebeca0`; G2 [45524159459](https://github.com/tamzrod/OS.js/actions/runs/45524159459), G3 [45524163153](https://github.com/tamzrod/OS.js/actions/runs/45524163153), G4 [45524166518](https://github.com/tamzrod/OS.js/actions/runs/45524166518); 73/73 G5 tests; constrained-heap probe 271 ms | P5 accepted; G5 closed | G6 T6.1 |
 | 4 | G6 browser-only distribution | `b39be51`; G2 [45526121278](https://github.com/tamzrod/OS.js/actions/runs/45526121278), G3 [45526123701](https://github.com/tamzrod/OS.js/actions/runs/45526123701), G4 [45526125597](https://github.com/tamzrod/OS.js/actions/runs/45526125597); 21/21 evidence commands incl. browser_artifact/static_host | P5 accepted; G6 closed | G7 |
 | 5 | G7 continuous security | workflows `security-continuous.yml`, `codeql.yml`; 90/90 green suites; audit gate and secret scan pass locally | CI verification pending | G8 |
+| 6 | G7 continuous security | `e2c3404`; continuous [45529507737](https://github.com/tamzrod/OS.js/actions/runs/45529507737) push / [45529516539](https://github.com/tamzrod/OS.js/actions/runs/45529516539) PR; CodeQL [45529507700](https://github.com/tamzrod/OS.js/actions/runs/45529507700) push / [45529516491](https://github.com/tamzrod/OS.js/actions/runs/45529516491) PR; all trials green | P5 accepted | G8 |
+| 7 | G8 technical evidence | `146f800`; G2 [45530642530](https://github.com/tamzrod/OS.js/actions/runs/45530642530), G3 [45530645226](https://github.com/tamzrod/OS.js/actions/runs/45530645226), G4 [45530648214](https://github.com/tamzrod/OS.js/actions/runs/45530648214) 23/23, continuous/CodeQL/G5 push+PR green; production audit 0/0/0/0 | T8.5 AWAITING_HUMAN_APPROVAL | Security owner |

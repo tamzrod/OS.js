@@ -153,7 +153,7 @@ The controlling analysis is [`../../docs/security-risk-assessment.md`](../../doc
 
 ## G7 — Enforce security continuously
 
-**Position:** P4 implementation complete — continuous CI evidence pending  
+**Position:** Complete — continuous gates, CodeQL, dependency review, secret scan and retained evidence verified  
 **Exit condition:** Pull requests and releases cannot regress the agreed security gates without an explicit, recorded decision.
 
 - [x] **T7.1** Add CI jobs for full and production npm audits with high-severity failure thresholds. — `security-continuous.yml` + `audit-gate.cjs`
@@ -165,13 +165,13 @@ The controlling analysis is [`../../docs/security-risk-assessment.md`](../../doc
 
 ## G8 — Complete security review and unblock MI-P6
 
-**Position:** Not started  
+**Position:** T8.1–T8.4 complete; T8.5 **AWAITING_HUMAN_APPROVAL**  
 **Exit condition:** A named security owner approves the release evidence and records the decision to resume MI-P6.
 
-- [ ] **T8.1** Run clean-room installation, test, build, full audit, production audit, and SBOM generation on the release commit.
-- [ ] **T8.2** Review the deployment threat model, server exposure, credentials, reverse-proxy controls, and browser security headers.
-- [ ] **T8.3** Resolve or explicitly reject every remaining advisory; no high or critical production exception is permitted.
-- [ ] **T8.4** Record residual risks, ownership, and expiry dates for accepted lower-severity findings.
+- [x] **T8.1** Run clean-room installation, test, build, full audit, production audit, and SBOM generation on the release commit. — `146f800`; G2/G3/G4 + 23/23 commands
+- [x] **T8.2** Review the deployment threat model, server exposure, credentials, reverse-proxy controls, and browser security headers. — `docs/g8-threat-model-review.md`
+- [x] **T8.3** Resolve or explicitly reject every remaining advisory; no high or critical production exception is permitted. — production audit 0/0/0/0; `EX-001` dev-only
+- [x] **T8.4** Record residual risks, ownership, and expiry dates for accepted lower-severity findings. — `docs/g8-residual-risk-register.md`
 - [ ] **T8.5** Obtain security sign-off and record the MI-P6 unblock decision.
 
 ## Dependencies and risks
@@ -309,3 +309,4 @@ Additional evidence required before completion:
 | 2026-11-25 | Completed `P5 G5 / T5.3`. The named chains are server-only and became unreachable when T5.2 removed the server from the production graph; the production SBOM contains 32 recursively listed browser components and no parsing, WebSocket, glob, UUID, archive or metadata chain. A non-force audit fix plus a `tmp@0.2.7` override reduced the full development tree from 10 high to 1 high; the remaining PostCSS 7 high is stylelint-only and recorded with owner, compensating control and expiry for G8. A new verifier enforces production-audit zero, SBOM absence, development-only proof for residual highs, and distribution marker absence, and runs inside G4 evidence. Clean evidence: G2 45522644919, G3 45522647922, G4 45522650748, all successful at `d467f37`. Decision: close T5.3 and continue to `P4 G5 / T5.4`.
 | 2026-11-25 | Completed `P5 G5 / T5.4–T5.6` and closed G5. The static artifact has no request parser, upload handler, archive extractor or decompression endpoint; host-level limits are recorded with explicit values and the distribution surface is tested for native addons, package manifests, server markers and active listeners. Hostile client inputs are exercised against the shipped bundle: 100,000-level nesting, malformed stored JSON, `__proto__` payloads, 50,000 keys, a 100,000-element array, an 8 MiB string and a 10,000-segment dotted path all fail closed or complete in bounded time. A child process capped at 64 MiB handles the 200,000-level probe without OOM or crash in about 271 ms. Clean evidence at `cebeca0`: G2 45524159459, G3 45524163153, G4 45524166518, plus lint, build and G5 push/PR runs. Decision: close G5 and continue to `P4 G6 / T6.1`.
 | 2026-11-25 | Implemented G7. Continuous CI captures full and production audits and enforces a high-severity gate that permits only recorded development-only exceptions with lock proof and expiry. Dependency review, a dependency-free secret scan, CodeQL `security-extended`, and isolated CycloneDX SBOM generation are wired. Ninety green security tests run on every push and PR. Audit, SBOM, secret-scan and test outputs are retained for 90 days per commit. Exception format, advisory log and release checklist are documented, including the PostCSS `EX-001` exception and the resolved `tmp` high. G7 stays open until the new workflows pass and are reviewed.
+| 2026-11-25 | Completed G7 and G8 technical work. Continuous security and CodeQL pass on push and PR; completed G5 trials report already-applied; lockfile review replaced the unavailable dependency-review API. Clean evidence at `146f800`: G2, G3, G4 (23/23 commands), continuous, CodeQL and G5 all pass; production audit 0/0/0/0; production SBOM 32 components / 33 entries. Added threat-model, residual-risk and sign-off records. T8.5 remains **AWAITING_HUMAN_APPROVAL**; no merge, release, deployment or MI-P6 unblock. |
