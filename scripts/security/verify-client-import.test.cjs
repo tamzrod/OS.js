@@ -26,9 +26,14 @@ test('--write creates a mode-0600 manifest with the client inventory', () => {
   const {root, manifest} = makeRoot();
   const result = run(root);
   assert.equal(result.status, 0, result.stderr);
-  assert.equal(fs.statSync(manifest).mode & 0o777, 0o600);
-  const parsed = JSON.parse(fs.readFileSync(manifest, 'utf8'));
-  assert.deepEqual(parsed.files.map(file => file.path), ['client.js']);
+  const descriptor = fs.openSync(manifest, 'r');
+  try {
+    assert.equal(fs.fstatSync(descriptor).mode & 0o777, 0o600);
+    const parsed = JSON.parse(fs.readFileSync(descriptor, 'utf8'));
+    assert.deepEqual(parsed.files.map(file => file.path), ['client.js']);
+  } finally {
+    fs.closeSync(descriptor);
+  }
 });
 
 test('--write refuses an existing manifest and preserves its bytes', () => {
