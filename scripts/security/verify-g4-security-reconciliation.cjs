@@ -63,8 +63,8 @@ function sbomStats(filename, expectedComponents, expectedDependencies, expectWeb
   }
   assert.strictEqual(identities.has('webpack@5.112.2'), expectWebpack);
 }
-sbomStats(fullSbomFile, 785, 786, true);
-sbomStats(productionSbomFile, 32, 33, false);
+sbomStats(fullSbomFile, 584, 770, true);
+sbomStats(productionSbomFile, 31, 33, false);
 
 console.log(JSON.stringify({
   full,

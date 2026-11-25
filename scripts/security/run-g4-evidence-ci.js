@@ -69,6 +69,7 @@ const sboms = fs.readdirSync(sbomDir).filter(name => name.endsWith('.cdx.json'))
 const fullSbom = path.join(sbomDir, sboms.find(name => name.includes('sbom_full')));
 const productionSbom = path.join(sbomDir, sboms.find(name => name.includes('sbom_production')));
 node('security_reconciliation', ['scripts/security/verify-g4-security-reconciliation.cjs', fullFile, productionFile, fullSbom, productionSbom]);
+node('residual_chains', ['scripts/security/verify-g5-residual-chains.cjs', fullFile, productionFile, productionSbom, path.join(root, 'dist')]);
 
 retain('source_identity', 'source-context', 'source', 'source-identity.json', 'application/json',
   `${JSON.stringify({commit, lockHash, packageHash: hash(path.join(root, 'package.json'))}, null, 2)}\n`);
