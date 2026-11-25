@@ -126,7 +126,7 @@ The controlling analysis is [`../../docs/security-risk-assessment.md`](../../doc
 
 ## G5 — Reduce and patch the server surface
 
-**Position:** P4 G6 — browser-only distribution (T6.1–T6.5 implemented, evidence pending)
+**Position:** G6 complete — G7 continuous security enforcement implemented; evidence pending
 **Exit condition:** Required server capabilities use maintained dependencies and have tested resource limits; unused capabilities are absent.
 
 **P1 analysis:** [`../../docs/p1-g5-server-surface-analysis.md`](../../docs/p1-g5-server-surface-analysis.md)
@@ -153,15 +153,15 @@ The controlling analysis is [`../../docs/security-risk-assessment.md`](../../doc
 
 ## G7 — Enforce security continuously
 
-**Position:** Not started  
+**Position:** P4 implementation complete — continuous CI evidence pending  
 **Exit condition:** Pull requests and releases cannot regress the agreed security gates without an explicit, recorded decision.
 
-- [ ] **T7.1** Add CI jobs for full and production npm audits with high-severity failure thresholds.
-- [ ] **T7.2** Add lockfile dependency review, secret scanning, SAST, and SBOM generation.
-- [ ] **T7.3** Run cookie, prototype-pollution, malformed-input, and resource-exhaustion regression suites in CI.
-- [ ] **T7.4** Retain audit, SBOM, test, and artifact inspection outputs for each release candidate.
-- [ ] **T7.5** Define the advisory-exception format with owner, reachability evidence, compensating control, and expiry.
-- [ ] **T7.6** Add a release checklist that prevents MI-P6 handoff until every success criterion is evidenced.
+- [x] **T7.1** Add CI jobs for full and production npm audits with high-severity failure thresholds. — `security-continuous.yml` + `audit-gate.cjs`
+- [x] **T7.2** Add lockfile dependency review, secret scanning, SAST, and SBOM generation. — dependency review, secret scan, CodeQL, CycloneDX
+- [x] **T7.3** Run cookie, prototype-pollution, malformed-input, and resource-exhaustion regression suites in CI. — 90 green tests
+- [x] **T7.4** Retain audit, SBOM, test, and artifact inspection outputs for each release candidate. — `security-gates-<sha>` artifacts
+- [x] **T7.5** Define the advisory-exception format with owner, reachability evidence, compensating control, and expiry. — `docs/security-exceptions.md`
+- [x] **T7.6** Add a release checklist that prevents MI-P6 handoff until every success criterion is evidenced. — `docs/release-checklist.md`
 
 ## G8 — Complete security review and unblock MI-P6
 
@@ -308,3 +308,4 @@ Additional evidence required before completion:
 | 2026-11-25 | Completed `P5 G5 / T5.2`. Independent review of the clean evidence at `fa0b3b5` accepted: G2 run 45520750362, G3 run 45520752555 and G4 run 45520754924 all passed with retained artifacts; lint, baseline build and G5 fail-closed startup passed at the same SHA. The review found that the T5.2 dependency removal had invalidated downstream verifiers; those were repaired by requiring four browser links and server absence, moving client tests to pinned Jest 30, moving server tests to the pinned `jest29` alias, replacing stale audit counters with the zero-high/zero-critical production gate, refreshing SBOM pins to 785/32 components, and fixing the stale vendored server test mock. No security gate was weakened. Decision: close T5.2 and continue to `P4 G5 / T5.3`.
 | 2026-11-25 | Completed `P5 G5 / T5.3`. The named chains are server-only and became unreachable when T5.2 removed the server from the production graph; the production SBOM contains 32 recursively listed browser components and no parsing, WebSocket, glob, UUID, archive or metadata chain. A non-force audit fix plus a `tmp@0.2.7` override reduced the full development tree from 10 high to 1 high; the remaining PostCSS 7 high is stylelint-only and recorded with owner, compensating control and expiry for G8. A new verifier enforces production-audit zero, SBOM absence, development-only proof for residual highs, and distribution marker absence, and runs inside G4 evidence. Clean evidence: G2 45522644919, G3 45522647922, G4 45522650748, all successful at `d467f37`. Decision: close T5.3 and continue to `P4 G5 / T5.4`.
 | 2026-11-25 | Completed `P5 G5 / T5.4–T5.6` and closed G5. The static artifact has no request parser, upload handler, archive extractor or decompression endpoint; host-level limits are recorded with explicit values and the distribution surface is tested for native addons, package manifests, server markers and active listeners. Hostile client inputs are exercised against the shipped bundle: 100,000-level nesting, malformed stored JSON, `__proto__` payloads, 50,000 keys, a 100,000-element array, an 8 MiB string and a 10,000-segment dotted path all fail closed or complete in bounded time. A child process capped at 64 MiB handles the 200,000-level probe without OOM or crash in about 271 ms. Clean evidence at `cebeca0`: G2 45524159459, G3 45524163153, G4 45524166518, plus lint, build and G5 push/PR runs. Decision: close G5 and continue to `P4 G6 / T6.1`.
+| 2026-11-25 | Implemented G7. Continuous CI captures full and production audits and enforces a high-severity gate that permits only recorded development-only exceptions with lock proof and expiry. Dependency review, a dependency-free secret scan, CodeQL `security-extended`, and isolated CycloneDX SBOM generation are wired. Ninety green security tests run on every push and PR. Audit, SBOM, secret-scan and test outputs are retained for 90 days per commit. Exception format, advisory log and release checklist are documented, including the PostCSS `EX-001` exception and the resolved `tmp` high. G7 stays open until the new workflows pass and are reviewed.

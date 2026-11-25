@@ -1,0 +1,88 @@
+name: Continuous security gates
+
+on:
+  push:
+    branches:
+      - codex/rm-sec-001-g1-baseline
+  pull_request:
+    branches:
+      - codex/rm-sec-001-g1-baseline
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: security-continuous-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  audit-and-regressions:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out exact source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Set up pinned Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - name: Install exact graph
+        run: npm ci --ignore-scripts
+      - name: Build browser artifact
+        run: npm run package:discover && npm run build
+      - name: Capture audits
+        run: |
+          mkdir -p security-output
+          npm audit --json > security-output/audit-full.json || true
+          npm audit --omit=dev --json > security-output/audit-production.json || true
+      - name: Enforce audit thresholds
+        run: node scripts/security/audit-gate.cjs security-output/audit-full.json security-output/audit-production.json
+      - name: Scan tracked files for secrets
+        run: node scripts/security/scan-secrets.cjs | tee security-output/secret-scan.json
+      - name: Run security regression suites
+        run: node --test scripts/security/g3-*.green.test.cjs scripts/security/g5-*.test.cjs scripts/security/g6-*.test.cjs > security-output/security-tests.log 2>&1
+      - name: Generate SBOMs
+        env:
+          SBOM_TOOL_DIR: ${{ runner.temp }}/osjs-sbom-tool
+        run: |
+          mkdir -p "$SBOM_TOOL_DIR"
+          cd "$SBOM_TOOL_DIR"
+          npm init --yes
+          npm install --save-exact --ignore-scripts @cyclonedx/cyclonedx-npm@7.0.0
+          cd "$GITHUB_WORKSPACE"
+          "$SBOM_TOOL_DIR/node_modules/.bin/cyclonedx-npm" --ignore-npm-errors --package-lock-only \
+            --output-reproducible --no-validate --spec-version 1.6 --output-format JSON \
+            --output-file security-output/sbom-full.cdx.json package.json
+          "$SBOM_TOOL_DIR/node_modules/.bin/cyclonedx-npm" --ignore-npm-errors --package-lock-only \
+            --output-reproducible --no-validate --spec-version 1.6 --output-format JSON --omit=dev \
+            --output-file security-output/sbom-production.cdx.json package.json
+      - name: Retain gate outputs
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: security-gates-${{ github.sha }}
+          path: security-output
+          if-no-files-found: error
+          retention-days: 90
+
+  dependency-review:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pull-requests: read
+    steps:
+      - name: Check out exact source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Review dependency changes
+        uses: actions/dependency-review-action@bbc44d14a204704ccc493733616cd1e93a0321ec
+        with:
+          fail-on-severity: high
+          comment-summary-in-pr: never
