@@ -5,7 +5,7 @@
 **Mission:** `active_work/operation-cwal.md`  
 **Trigger in OpenCode:** `operation cwal`  
 **Authorized branch:** `codex/rm-sec-001-g1-baseline`  
-**Current technical location:** P4 G5 T5.4 — record shipping-boundary resource limits; server is absent from the shipped graph and production Node startup is fail-closed. Subsequent G5 T5.5–T5.6, G6, G7 and G8 pending.  
+**Current technical location:** P4 G6 T6.1 — define browser entry points and the explicit runtime dependency allowlist. G5 is complete; G6, G7 and G8 remain.  
 **Human release gate:** G8 T8.5 not delegated.  
 **Expected PR:** #1 open, draft, unmerged (re-verify when execution begins).  
 **Baseline source:** branch HEAD must be read at execution start; do not treat the creation SHA below as a guaranteed current HEAD.
@@ -19,7 +19,7 @@
 - Last verified production audit after T5.2: **0 critical / 0 high / 0 moderate / 0 low**; full development tree: **0 critical / 10 high / 14 moderate / 3 low**. Historical audit: **0 critical / 14 high / 3 moderate / 5 low**; exact source for post-promotion audit `e37e713d0a00ccf74d6a1737f021737c84180d48`. These are *historical values*: every CWAL execution must obtain a fresh baseline on the current branch and distinguish installed development graph from shipped graph.
 - Last verified build/security results at evidence commit `6acef72c6ecef5b4abec4df870911b5dc44cbfd2`: [Windows+Ubuntu build 44999216879](https://github.com/tamzrod/OS.js/actions/runs/44999216879), [startup regressions 44999216847](https://github.com/tamzrod/OS.js/actions/runs/44999216847), [lint 44999216901](https://github.com/tamzrod/OS.js/actions/runs/44999216901), all successful at the time. New governance-only commits are not a substitute for a new clean source check.
 
-## Next task — T5.4 shipping-boundary limits
+## Next task — T6.1 browser entry points and allowlist
 
 1. Verify remote branch, PR, working tree, selected Node/npm, current CI and full current audits.
 2. Map all provider registrations, imports, side effects, reverse-proxy/WS/session/VFS/upload consumer paths and production lockfile roots; explicitly distinguish static-only product requirements from generic OS.js demo defaults.
@@ -44,3 +44,4 @@
 
 No automated merge, no release, no deployment.
 | 2 | G5 T5.3 residual server-chain classification | `d467f37`; G2 [45522644919](https://github.com/tamzrod/OS.js/actions/runs/45522644919), G3 [45522647922](https://github.com/tamzrod/OS.js/actions/runs/45522647922), G4 [45522650748](https://github.com/tamzrod/OS.js/actions/runs/45522650748); full audit 0 critical/1 high/9 moderate; production 0/0/0/0; SBOM 769/32 | P5 accepted; PostCSS exception carried to G8 | G5 T5.4 |
+| 3 | G5 T5.4–T5.6 shipping-boundary limits, hostile inputs, DoS bounds | `cebeca0`; G2 [45524159459](https://github.com/tamzrod/OS.js/actions/runs/45524159459), G3 [45524163153](https://github.com/tamzrod/OS.js/actions/runs/45524163153), G4 [45524166518](https://github.com/tamzrod/OS.js/actions/runs/45524166518); 73/73 G5 tests; constrained-heap probe 271 ms | P5 accepted; G5 closed | G6 T6.1 |

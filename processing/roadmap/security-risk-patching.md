@@ -126,7 +126,7 @@ The controlling analysis is [`../../docs/security-risk-assessment.md`](../../doc
 
 ## G5 — Reduce and patch the server surface
 
-**Position:** P4 G5 / T5.4 — record shipping-boundary resource limits
+**Position:** G5 complete — G6 / T6.1 browser entry points and dependency allowlist
 **Exit condition:** Required server capabilities use maintained dependencies and have tested resource limits; unused capabilities are absent.
 
 **P1 analysis:** [`../../docs/p1-g5-server-surface-analysis.md`](../../docs/p1-g5-server-surface-analysis.md)
@@ -136,9 +136,9 @@ The controlling analysis is [`../../docs/security-risk-assessment.md`](../../doc
 - [x] **T5.1** [Define and test the production server capability contract and fail-closed startup boundary.](../tasks/RM-SEC-001/T5.1-capability-contract.md) — P5 accepted; production Node remains blocked
 - [x] **T5.2** Remove unused server providers, upload/archive handlers, CLI features, and applications from the production graph. — P5 accepted at `fa0b3b5` with clean G2/G3/G4 evidence
 - [x] **T5.3** Upgrade or replace HTTP parsing, query parsing, WebSocket, glob, UUID, archive, and metadata-processing chains. — P5 accepted at `d467f37`; chains absent, development graph patched
-- [ ] **T5.4** Add explicit request body, header, timeout, connection, upload, and decompression limits.
-- [ ] **T5.5** Add regression tests for malformed requests, oversized inputs, fragment/header exhaustion, and relevant upload/archive cases.
-- [ ] **T5.6** Verify that denial-of-service tests fail safely without crashing or exhausting the service.
+- [x] **T5.4** Add explicit request body, header, timeout, connection, upload, and decompression limits. — P5 accepted at `cebeca0`; static-host limits recorded, artifact surface tested
+- [x] **T5.5** Add regression tests for malformed requests, oversized inputs, fragment/header exhaustion, and relevant upload/archive cases. — P5 accepted at `cebeca0`; malformed/oversized client inputs covered, request surfaces absent
+- [x] **T5.6** Verify that denial-of-service tests fail safely without crashing or exhausting the service. — P5 accepted at `cebeca0`; constrained-heap probe passes
 
 ## G6 — Produce a minimal browser-only distribution
 
@@ -307,3 +307,4 @@ Additional evidence required before completion:
 | 2026-11-14 | Completed `P5 G3 / T3.8`. A clean clone of commit `783be099` reproduced the exact install and lock hash, all five local links, 11-package discovery, zero-error lint/style, hostile-input checks, and release-lock/manifest/bundle absence scans. Accept T3.8 and continue to `P4 G3 / T3.9`. |
 | 2026-11-25 | Completed `P5 G5 / T5.2`. Independent review of the clean evidence at `fa0b3b5` accepted: G2 run 45520750362, G3 run 45520752555 and G4 run 45520754924 all passed with retained artifacts; lint, baseline build and G5 fail-closed startup passed at the same SHA. The review found that the T5.2 dependency removal had invalidated downstream verifiers; those were repaired by requiring four browser links and server absence, moving client tests to pinned Jest 30, moving server tests to the pinned `jest29` alias, replacing stale audit counters with the zero-high/zero-critical production gate, refreshing SBOM pins to 785/32 components, and fixing the stale vendored server test mock. No security gate was weakened. Decision: close T5.2 and continue to `P4 G5 / T5.3`.
 | 2026-11-25 | Completed `P5 G5 / T5.3`. The named chains are server-only and became unreachable when T5.2 removed the server from the production graph; the production SBOM contains 32 recursively listed browser components and no parsing, WebSocket, glob, UUID, archive or metadata chain. A non-force audit fix plus a `tmp@0.2.7` override reduced the full development tree from 10 high to 1 high; the remaining PostCSS 7 high is stylelint-only and recorded with owner, compensating control and expiry for G8. A new verifier enforces production-audit zero, SBOM absence, development-only proof for residual highs, and distribution marker absence, and runs inside G4 evidence. Clean evidence: G2 45522644919, G3 45522647922, G4 45522650748, all successful at `d467f37`. Decision: close T5.3 and continue to `P4 G5 / T5.4`.
+| 2026-11-25 | Completed `P5 G5 / T5.4–T5.6` and closed G5. The static artifact has no request parser, upload handler, archive extractor or decompression endpoint; host-level limits are recorded with explicit values and the distribution surface is tested for native addons, package manifests, server markers and active listeners. Hostile client inputs are exercised against the shipped bundle: 100,000-level nesting, malformed stored JSON, `__proto__` payloads, 50,000 keys, a 100,000-element array, an 8 MiB string and a 10,000-segment dotted path all fail closed or complete in bounded time. A child process capped at 64 MiB handles the 200,000-level probe without OOM or crash in about 271 ms. Clean evidence at `cebeca0`: G2 45524159459, G3 45524163153, G4 45524166518, plus lint, build and G5 push/PR runs. Decision: close G5 and continue to `P4 G6 / T6.1`.
