@@ -41,6 +41,19 @@
 // Reject unsafe deployments before constructing the server or providers.
 require('./security-profile.js').assertProductionStartup();
 
+// The Node server is a development-only capability. It is not installed by the
+// root production graph; local development installs it separately with
+// `npm ci --prefix vendor/osjs-server --omit=dev`.
+let server;
+try {
+  server = require('../../vendor/osjs-server');
+} catch (error) {
+  if (error && error.code === 'MODULE_NOT_FOUND') {
+    console.error('OS.js development server dependencies are missing. Run: npm ci --prefix vendor/osjs-server --omit=dev');
+  }
+  throw error;
+}
+
 const {
   Core,
   CoreServiceProvider,
@@ -48,7 +61,7 @@ const {
   VFSServiceProvider,
   AuthServiceProvider,
   SettingsServiceProvider
-} = require('@osjs/server');
+} = server;
 
 const config = require('./config.js');
 const osjs = new Core(config, {});

@@ -1,11 +1,11 @@
 # CWAL resume register — OSJS-CWAL-SEC-001
 
-**State:** READY_TO_RUN  
+**State:** RUNNING  
 **Updated:** 2026-11-25  
 **Mission:** `active_work/operation-cwal.md`  
 **Trigger in OpenCode:** `operation cwal`  
 **Authorized branch:** `codex/rm-sec-001-g1-baseline`  
-**Current technical location:** P4/P5 G5 T5.2; subsequent G5 T5.3–T5.6, G6, G7 and G8 pending.  
+**Current technical location:** P4/P5 G5 T5.2 — server removed from the production dependency graph; awaiting clean CI review. Subsequent G5 T5.3–T5.6, G6, G7 and G8 pending.  
 **Human release gate:** G8 T8.5 not delegated.  
 **Expected PR:** #1 open, draft, unmerged (re-verify when execution begins).  
 **Baseline source:** branch HEAD must be read at execution start; do not treat the creation SHA below as a guaranteed current HEAD.
@@ -31,7 +31,8 @@
 
 | Sequence | Task | Evidence SHA / CI / artifact | P5 decision | Next |
 |---|---|---|---|---|
-| 0 | CWAL mission and OpenCode entrypoint installed | Verify governance HEAD at runtime | Plan only; execution not started | G5 T5.2 inventory |
+| 0 | CWAL mission and OpenCode entrypoint installed | Governance HEAD verified; PR #1 open draft; fresh baseline 0 critical/14 high/3 moderate/5 low production (pinned Node 26.13.0/npm 11.20.0, lock `57a50ba5…`) | Baseline accepted at working HEAD | G5 T5.2 inventory |
+| 1 | G5 T5.2 provider/consumer inventory + remove `@osjs/server` from production graph | Pending commit, remote CI at exact SHA, and independent review; local evidence: 0/0/0/0 production audit, 216 lock entries removed, 65/65 G5 tests, build without server markers | Pending | G5 T5.2 review, then T5.3 |
 
 ## Objective completion
 

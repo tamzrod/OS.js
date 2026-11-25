@@ -2,7 +2,7 @@
 
 **ID:** `RM-SEC-001`  
 **Status:** Active  
-**Current position:** P3 G5 / T5.2 — Scope production provider and dependency removal
+**Current position:** P4/P5 G5 / T5.2 — Node server removed from the production graph; awaiting clean CI review
 **Owner:** Unassigned  
 **Created:** 2026-11-09  
 **Updated:** 2026-11-16
@@ -126,7 +126,7 @@ The controlling analysis is [`../../docs/security-risk-assessment.md`](../../doc
 
 ## G5 — Reduce and patch the server surface
 
-**Position:** P3 G5 / T5.2 — Scope production provider and dependency removal
+**Position:** P4/P5 G5 / T5.2 — Node server removed from the production graph; awaiting clean CI review
 **Exit condition:** Required server capabilities use maintained dependencies and have tested resource limits; unused capabilities are absent.
 
 **P1 analysis:** [`../../docs/p1-g5-server-surface-analysis.md`](../../docs/p1-g5-server-surface-analysis.md)
@@ -217,6 +217,8 @@ Additional evidence required before completion:
 | 2026-11-18 | Close G4 using retained clean evidence from commit `70c981165f9184b123a0e45e361285c8be11b683`. | Run `43777453710` and artifact `14187270695` prove supported Node 26/Webpack 5 builds, security and browser contracts, tests, audits, SBOMs, and workaround absence from clean source. Production findings remain G5 blockers. |
 
 ## Progress log
+
+| 2026-11-25 | Completed P4 G5 / T5.2 provider and dependency inventory at the working head. Documented a consumer decision for every Core, Package, VFS, Auth, Settings, WebSocket, session, proxy, watcher, upload, metadata and CLI surface: all Node server capabilities are development-only, and the static browser distribution is the shipping boundary. Removed `@osjs/server` from root production dependencies without re-adding it as a development link; the optional local server installs from its own exact `vendor/osjs-server` lock. The regenerated lock removes 216 entries, adds none, and changes no version. Added dependency-free negative tests for manifest/lock/server-runtime absence and entrypoint ordering. Local pinned-toolchain evidence: `npm ci`, `npm test`, 10-package discovery, browser build without server markers, 65/65 G5 security tests, and **0 critical / 0 high / 0 moderate / 0 low** production audit; full-tree audit is 0 critical / 10 high / 14 moderate / 3 low, all development/build tooling for T5.3 and G7/G8 review. Remote CI and independent P5 review are still required; T5.2 stays open pending that evidence. No merge, release or deployment. |
 
 | 2026-11-18 | Closed T5.1 after [G5 startup-gate CI run 44198337864](https://github.com/tamzrod/OS.js/actions/runs/44198337864) passed on code head `59fbf80`. Production Node startup deliberately remains blocked, with all G5 server-reachability remediation pending. Advance to P3 G5 / T5.2 planning. |
 

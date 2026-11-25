@@ -100,6 +100,11 @@ npm run package:discover
 # Build client
 npm run build
 
-# Start serving
+# Start the development server (optional; the static build does not need it)
+npm ci --prefix vendor/osjs-server --omit=dev
 npm run serve
 ```
+
+The root install and the shipped static artifact exclude the Node server. The
+development server is installed separately because it is not a production
+capability.

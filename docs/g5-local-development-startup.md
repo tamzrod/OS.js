@@ -12,11 +12,20 @@ reachable development deployments.
 blocked by the G5 fail-closed capability gate. The static browser build
 (`npm run build`) does not require the Node server.
 
-For isolated local development only, set both of these variables explicitly:
+For isolated local development only, install the vendored server separately and
+set both of these variables explicitly:
 
 ```bash
+# The root install intentionally excludes the Node server from the shipped graph.
+npm ci --prefix vendor/osjs-server --omit=dev
 NODE_ENV=development OSJS_UNSAFE_LOCAL_DEV=true npm run serve
 ```
+
+`npm ci` at the repository root no longer installs the server dependency tree.
+The root production graph is the static browser runtime only; `npm audit --omit=dev`
+must not see the server, its HTTP/WebSocket stack, or its file-watching chain.
+The `vendor/osjs-server` package retains its own exact lock for this opt-in
+development install.
 
 The root `src/server/config.js` sets `hostname: '127.0.0.1'`, and
 `vendor/osjs-server/src/core.js` supplies that hostname to the actual

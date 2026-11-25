@@ -12,6 +12,10 @@ on:
       - 'scripts/security/g5-auth-adapter.test.cjs'
       - 'scripts/security/g5-proxy-surface.test.cjs'
       - 'scripts/security/g5-watcher-surface.test.cjs'
+      - 'scripts/security/g5-production-graph.test.cjs'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'vendor/osjs-server/package.json'
       - 'vendor/osjs-server/src/providers/core.js'
       - 'vendor/osjs-server/src/providers/packages.js'
       - 'vendor/osjs-server/src/auth.js'
@@ -38,4 +42,4 @@ jobs:
         with:
           node-version-file: .nvmrc
       - name: Execute dependency-free startup security tests
-        run: node --test scripts/security/g5-capability-contract.test.cjs scripts/security/g5-registration-routes.test.cjs scripts/security/g5-auth-adapter.test.cjs scripts/security/g5-proxy-surface.test.cjs scripts/security/g5-watcher-surface.test.cjs
+        run: node --test scripts/security/g5-capability-contract.test.cjs scripts/security/g5-registration-routes.test.cjs scripts/security/g5-auth-adapter.test.cjs scripts/security/g5-proxy-surface.test.cjs scripts/security/g5-watcher-surface.test.cjs scripts/security/g5-production-graph.test.cjs

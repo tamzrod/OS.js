@@ -108,10 +108,10 @@ test('unconfigured process exits before server dependencies are imported', () =>
   assert.doesNotMatch(result.stderr, /Cannot find module/);
 });
 
-test('production hook runs before importing @osjs/server or registering providers', () => {
+test('production hook runs before importing the Node server or registering providers', () => {
   const source = fs.readFileSync(path.join(__dirname, '../../src/server/index.js'), 'utf8');
   const gate = source.indexOf("require('./security-profile.js').assertProductionStartup()");
-  const imports = source.indexOf("require('@osjs/server')");
+  const imports = source.indexOf("require('../../vendor/osjs-server')");
   const register = source.indexOf('osjs.register(');
   assert.ok(gate !== -1 && imports > gate && register > gate);
 });
