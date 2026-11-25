@@ -67,7 +67,7 @@ const jest = path.join(toolDir, 'node_modules/jest/bin/jest.js');
 const jestLegacy = path.join(toolDir, 'node_modules/jest29/bin/jest.js');
 execute('common_security_tests', process.execPath, [jest, '--config', 'package.json', '--runInBand', '--coverage=false', '__tests__/safe-object.js'], 'security-test', 'common', 'common-security-tests.txt', undefined, {cwd: path.join(sourceDir, 'vendor/osjs-common')});
 execute('client_tests', process.execPath, [jest, '--runInBand', '--coverage=false'], 'compatibility-test', 'client', 'client-tests.txt', undefined, {cwd: path.join(sourceDir, 'vendor/osjs-client')});
-execute('server_tests', process.execPath, [jestLegacy, '--config', 'package.json', '--runInBand', '--coverage=false'], 'compatibility-test', 'server', 'server-tests.txt', undefined, {cwd: path.join(sourceDir, 'vendor/osjs-server')});
+execute('server_tests', process.execPath, [jestLegacy, '--config', 'package.json', '--runInBand', '--coverage=false', '--forceExit'], 'compatibility-test', 'server', 'server-tests.txt', undefined, {cwd: path.join(sourceDir, 'vendor/osjs-server')});
 npm('dialogs_lint', ['test'], 'compatibility-test', 'dialogs', 'dialogs-lint.txt', undefined, path.join(sourceDir, 'vendor/osjs-dialogs'));
 npm('settings_lint', ['run', 'eslint'], 'compatibility-test', 'settings-application', 'settings-lint.txt', undefined, path.join(sourceDir, 'vendor/osjs-settings-application'));
 

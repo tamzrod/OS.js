@@ -3,7 +3,6 @@ consola.pauseLogs();
 
 const temp = require('temp').track();
 const path = require('path');
-const config = require('../src/config.js');
 
 const {
   Core,
@@ -19,7 +18,7 @@ module.exports = (options = {}) => {
 
   const osjs = new Core(Object.assign({
     tempPath,
-    development: false,
+    development: true,
     port: 0,
     root: __dirname,
     public: path.resolve(__dirname, 'dist'),
@@ -32,7 +31,7 @@ module.exports = (options = {}) => {
         'defined file': 'test/jest'
       }
     }
-  }, config), {
+  }), {
     kill: false
   });
 
