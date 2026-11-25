@@ -5,7 +5,7 @@
 **Mission:** `active_work/operation-cwal.md`  
 **Trigger in OpenCode:** `operation cwal`  
 **Authorized branch:** `codex/rm-sec-001-g1-baseline`  
-**Current technical location:** G8 technical work complete at `146f800`; T8.5 **AWAITING_HUMAN_APPROVAL**. No further autonomous release action is permitted.  
+**Current technical location:** G8 technical work complete at `146f800`; T8.5 approval-package preparation committed on the security branch. **AWAITING_HUMAN_APPROVAL**; no autonomous release action is permitted.  
 **Human release gate:** G8 T8.5 not delegated.  
 **Expected PR:** #1 open, draft, unmerged (re-verify when execution begins).  
 **Baseline source:** branch HEAD must be read at execution start; do not treat the creation SHA below as a guaranteed current HEAD.
@@ -49,3 +49,14 @@ No automated merge, no release, no deployment.
 | 5 | G7 continuous security | workflows `security-continuous.yml`, `codeql.yml`; 90/90 green suites; audit gate and secret scan pass locally | CI verification pending | G8 |
 | 6 | G7 continuous security | `e2c3404`; continuous [45529507737](https://github.com/tamzrod/OS.js/actions/runs/45529507737) push / [45529516539](https://github.com/tamzrod/OS.js/actions/runs/45529516539) PR; CodeQL [45529507700](https://github.com/tamzrod/OS.js/actions/runs/45529507700) push / [45529516491](https://github.com/tamzrod/OS.js/actions/runs/45529516491) PR; all trials green | P5 accepted | G8 |
 | 7 | G8 technical evidence | `146f800`; G2 [45530642530](https://github.com/tamzrod/OS.js/actions/runs/45530642530), G3 [45530645226](https://github.com/tamzrod/OS.js/actions/runs/45530645226), G4 [45530648214](https://github.com/tamzrod/OS.js/actions/runs/45530648214) 23/23, continuous/CodeQL/G5 push+PR green; production audit 0/0/0/0 | T8.5 AWAITING_HUMAN_APPROVAL | Security owner |
+
+## T8.5 human-approval handoff preparation — 2026-11-25
+
+- Independent pre-sign-off review verified candidate `146f8002e4991e9e4eb159909ff4930970e7c406` G2/G3/G4 clean runs, continuous security, CodeQL, G5 tests, artifact availability and exact commit associations, and records commit `28697f4d86f8ab00f2006404b13a4cff20a5ff5c` CI.
+- Prepared `docs/g8-security-signoff.md` with explicit **unfilled** human owner, identity, approval/rejection/defer, each of EX-001/EX-002 and RR-001–RR-004, expiry/review controls, evidence references, MI-P6 decision, date and signature. No human decision has been provided or inferred.
+- Reconciled `docs/release-checklist.md`: technical items with exact passed CI evidence are distinguished from unchecked human review and deployment obligations.
+- Updated `docs/security-exceptions.md` to clarify automated audit-gate scope and document EX-002; `docs/g8-residual-risk-register.md` now labels prior 'accepted' proposals **PENDING HUMAN ACCEPTANCE** rather than attributing approval to an unnamed owner.
+- Approved scope is documentation and PR-description maintenance only. Confirm PR #1 remains **open, draft, unmerged**; production server remains fail-closed; MI-P6 is blocked. Do not mark status COMPLETE or fill any human decision box.
+- Final documentation-commit SHA and verification checks should be read from GitHub after this checkpoint; older candidate CI results are not represented as tests on a new runtime change.
+
+**Next and only authorized T8.5 decision:** a named human security owner reviews exact evidence and signs `docs/g8-security-signoff.md`, accepting/rejecting risks individually and expressly deciding MI-P6 status. Any required deployment/release approval remains a separate gate.
