@@ -5,7 +5,7 @@
 **Mission:** `active_work/operation-cwal.md`  
 **Trigger in OpenCode:** `operation cwal`  
 **Authorized branch:** `codex/rm-sec-001-g1-baseline`  
-**Current technical location:** G8 technical work complete at `146f800`; T8.5 approval-package preparation committed on the security branch. **AWAITING_HUMAN_APPROVAL**; no autonomous release action is permitted.  
+**Current technical location:** T8.5 approval package prepared; newly identified unresolved High CodeQL finding requires bounded OSJS-SEC-FIX-001 remediation. **READY_TO_RUN** for this technical fix only; T8.5 remains **AWAITING_HUMAN_APPROVAL**, MI-P6 BLOCKED, no autonomous release action permitted.  
 **Human release gate:** G8 T8.5 not delegated.  
 **Expected PR:** #1 open, draft, unmerged (re-verify when execution begins).  
 **Baseline source:** branch HEAD must be read at execution start; do not treat the creation SHA below as a guaranteed current HEAD.
@@ -19,7 +19,7 @@
 - Last verified production audit after T5.2: **0 critical / 0 high / 0 moderate / 0 low**; full development tree: **0 critical / 10 high / 14 moderate / 3 low**. Historical audit: **0 critical / 14 high / 3 moderate / 5 low**; exact source for post-promotion audit `e37e713d0a00ccf74d6a1737f021737c84180d48`. These are *historical values*: every CWAL execution must obtain a fresh baseline on the current branch and distinguish installed development graph from shipped graph.
 - Last verified build/security results at evidence commit `6acef72c6ecef5b4abec4df870911b5dc44cbfd2`: [Windows+Ubuntu build 44999216879](https://github.com/tamzrod/OS.js/actions/runs/44999216879), [startup regressions 44999216847](https://github.com/tamzrod/OS.js/actions/runs/44999216847), [lint 44999216901](https://github.com/tamzrod/OS.js/actions/runs/44999216901), all successful at the time. New governance-only commits are not a substitute for a new clean source check.
 
-## Next task — human security-owner review of the G8 evidence package
+## Historical task plan (superseded by current OSJS-SEC-FIX-001 priority below)
 
 1. Verify remote branch, PR, working tree, selected Node/npm, current CI and full current audits.
 2. Map all provider registrations, imports, side effects, reverse-proxy/WS/session/VFS/upload consumer paths and production lockfile roots; explicitly distinguish static-only product requirements from generic OS.js demo defaults.
@@ -60,3 +60,12 @@ No automated merge, no release, no deployment.
 - Final documentation-commit SHA and verification checks should be read from GitHub after this checkpoint; older candidate CI results are not represented as tests on a new runtime change.
 
 **Next and only authorized T8.5 decision:** a named human security owner reviews exact evidence and signs `docs/g8-security-signoff.md`, accepting/rejecting risks individually and expressly deciding MI-P6 status. Any required deployment/release approval remains a separate gate.
+
+
+## Current next action — OSJS-SEC-FIX-001
+
+**Command:** `operation cwal` in OpenHands. **Authoritative task:** section 7 of `active_work/operation-cwal.md` (read first). Do not paste an expanded mission into the agent. This register tracks progress, not independent authorization.
+
+**Trigger:** GitHub Advanced Security High TOCTOU review comment [4689024229](https://github.com/tamzrod/OS.js/pull/1#discussion_r4689024229), affecting `scripts/security/verify-client-import.js`. At initial handoff: nine review threads, one unresolved; branch baseline `72e254c9e8978b81657ab919c4ccb2e3af38ac43`. The old G8 code candidate `146f800` is **not** sufficient evidence for changed source after remediation.
+
+**Next sequence:** re-read current refs and alerts → focused exclusive-create fix and race/symlink regressions → independent code review and exact-SHA CI → evidence/PR reconciliation → STOP at `AWAITING_HUMAN_APPROVAL` on verified PASS, or `BLOCKED` with evidence. Do not fill human T8.5 verdicts, unblock MI-P6, or merge/release/deploy. This instruction does not itself assert the vulnerability is fixed.
