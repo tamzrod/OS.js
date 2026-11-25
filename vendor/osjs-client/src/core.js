@@ -443,7 +443,9 @@ export default class Core extends CoreBase {
     };
 
     window.addEventListener('message', ev => {
-      if (ev.origin !== window.location.origin) return;
+      if (ev.origin !== window.location.origin) {
+        return;
+      }
       const message = ev.data || {};
       if (message && message.name === 'osjs/iframe:message') {
         handle(...(message.params || []));
